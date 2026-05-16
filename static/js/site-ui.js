@@ -15,14 +15,17 @@ function initSmoothAnchors() {
     anchor.addEventListener("click", function (event) {
       const href = anchor.getAttribute("href");
       const id = href ? href.slice(1) : "";
-      const target = id ? document.querySelector(`[id='${decodeURIComponent(id)}']`) : null;
+      const target = id
+        ? document.querySelector(`[id='${decodeURIComponent(id)}']`)
+        : null;
 
       if (!target) {
         return;
       }
 
       event.preventDefault();
-      const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)")
+        .matches;
       target.scrollIntoView({ behavior: smooth ? "smooth" : "auto" });
 
       if (id === "top") {
@@ -41,7 +44,8 @@ function initTopLink() {
   }
 
   function syncTopLink() {
-    const shouldShow = document.body.scrollTop > 800 || document.documentElement.scrollTop > 800;
+    const shouldShow =
+      document.body.scrollTop > 800 || document.documentElement.scrollTop > 800;
     topLink.classList.toggle("is-visible", shouldShow);
   }
 
@@ -59,8 +63,13 @@ function initThemeToggle() {
   }
 
   toggle.addEventListener("click", function () {
-    const current = document.documentElement.getAttribute("data-scheme") || "catppuccin-latte";
-    const next = current === "catppuccin-latte" ? "catppuccin-macchiato" : "catppuccin-latte";
+    const current =
+      document.documentElement.getAttribute("data-scheme") ||
+      "catppuccin-macchiato";
+    const next =
+      current === "catppuccin-macchiato"
+        ? "catppuccin-latte"
+        : "catppuccin-macchiato";
     applyScheme(next);
     const select = document.getElementById("scheme-select");
     if (select) {
@@ -92,7 +101,9 @@ function initCodeCopyButtons() {
       if ("clipboard" in navigator) {
         let content = codeBlock.textContent;
         if (codeBlock.firstChild && codeBlock.firstChild.tagName === "TABLE") {
-          content = Array.from(codeBlock.firstChild.getElementsByTagName("span"))
+          content = Array.from(
+            codeBlock.firstChild.getElementsByTagName("span"),
+          )
             .map(function (span) {
               return span.textContent;
             })
@@ -122,9 +133,12 @@ function initCodeCopyButtons() {
     } else if (container.parentNode.firstChild === container) {
       return;
     } else if (
-      codeBlock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE"
+      codeBlock.parentNode.parentNode.parentNode.parentNode.parentNode
+        .nodeName === "TABLE"
     ) {
-      codeBlock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copyButton);
+      codeBlock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(
+        copyButton,
+      );
     } else {
       codeBlock.parentNode.appendChild(copyButton);
     }
@@ -150,7 +164,10 @@ function initSchemeSelect() {
     return;
   }
 
-  const saved = (document.body.dataset.rememberChoice === "true" && localStorage.getItem("pref-scheme")) || "catppuccin-latte";
+  const saved =
+    (document.body.dataset.rememberChoice === "true" &&
+      localStorage.getItem("pref-scheme")) ||
+    "catppuccin-latte";
   select.value = saved;
 
   select.addEventListener("change", function () {
