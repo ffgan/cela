@@ -1,80 +1,160 @@
-/* ─── Catppuccin Latte (light default) ─────────────────────────────────────── */
+/* Material Design 3 — light & dark only.
+   Seed: blue (#0B57D0). Legacy scheme names migrate in JS. */
+
+:root {
+  /* Shape */
+  --shape-xs: 4px;
+  --shape-sm: 8px;
+  --shape-md: 12px;
+  --shape-lg: 16px;
+  --shape-xl: 28px;
+  --shape-full: 9999px;
+
+  /* Motion */
+  --motion-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --motion-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --motion-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --duration-short: 200ms;
+  --duration-medium: 300ms;
+  --duration-long: 450ms;
+
+  /* State layers */
+  --state-hover: 0.08;
+  --state-focus: 0.12;
+  --state-pressed: 0.12;
+  --state-dragged: 0.16;
+
+  /* Elevation */
+  --elevation-0: none;
+  --elevation-1: 0 1px 2px 0 rgb(var(--shadow-rgb) / 0.3),
+    0 1px 3px 1px rgb(var(--shadow-rgb) / 0.15);
+  --elevation-2: 0 1px 2px 0 rgb(var(--shadow-rgb) / 0.3),
+    0 2px 6px 2px rgb(var(--shadow-rgb) / 0.15);
+  --elevation-3: 0 4px 8px 3px rgb(var(--shadow-rgb) / 0.15),
+    0 1px 3px 0 rgb(var(--shadow-rgb) / 0.3);
+  --elevation-4: 0 6px 10px 4px rgb(var(--shadow-rgb) / 0.15),
+    0 2px 3px 0 rgb(var(--shadow-rgb) / 0.3);
+  --elevation-5: 0 8px 12px 6px rgb(var(--shadow-rgb) / 0.15),
+    0 4px 4px 0 rgb(var(--shadow-rgb) / 0.3);
+}
+
+/* ─── Light ─────────────────────────────────────────────────────────────────── */
 :root,
-[data-scheme="catppuccin-latte"] {
+[data-scheme="light"] {
   color-scheme: light;
-  --theme-bg: #f8f8f8;
-  --surface-bg: #ffffff;
-  --surface-muted: #ccd0da;
-  --surface-strong: #e6e9ef;
-  --text-main: #1e1e1e;
-  --text-muted: #5c5f77;
-  --content-text: #4c4f69;
-  --highlight-bg: #dce0e8;
-  --code-bg: #f8f8f8;
-  --border-color: #e6e9ef;
-  --accent-color: #1e66f5;
-  --accent-strong: #04a5e5;
-  --accent-soft: rgba(30, 102, 245, 0.14);
-  --focus-ring: rgba(30, 102, 245, 0.2);
-  --overlay-backdrop: rgba(15, 23, 42, 0.72);
+  --shadow-rgb: 25 28 33;
+
+  --md-primary: #0b57d0;
+  --md-on-primary: #ffffff;
+  --md-primary-container: #d3e3fd;
+  --md-on-primary-container: #041e49;
+  --md-secondary: #545f71;
+  --md-on-secondary: #ffffff;
+  --md-secondary-container: #d8e3f8;
+  --md-on-secondary-container: #111c2b;
+  --md-tertiary: #6d5677;
+  --md-on-tertiary: #ffffff;
+  --md-tertiary-container: #f5d9ff;
+  --md-on-tertiary-container: #261431;
+
+  --md-error: #ba1a1a;
+  --md-on-error: #ffffff;
+  --md-error-container: #ffdad6;
+  --md-on-error-container: #410002;
+
+  --md-surface: #f9f9ff;
+  --md-surface-dim: #d9d9e0;
+  --md-surface-bright: #f9f9ff;
+  --md-surface-container-lowest: #ffffff;
+  --md-surface-container-low: #f3f3fa;
+  --md-surface-container: #ededf4;
+  --md-surface-container-high: #e7e8ee;
+  --md-surface-container-highest: #e1e2e8;
+  --md-on-surface: #1a1b21;
+  --md-on-surface-variant: #44474e;
+  --md-outline: #74777f;
+  --md-outline-variant: #c4c6d0;
+
+  --md-inverse-surface: #2f3036;
+  --md-inverse-on-surface: #f0f0f7;
+  --md-inverse-primary: #a8c7fa;
+  --md-scrim: rgb(0 0 0 / 0.5);
+  --md-surface-tint: #0b57d0;
+
+  /* Legacy aliases used by components */
+  --theme-bg: var(--md-surface);
+  --surface-bg: var(--md-surface-container-lowest);
+  --surface-muted: var(--md-surface-container-highest);
+  --surface-strong: var(--md-surface-container-high);
+  --text-main: var(--md-on-surface);
+  --text-muted: var(--md-on-surface-variant);
+  --content-text: #2e3038;
+  --highlight-bg: var(--md-surface-container);
+  --code-bg: var(--md-surface-container-low);
+  --border-color: var(--md-outline-variant);
+  --accent-color: var(--md-primary);
+  --accent-strong: #0842a0;
+  --accent-soft: rgb(11 87 208 / 0.12);
+  --focus-ring: rgb(11 87 208 / 0.24);
+  --overlay-backdrop: var(--md-scrim);
 }
 
-/* ─── Catppuccin Macchiato (dark default) ───────────────────────────────────── */
-[data-scheme="catppuccin-macchiato"] {
+/* ─── Dark ──────────────────────────────────────────────────────────────────── */
+[data-scheme="dark"] {
   color-scheme: dark;
-  --theme-bg: #1e2030;
-  --surface-bg: #24273a;
-  --surface-muted: #363a4f;
-  --surface-strong: #303446;
-  --text-main: #cad3f5;
-  --text-muted: #b8c0e0;
-  --content-text: #a5adcb;
-  --highlight-bg: #181926;
-  --code-bg: #181926;
-  --border-color: #1e2030;
-  --accent-color: #8bd5ca;
-  --accent-strong: #91d7e3;
-  --accent-soft: rgba(139, 213, 202, 0.16);
-  --focus-ring: rgba(138, 173, 244, 0.28);
-  --overlay-backdrop: rgba(12, 14, 22, 0.82);
-}
+  --shadow-rgb: 0 0 0;
 
-/* ─── Rosé Pine (dark) ──────────────────────────────────────────────────────── */
-[data-scheme="rose-pine"] {
-  color-scheme: dark;
-  --theme-bg: #191724;
-  --surface-bg: #1f1d2e;
-  --surface-muted: #403d52;
-  --surface-strong: #26233a;
-  --text-main: #e0def4;
-  --text-muted: #908caa;
-  --content-text: #e0def4;
-  --highlight-bg: #26233a;
-  --code-bg: #26233a;
-  --border-color: #403d52;
-  --accent-color: #ebbcba;
-  --accent-strong: #eb6f92;
-  --accent-soft: rgba(235, 188, 186, 0.16);
-  --focus-ring: rgba(196, 167, 231, 0.28);
-  --overlay-backdrop: rgba(10, 9, 18, 0.82);
-}
+  --md-primary: #a8c7fa;
+  --md-on-primary: #062e6f;
+  --md-primary-container: #0842a0;
+  --md-on-primary-container: #d3e3fd;
+  --md-secondary: #bcc7db;
+  --md-on-secondary: #263141;
+  --md-secondary-container: #3c4758;
+  --md-on-secondary-container: #d8e3f8;
+  --md-tertiary: #d8bde3;
+  --md-on-tertiary: #3c2947;
+  --md-tertiary-container: #533f5e;
+  --md-on-tertiary-container: #f5d9ff;
 
-/* ─── Nord (dark) ───────────────────────────────────────────────────────────── */
-[data-scheme="nord"] {
-  color-scheme: dark;
-  --theme-bg: #2e3440;
-  --surface-bg: #3b4252;
-  --surface-muted: #434c5e;
-  --surface-strong: #4c566a;
-  --text-main: #eceff4;
-  --text-muted: #d8dee9;
-  --content-text: #e5e9f0;
-  --highlight-bg: #2e3440;
-  --code-bg: #2e3440;
-  --border-color: #434c5e;
-  --accent-color: #88c0d0;
-  --accent-strong: #81a1c1;
-  --accent-soft: rgba(136, 192, 208, 0.16);
-  --focus-ring: rgba(136, 192, 208, 0.28);
-  --overlay-backdrop: rgba(10, 12, 16, 0.82);
+  --md-error: #ffb4ab;
+  --md-on-error: #690005;
+  --md-error-container: #93000a;
+  --md-on-error-container: #ffdad6;
+
+  --md-surface: #121318;
+  --md-surface-dim: #121318;
+  --md-surface-bright: #38393f;
+  --md-surface-container-lowest: #0d0e13;
+  --md-surface-container-low: #1a1b21;
+  --md-surface-container: #1e1f25;
+  --md-surface-container-high: #282a2f;
+  --md-surface-container-highest: #33343a;
+  --md-on-surface: #e2e2e9;
+  --md-on-surface-variant: #c4c6d0;
+  --md-outline: #8e9099;
+  --md-outline-variant: #44474e;
+
+  --md-inverse-surface: #e2e2e9;
+  --md-inverse-on-surface: #2f3036;
+  --md-inverse-primary: #0b57d0;
+  --md-scrim: rgb(0 0 0 / 0.72);
+  --md-surface-tint: #a8c7fa;
+
+  --theme-bg: var(--md-surface);
+  --surface-bg: var(--md-surface-container-low);
+  --surface-muted: var(--md-surface-container-highest);
+  --surface-strong: var(--md-surface-container-high);
+  --text-main: var(--md-on-surface);
+  --text-muted: var(--md-on-surface-variant);
+  --content-text: #c8c6cf;
+  --highlight-bg: var(--md-surface-container-lowest);
+  --code-bg: var(--md-surface-container-lowest);
+  --border-color: var(--md-outline-variant);
+  --accent-color: var(--md-primary);
+  --accent-strong: #d3e3fd;
+  --accent-soft: rgb(168 199 250 / 0.16);
+  --focus-ring: rgb(168 199 250 / 0.28);
+  --overlay-backdrop: var(--md-scrim);
 }

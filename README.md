@@ -7,7 +7,7 @@
 
 *Cela* is a simple, lightweight Zola theme, inspired by [Hugo PaperMod](https://github.com/adityatelange/hugo-PaperMod).
 
-The style sheet is adapted from [Catppuccin](https://github.com/catppuccin/catppuccin).
+The UI follows [Material Design 3](https://m3.material.io/) with light and dark schemes.
 If you like it, please give it a 🌟 on GitHub. Thanks!
 
 ![screenshot](screenshot.png)
@@ -16,7 +16,7 @@ If you like it, please give it a 🌟 on GitHub. Thanks!
 
 ## Theme Features
 
-+ [x] Catppuccin color theme
++ [x] Material Design 3 light/dark theme
 + [x] Light/Dark mode toggle
 + [x] MathJax support
 + [x] Blog RSS feeds
@@ -191,8 +191,6 @@ Mapping between semantic template class names and their Tailwind token equivalen
 | `.pagination .previous` | `section_post.html` | Previous page link | `bg-text`, `text-theme` |
 | `.pagination .next` | `section_post.html` | Next page link | `bg-text`, `text-theme` |
 | `.footer-credits` | `home_footer.html` | Copyright + powered-by row | `text-muted` |
-| `.footer-scheme` | `home_footer.html` | Color scheme selector row | `text-muted` |
-| `#scheme-select` | `home_footer.html` | Color scheme `<select>` | `border`, `text-muted` |
 
 > Tailwind token names correspond to keys in `tailwind.config.js` → `theme.extend`.
 

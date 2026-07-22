@@ -49,6 +49,24 @@ function initTopLink() {
   window.addEventListener("scroll", syncTopLink, { passive: true });
 }
 
+function normalizeScheme(value) {
+  if (!value) {
+    return null;
+  }
+  if (value === "light" || value === "catppuccin-latte") {
+    return "light";
+  }
+  if (
+    value === "dark" ||
+    value === "catppuccin-macchiato" ||
+    value === "rose-pine" ||
+    value === "nord"
+  ) {
+    return "dark";
+  }
+  return null;
+}
+
 function initThemeToggle() {
   if (document.body.dataset.showThemeToggle !== "true") {
     return;
@@ -59,13 +77,9 @@ function initThemeToggle() {
   }
 
   toggle.addEventListener("click", function () {
-    const current = document.documentElement.getAttribute("data-scheme") || "catppuccin-latte";
-    const next = current === "catppuccin-latte" ? "catppuccin-macchiato" : "catppuccin-latte";
+    const current = normalizeScheme(document.documentElement.getAttribute("data-scheme")) || "light";
+    const next = current === "light" ? "dark" : "light";
     applyScheme(next);
-    const select = document.getElementById("scheme-select");
-    if (select) {
-      select.value = next;
-    }
   });
 }
 
@@ -132,30 +146,14 @@ function initCodeCopyButtons() {
 }
 
 function applyScheme(scheme) {
-  document.documentElement.setAttribute("data-scheme", scheme);
-  const isDark = scheme !== "catppuccin-latte";
+  const normalized = normalizeScheme(scheme) || "light";
+  document.documentElement.setAttribute("data-scheme", normalized);
+  const isDark = normalized === "dark";
   document.documentElement.classList.toggle("dark", isDark);
   document.body.classList.toggle("dark", isDark);
   if (document.body.dataset.rememberChoice === "true") {
-    localStorage.setItem("pref-scheme", scheme);
+    localStorage.setItem("pref-scheme", normalized);
   }
-}
-
-function initSchemeSelect() {
-  if (document.body.dataset.showThemeToggle !== "true") {
-    return;
-  }
-  const select = document.getElementById("scheme-select");
-  if (!select) {
-    return;
-  }
-
-  const saved = (document.body.dataset.rememberChoice === "true" && localStorage.getItem("pref-scheme")) || "catppuccin-latte";
-  select.value = saved;
-
-  select.addEventListener("change", function () {
-    applyScheme(select.value);
-  });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -164,5 +162,4 @@ document.addEventListener("DOMContentLoaded", function () {
   initTopLink();
   initThemeToggle();
   initCodeCopyButtons();
-  initSchemeSelect();
 });

@@ -1,22 +1,36 @@
 <script>document.documentElement.classList.add("js");</script>
 <script>
   (function () {
-    var scheme;
-    var darkSchemes = ["catppuccin-macchiato", "rose-pine", "nord"];
+    function normalizeScheme(value) {
+      if (!value) return null;
+      if (value === "light" || value === "catppuccin-latte") return "light";
+      if (
+        value === "dark" ||
+        value === "catppuccin-macchiato" ||
+        value === "rose-pine" ||
+        value === "nord"
+      ) {
+        return "dark";
+      }
+      return null;
+    }
+
+    var scheme = null;
     {% if config.extra.cela.color.remember_choice -%}
-    scheme = localStorage.getItem("pref-scheme");
+    scheme = normalizeScheme(localStorage.getItem("pref-scheme"));
     {% endif -%}
     if (!scheme) {
       {% if config.extra.cela.color.default_theme == "dark" -%}
-      scheme = "catppuccin-macchiato";
+      scheme = "dark";
       {% elif config.extra.cela.color.default_theme == "light" -%}
-      scheme = "catppuccin-latte";
+      scheme = "light";
       {% else -%}
-      scheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "catppuccin-macchiato" : "catppuccin-latte";
+      scheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       {% endif -%}
     }
+
     document.documentElement.setAttribute("data-scheme", scheme);
-    if (darkSchemes.indexOf(scheme) !== -1) {
+    if (scheme === "dark") {
       document.documentElement.classList.add("dark");
       document.body.classList.add("dark");
     }

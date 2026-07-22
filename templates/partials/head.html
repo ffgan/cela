@@ -56,8 +56,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="{{ get_url(path=(config.extra.cela.favicon16x16 | default(value='favicon-16x16.png'))) }}">
 <link rel="icon" type="image/png" sizes="32x32" href="{{ get_url(path=(config.extra.cela.favicon32x32 | default(value='favicon-32x32.png'))) }}">
 <link rel="apple-touch-icon" href="{{ get_url(path=(config.extra.cela.apple_touch_icon | default(value='apple-touch-icon.png'))) }}">
-<meta name="theme-color" content="{{ config.extra.cela.theme_color | default(value='#2e2e33') }}">
-<meta name="msapplication-TileColor" content="{{ config.extra.cela.msapplication_TileColor | default(value='#2e2e33') }}">
+<meta name="theme-color" content="{{ config.extra.cela.theme_color | default(value='#121318') }}">
+<meta name="msapplication-TileColor" content="{{ config.extra.cela.msapplication_TileColor | default(value='#121318') }}">
 
 {% if config.generate_feeds %}
 {% for feed_filename in config.feed_filenames %}
@@ -74,39 +74,52 @@
     </style>
     {% if config.extra.cela.color.default_theme == "dark" %}
     <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme-bg: rgb(24, 25, 38);
-                --surface-bg: rgb(36, 39, 58);
-                --surface-muted: rgb(54, 58, 79);
-                --surface-strong: rgb(68, 71, 90);
-                --text-main: rgb(202, 211, 245);
-                --text-muted: rgb(165, 173, 203);
-                --content-text: rgb(184, 192, 224);
-                --highlight-bg: rgb(54, 58, 79);
-                --code-bg: rgb(30, 32, 48);
-                --border-color: rgb(68, 71, 90);
-                --accent-color: rgb(138, 173, 244);
-                --accent-strong: rgb(125, 196, 228);
-                --accent-soft: rgba(138, 173, 244, 0.18);
-                --focus-ring: rgba(138, 173, 244, 0.32);
-                --overlay-backdrop: rgba(17, 17, 27, 0.72);
-                --hero-glow: radial-gradient(circle at top, rgba(138, 173, 244, 0.18), transparent 55%);
-            }
-
-            .list {
-                background: var(--theme-bg);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme-bg);
-            }
+        :root {
+            color-scheme: dark;
+            --shadow-rgb: 0 0 0;
+            --md-primary: #a8c7fa;
+            --md-on-primary: #062e6f;
+            --md-primary-container: #0842a0;
+            --md-on-primary-container: #d3e3fd;
+            --md-secondary: #bcc7db;
+            --md-on-secondary: #263141;
+            --md-secondary-container: #3c4758;
+            --md-on-secondary-container: #d8e3f8;
+            --md-surface: #121318;
+            --md-surface-dim: #121318;
+            --md-surface-bright: #38393f;
+            --md-surface-container-lowest: #0d0e13;
+            --md-surface-container-low: #1a1b21;
+            --md-surface-container: #1e1f25;
+            --md-surface-container-high: #282a2f;
+            --md-surface-container-highest: #33343a;
+            --md-on-surface: #e2e2e9;
+            --md-on-surface-variant: #c4c6d0;
+            --md-outline: #8e9099;
+            --md-outline-variant: #44474e;
+            --md-inverse-surface: #e2e2e9;
+            --md-inverse-on-surface: #2f3036;
+            --md-scrim: rgb(0 0 0 / 0.72);
+            --theme-bg: var(--md-surface);
+            --surface-bg: var(--md-surface-container-low);
+            --surface-muted: var(--md-surface-container-highest);
+            --surface-strong: var(--md-surface-container-high);
+            --text-main: var(--md-on-surface);
+            --text-muted: var(--md-on-surface-variant);
+            --content-text: #c8c6cf;
+            --highlight-bg: var(--md-surface-container-lowest);
+            --code-bg: var(--md-surface-container-lowest);
+            --border-color: var(--md-outline-variant);
+            --accent-color: var(--md-primary);
+            --accent-strong: #d3e3fd;
+            --accent-soft: rgb(168 199 250 / 0.16);
+            --focus-ring: rgb(168 199 250 / 0.28);
+            --overlay-backdrop: var(--md-scrim);
         }
 
+        .list {
+            background: var(--theme-bg);
+        }
     </style>
     {% endif %}
 </noscript>
