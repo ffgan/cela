@@ -23,6 +23,7 @@ If you like it, please give it a 🌟 on GitHub. Thanks!
 + [x] Full-text search
 + [x] Robot tools
 + [x] Home page archive grouping (group by year)
++ [x] Homepage pagination (5 per page) and Archive pagination (10 per page)
 + [ ] Internationalization (i18n)
 
 ### Tags, Categories, and Taxonomies
@@ -169,6 +170,12 @@ Homepage motion is intentionally scoped to the landing page hero, social icons,
 year or section headers, and home post lists. It uses CSS animation plus
 `IntersectionObserver`, and degrades cleanly when JavaScript is disabled or
 `prefers-reduced-motion` is enabled.
+
+## Pagination
+
+- Homepage (`/`): set `paginate_by = 5` in `content/_index.md`, and `transparent = true` in `content/blog/_index.md` so posts under `home_content_dir` are paginated on the home page. Override size with `extra.cela.home_paginate_by`.
+- Archive (`/archive/`): add `content/archive/_index.md` with `template = "archive.html"`. Page size defaults to 10 via `extra.cela.archive_paginate_by`.
+- Point the nav item at `/archive`, for example `{path = "/archive", title = "Archive"}`.
 
 ## CSS Class Reference
 

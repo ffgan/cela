@@ -1,0 +1,44 @@
+{% macro year_cards(pages, client_paginate=false, paginate_by=5) %}
+{% if client_paginate %}
+<div
+  class="post-list"
+  data-list-paginate="true"
+  data-paginate-by="{{ paginate_by }}"
+>
+{% endif %}
+{% for year, year_pages in pages | group_by(attribute="year") %}
+<h1 class="home-year reveal-on-scroll"{% if client_paginate %} data-list-heading="true"{% endif %}>{{ year }}</h1>
+{% for page in year_pages %}
+{% set card_page = page %}
+{% set card_reveal = true %}
+{% include "partials/common/post_card.html" %}
+{% endfor %}
+{% endfor %}
+{% if client_paginate %}
+</div>
+<footer class="page-footer">
+  <nav class="pagination" data-list-pagination aria-label="Pagination" hidden></nav>
+</footer>
+{% endif %}
+{% endmacro %}
+
+{% macro bare_cards(pages, client_paginate=false, paginate_by=5) %}
+{% if client_paginate %}
+<div
+  class="post-list"
+  data-list-paginate="true"
+  data-paginate-by="{{ paginate_by }}"
+>
+{% endif %}
+{% for page in pages %}
+{% set card_page = page %}
+{% set card_reveal = true %}
+{% include "partials/common/post_card.html" %}
+{% endfor %}
+{% if client_paginate %}
+</div>
+<footer class="page-footer">
+  <nav class="pagination" data-list-pagination aria-label="Pagination" hidden></nav>
+</footer>
+{% endif %}
+{% endmacro %}

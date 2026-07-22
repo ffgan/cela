@@ -1,2 +1,4 @@
+{% if not paginator or paginator.current_index == 1 %}
 {% include "partials/home/home_info.html" %}
+{% endif %}
 {% include "partials/home/home_list.html" %}

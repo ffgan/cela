@@ -460,6 +460,15 @@
     margin-inline-end: auto;
   }
 
+  .pagination .pagination-info {
+    align-self: center;
+    color: var(--md-on-surface-variant);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 40px;
+  }
+
   .social-icons {
     padding: 12px 0;
   }

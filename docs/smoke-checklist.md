@@ -5,7 +5,8 @@ still matches the current baseline.
 
 ## Baseline Pages
 
-- Home: `/`
+- Home: `/` (5 posts per page; `/page/2/` when there are more)
+- Archive: `/archive/` (10 posts per page)
 - Single post: `/blog/example/`
 - Taxonomy list: `/tags/`
 - Taxonomy single: `/tags/rust/`

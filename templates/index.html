@@ -1,5 +1,6 @@
 {% import "macros/extra_icon.svg.html" as macro_extra_icon -%}
 {% import "macros/social_icon.svg.html" as macro_social_icon -%}
+{% import "macros/post_list.html" as post_list -%}
 <!DOCTYPE html>
 <html lang="{{ lang }}" dir="{{ config.extra.cela.global.i18n_dir }}">
 
@@ -47,6 +48,7 @@ data-search-index-js-url="{{ get_url(path='search_index.' ~ lang ~ '.js') }}">
 {% block extra_js %}
 <script src="{{ get_url(path='js/site-ui.js') | safe }}"></script>
 <script src="{{ get_url(path='js/search-ui.js') | safe }}"></script>
+<script src="{{ get_url(path='js/list-paginate.js') | safe }}"></script>
 <script src="{{ get_url(path='js/home-effects.js') | safe }}"></script>
 {% if config.extra.debug %}
 {% include "macros/debug_console.html" %}
