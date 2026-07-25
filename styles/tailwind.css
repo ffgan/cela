@@ -263,7 +263,7 @@
 
   .top-link:focus-visible,
   .md-icon-button:focus-visible,
-  #menu a:focus-visible,
+  .md-nav-item:focus-visible,
   .post-entry:focus-within,
   .button:focus-visible,
   .search-toggle-modal button:focus-visible {
@@ -303,14 +303,13 @@
     display: block;
   }
 
-  .nav .md-icon-button {
-    display: grid;
+  .nav .md-icon-button,
+  .nav .md-nav-item {
+    display: inline-flex;
   }
 
-  .logo,
-  #menu {
-    display: flex;
-    margin: auto 1.5rem;
+  .nav .md-icon-button {
+    display: grid;
   }
 
   .logo {
@@ -318,6 +317,7 @@
     flex-wrap: inherit;
     align-items: center;
     gap: 0.25rem;
+    margin: auto 1.5rem;
   }
 
   .logo-title {
@@ -403,7 +403,16 @@
     display: none;
   }
 
-  #menu {
+  /* M3 Top App Bar destinations (desktop) + modal Navigation Drawer (mobile) */
+  .nav .nav-drawer-toggle {
+    display: none;
+    position: relative;
+    margin-inline: 0.5rem 1.5rem;
+    margin-block: auto;
+    flex-shrink: 0;
+  }
+
+  .md-nav-bar {
     display: flex;
     align-items: center;
     list-style: none;
@@ -412,47 +421,60 @@
     white-space: nowrap;
     gap: 0.25rem;
     padding-block: 0.25rem;
+    margin: auto 1.5rem auto auto;
   }
 
-  #menu li + li {
-    margin-inline-start: 0;
-  }
-
-  #menu a {
+  .md-nav-item {
     display: inline-flex;
     align-items: center;
+    gap: 0.5rem;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: var(--shape-full);
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.01em;
+    line-height: 20px;
     color: var(--md-on-surface-variant);
-    border-radius: var(--shape-full);
-    padding: 0.5rem 1rem;
     transition:
       background-color var(--duration-short) var(--motion-standard),
       color var(--duration-short) var(--motion-standard);
   }
 
-  #menu a:hover {
+  .md-nav-item:hover {
     background: color-mix(in srgb, var(--md-on-surface) calc(var(--state-hover) * 100%), transparent);
     color: var(--md-on-surface);
   }
 
-  #menu .active {
-    font-weight: 500;
-    border-bottom: 0;
+  .md-nav-item:active {
+    background: color-mix(in srgb, var(--md-on-surface) calc(var(--state-pressed) * 100%), transparent);
+  }
+
+  .md-nav-item.is-active {
     color: var(--md-on-secondary-container);
     background: var(--md-secondary-container);
-    border-radius: var(--shape-full);
-    padding: 0.5rem 1rem;
   }
 
-  #menu a:has(.active) {
-    padding: 0;
-    background: transparent;
+  .md-nav-item.is-active:hover {
+    background: color-mix(
+      in srgb,
+      var(--md-on-secondary-container) calc(var(--state-hover) * 100%),
+      var(--md-secondary-container)
+    );
+    color: var(--md-on-secondary-container);
   }
 
-  #menu a:has(.active):hover {
-    background: transparent;
+  .md-nav-label {
+    display: inline-block;
+  }
+
+  /* Drawer is mobile-only; keep it out of the desktop layout */
+  .nav-drawer {
+    display: none;
+  }
+
+  body.nav-drawer-open {
+    overflow: hidden;
   }
 
   .page-header h1,
@@ -1723,6 +1745,138 @@
     .footer {
       padding: calc((3.75rem - 0.875rem - 10px) / 2) 0.875rem;
     }
+
+    .logo {
+      margin-inline-end: auto;
+    }
+
+    /* With JS: hamburger + modal drawer; hide the inline bar destinations */
+    .js .nav .nav-drawer-toggle {
+      display: grid;
+      margin-inline-start: auto;
+    }
+
+    .js .md-nav-bar {
+      display: none;
+    }
+
+    .js .nav-drawer {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .js .nav-drawer[hidden] {
+      display: none;
+    }
+
+    .js .nav-drawer.is-open {
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .js .nav-drawer.is-open[hidden] {
+      display: block;
+    }
+
+    .js .nav-drawer-scrim {
+      position: absolute;
+      inset: 0;
+      background: var(--md-scrim);
+      opacity: 0;
+      transition: opacity var(--duration-short) var(--motion-standard);
+    }
+
+    .js .nav-drawer.is-open .nav-drawer-scrim {
+      opacity: 1;
+    }
+
+    .js .nav-drawer-sheet {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 0;
+      width: min(280px, 72vw);
+      max-width: 280px;
+      padding-block: 12px;
+      background: var(--md-surface-container-low);
+      border-start-end-radius: var(--shape-lg);
+      border-end-end-radius: var(--shape-lg);
+      box-shadow: var(--elevation-3);
+      transform: translateX(-105%);
+      transition: transform var(--duration-medium) var(--motion-emphasized-decelerate);
+    }
+
+    [dir="rtl"] .js .nav-drawer-sheet {
+      inset-inline-start: auto;
+      inset-inline-end: 0;
+      border-start-end-radius: 0;
+      border-end-end-radius: 0;
+      border-start-start-radius: var(--shape-lg);
+      border-end-start-radius: var(--shape-lg);
+      transform: translateX(105%);
+    }
+
+    .js .nav-drawer.is-open .nav-drawer-sheet {
+      transform: translateX(0);
+    }
+
+    .js .nav-drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      min-height: 56px;
+      padding: 0 8px 0 16px;
+      margin-bottom: 4px;
+    }
+
+    .js .nav-drawer-title {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      line-height: 20px;
+      color: var(--md-on-surface-variant);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .js .md-nav-drawer-list {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      list-style: none;
+      gap: 0;
+      margin: 0;
+      padding: 0 12px 12px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .js .md-nav-drawer-list li {
+      width: 100%;
+    }
+
+    .js .md-nav-drawer-list .md-nav-item {
+      width: 100%;
+      min-height: 56px;
+      padding: 0 24px;
+      border-radius: var(--shape-full);
+    }
+
+    /* No-JS: keep the inline bar destinations visible */
+    html:not(.js) .md-nav-bar {
+      flex-basis: 100%;
+      flex-wrap: wrap;
+      margin: 0 0.875rem 0.5rem;
+      white-space: normal;
+    }
   }
 
   @media screen and (max-width: 900px) {
@@ -1750,8 +1904,11 @@
     .top-link,
     #searchResults .focus,
     #searchResults li:active,
-    .search-toggle-modal button:hover {
+    .search-toggle-modal button:hover,
+    .js .nav-drawer-scrim,
+    .js .nav-drawer-sheet {
       transform: none !important;
+      transition: none !important;
     }
   }
 }

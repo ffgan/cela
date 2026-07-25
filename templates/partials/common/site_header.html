@@ -1,6 +1,6 @@
 {% include "partials/common/header_body_theme.html" -%}
 <header class="header">
-  <nav class="nav">
+  <nav class="nav" aria-label="Primary">
     <div class="logo">
       {% if config.extra.cela.show_cela_logo %}
       {# M3 Icon Button — leading home affordance in Top App Bar #}
@@ -79,7 +79,8 @@
       </div>
     </div>
     {% if config.extra.cela.navigation %}
-    <ul id="menu">
+    {# Desktop / no-JS: inline M3 destinations in the top app bar #}
+    <ul id="menu" class="md-nav-destinations md-nav-bar">
       {% for item in config.extra.cela.navigation %}
         {% set path = item.path | trim %}
         {% if path is starting_with("http://") or path is starting_with("https://") or path is starting_with("#") %}
@@ -91,8 +92,14 @@
         {% endif %}
         {% set is_active_link = current_url and url | trim_end_matches(pat="/") == current_url | trim_end_matches(pat="/") %}
       <li>
-        <a href="{{ url }}" title="{{ item.title }}" {%- if item.is_search -%} data-search-toggle="true"{%- endif -%}>
-          <span {%- if is_active_link -%} class="active" {%- endif -%}>{{ item.title }}</span>
+        <a
+          class="md-nav-item{% if is_active_link %} is-active{% endif %}"
+          href="{{ url }}"
+          title="{{ item.title }}"
+          {%- if item.is_search -%} data-search-toggle="true"{%- endif -%}
+          {%- if is_active_link %} aria-current="page"{% endif -%}
+        >
+          <span class="md-nav-label">{{ item.title }}</span>
           {%- if item.is_external and item.is_external == true -%}
             {{ macro_extra_icon::extra_icon(icon='link') }}
           {%- elif item.is_robot and item.is_robot == true -%}
@@ -102,6 +109,86 @@
       </li>
       {% endfor %}
     </ul>
+    {# Mobile-only trailing action — far right of the top app bar #}
+    <button
+      class="md-icon-button nav-drawer-toggle"
+      id="nav-drawer-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-drawer"
+      aria-label="Open menu"
+    >
+      <svg
+        class="md-icon nav-drawer-icon-menu"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        {# Material Symbols Rounded — menu #}
+        <path d="M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z"/>
+      </svg>
+    </button>
     {% endif %}
   </nav>
 </header>
+{% if config.extra.cela.navigation %}
+{# Outside .header so position:fixed is not trapped by backdrop-filter #}
+<div class="nav-drawer" id="nav-drawer" hidden>
+  <div class="nav-drawer-scrim" data-nav-drawer-close tabindex="-1"></div>
+  <div class="nav-drawer-sheet" id="nav-drawer-sheet">
+    <div class="nav-drawer-header">
+      <span class="nav-drawer-title">{{ config.extra.cela.header_title }}</span>
+      <button
+        class="md-icon-button"
+        type="button"
+        data-nav-drawer-close
+        aria-label="Close menu"
+      >
+        <svg
+          class="md-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M6.4 19L5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6z"/>
+        </svg>
+      </button>
+    </div>
+    <ul class="md-nav-destinations md-nav-drawer-list">
+      {% for item in config.extra.cela.navigation %}
+        {% set path = item.path | trim %}
+        {% if path is starting_with("http://") or path is starting_with("https://") or path is starting_with("#") %}
+          {% set url = path %}
+        {% else %}
+          {% set base = config.base_url | trim_end_matches(pat="/") %}
+          {% set rel = path | trim_start_matches(pat="/") %}
+          {% set url = base ~ "/" ~ rel %}
+        {% endif %}
+        {% set is_active_link = current_url and url | trim_end_matches(pat="/") == current_url | trim_end_matches(pat="/") %}
+      <li>
+        <a
+          class="md-nav-item{% if is_active_link %} is-active{% endif %}"
+          href="{{ url }}"
+          title="{{ item.title }}"
+          {%- if item.is_search -%} data-search-toggle="true"{%- endif -%}
+          {%- if is_active_link %} aria-current="page"{% endif -%}
+        >
+          <span class="md-nav-label">{{ item.title }}</span>
+          {%- if item.is_external and item.is_external == true -%}
+            {{ macro_extra_icon::extra_icon(icon='link') }}
+          {%- elif item.is_robot and item.is_robot == true -%}
+            {{ macro_extra_icon::extra_icon(icon='robot')}}
+          {%- endif -%}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %}

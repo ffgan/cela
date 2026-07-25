@@ -4,14 +4,14 @@ function initSearchOverlay() {
   const searchToggleModal = document.querySelector("#search-toggle-box .search-toggle-modal");
   const searchToggleInput = document.getElementById("search-toggle-input");
   const searchToggleButton = document.getElementById("search-toggle-button");
-  const searchToggleLink = document.querySelector('[data-search-toggle="true"]');
+  const searchToggleLinks = document.querySelectorAll('[data-search-toggle="true"]');
 
   if (
     !searchToggleBox ||
     !searchToggleModal ||
     !searchToggleInput ||
     !searchToggleButton ||
-    !searchToggleLink ||
+    !searchToggleLinks.length ||
     !searchPageUrl
   ) {
     return;
@@ -19,6 +19,11 @@ function initSearchOverlay() {
 
   function closeSearchOverlay() {
     searchToggleBox.classList.add("hidden");
+  }
+
+  function openSearchOverlay() {
+    searchToggleBox.classList.remove("hidden");
+    searchToggleInput.focus();
   }
 
   function submitSearch() {
@@ -30,10 +35,11 @@ function initSearchOverlay() {
     window.location.assign(`${searchPageUrl}?q=${encodeURIComponent(searchTerm)}`);
   }
 
-  searchToggleLink.addEventListener("click", function (event) {
-    event.preventDefault();
-    searchToggleBox.classList.remove("hidden");
-    searchToggleInput.focus();
+  searchToggleLinks.forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      openSearchOverlay();
+    });
   });
 
   document.addEventListener("keydown", function (event) {
@@ -48,8 +54,11 @@ function initSearchOverlay() {
   });
 
   document.addEventListener("click", function (event) {
+    const clickedToggle = Array.from(searchToggleLinks).some(function (link) {
+      return link.contains(event.target);
+    });
     const isClickInside =
-      searchToggleModal.contains(event.target) || searchToggleLink.contains(event.target);
+      searchToggleModal.contains(event.target) || clickedToggle;
     if (!isClickInside) {
       closeSearchOverlay();
     }

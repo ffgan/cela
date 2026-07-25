@@ -3,9 +3,6 @@
 {% set content_dir = content_dir | trim_start_matches(pat="content/") %}
 
 <header class="page-header">
-  <nav class="breadcrumbs" aria-label="breadcrumb">
-    <a href="{{ config.base_url }}">Home</a>
-  </nav>
   <h1>{{ section.title | default(value="Archive") }}</h1>
 </header>
 
