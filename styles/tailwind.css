@@ -1,6 +1,123 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/*
+  Tailwind v4 — CSS-first config.
+  Preflight is intentionally omitted; base styles live in @layer base below.
+*/
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@source "../templates/**/*.html";
+@source "../content/**/*.{md,html}";
+@source not "../content/_bak/**/*";
+@source "../static/js/**/*.js";
+
+/* Class-based dark mode (html/body.dark), matching theme-runtime + site-ui.js */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Design tokens previously in tailwind.config.js.
+  `inline` keeps runtime CSS variables (theme-runtime.css) as direct references.
+*/
+@theme inline {
+  --color-theme: var(--theme-bg);
+  --color-surface: var(--surface-bg);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border-color);
+  --color-text: var(--text-main);
+  --color-muted: var(--text-muted);
+  --color-content: var(--content-text);
+  --color-code: var(--code-bg);
+  --color-highlight: var(--highlight-bg);
+  --color-accent: var(--accent-color);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-surface-strong: var(--surface-strong);
+  --color-focus-ring: var(--focus-ring);
+  --color-md-primary: var(--md-primary);
+  --color-md-on-primary: var(--md-on-primary);
+  --color-md-primary-container: var(--md-primary-container);
+  --color-md-on-primary-container: var(--md-on-primary-container);
+  --color-md-secondary: var(--md-secondary);
+  --color-md-secondary-container: var(--md-secondary-container);
+  --color-md-on-secondary-container: var(--md-on-secondary-container);
+  --color-md-surface: var(--md-surface);
+  --color-md-surface-container: var(--md-surface-container);
+  --color-md-surface-container-lowest: var(--md-surface-container-lowest);
+  --color-md-surface-container-low: var(--md-surface-container-low);
+  --color-md-surface-container-high: var(--md-surface-container-high);
+  --color-md-surface-container-highest: var(--md-surface-container-highest);
+  --color-md-on-surface: var(--md-on-surface);
+  --color-md-on-surface-variant: var(--md-on-surface-variant);
+  --color-md-outline: var(--md-outline);
+  --color-md-outline-variant: var(--md-outline-variant);
+  --color-md-inverse-surface: var(--md-inverse-surface);
+  --color-md-inverse-on-surface: var(--md-inverse-on-surface);
+  --color-md-scrim: var(--md-scrim);
+  --color-overlay-backdrop: var(--overlay-backdrop);
+
+  --font-sans:
+    Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial,
+    Ubuntu, sans-serif;
+
+  --spacing-gap: 1.5rem;
+  --spacing-gap-mobile: 0.875rem;
+  --spacing-content-gap: 1.25rem;
+
+  /* Include horizontal padding in max widths (matches prior calc(N + 3rem)) */
+  --container-nav: calc(64rem + 3rem);
+  --container-main: calc(45rem + 3rem);
+
+  --radius-theme: var(--shape-md);
+  --radius-md-xs: var(--shape-xs);
+  --radius-md-sm: var(--shape-sm);
+  --radius-md-md: var(--shape-md);
+  --radius-md-lg: var(--shape-lg);
+  --radius-md-xl: var(--shape-xl);
+  --radius-md-full: var(--shape-full);
+
+  --shadow-card: var(--elevation-1);
+  --shadow-elevation-0: var(--elevation-0);
+  --shadow-elevation-1: var(--elevation-1);
+  --shadow-elevation-2: var(--elevation-2);
+  --shadow-elevation-3: var(--elevation-3);
+  --shadow-elevation-4: var(--elevation-4);
+  --shadow-elevation-5: var(--elevation-5);
+
+  --ease-theme: var(--motion-emphasized);
+  --ease-md-standard: var(--motion-standard);
+  --ease-md-emphasized: var(--motion-emphasized);
+  --ease-md-decelerate: var(--motion-emphasized-decelerate);
+
+  --duration-md-short: 200ms;
+  --duration-md-medium: 300ms;
+  --duration-md-long: 450ms;
+
+  --animate-hero-rise: hero-rise 450ms cubic-bezier(0.05, 0.7, 0.1, 1) both;
+  --animate-soft-fade: soft-fade 400ms cubic-bezier(0.05, 0.7, 0.1, 1) both;
+}
+
+@keyframes hero-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(1.2rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes soft-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 @layer base {
   *,
@@ -21,9 +138,7 @@
   }
 
   body {
-    background: var(--theme-bg);
-    color: var(--text-main);
-    font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, Ubuntu, sans-serif;
+    @apply bg-theme text-text font-sans;
     font-size: 16px;
     line-height: 1.6;
     letter-spacing: 0.015em;
@@ -132,19 +247,16 @@
 
 @layer components {
   .list {
-    background: var(--md-surface);
+    @apply bg-md-surface;
   }
 
   .dark.list {
-    background: var(--md-surface);
+    @apply bg-md-surface;
   }
 
   .main {
-    position: relative;
+    @apply relative mx-auto max-w-main p-gap;
     min-height: calc(100vh - 3.75rem - 3.75rem);
-    max-width: calc(45rem + 3rem);
-    margin: 0 auto;
-    padding: 1.5rem;
   }
 
   .not-found {
@@ -159,19 +271,14 @@
   }
 
   .footer {
-    max-width: calc(45rem + 3rem);
-    margin: 0 auto;
+    @apply mx-auto max-w-main text-center text-muted;
     padding: calc((3.75rem - 1.5rem) / 2) 1.5rem;
-    text-align: center;
     font-size: 12px;
     line-height: 24px;
-    color: var(--text-muted);
   }
 
   .footer-social {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 0.75rem;
+    @apply mb-3 flex justify-center;
   }
 
   .footer .footer-social-icons a {
@@ -179,9 +286,7 @@
   }
 
   .footer-credits {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    @apply flex flex-wrap justify-center text-muted;
     gap: 0 4px;
   }
 
@@ -288,12 +393,7 @@
   }
 
   .nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    max-width: calc(64rem + 3rem);
-    margin-inline: auto;
+    @apply mx-auto flex max-w-nav flex-wrap items-center justify-between;
     min-height: 3.75rem;
     line-height: 1.25;
     padding-block: 0.25rem;
@@ -490,31 +590,28 @@
 
   /* M3 filled button */
   .pagination a {
-    border-radius: var(--shape-full);
-    background: var(--md-primary);
-    color: var(--md-on-primary);
+    @apply rounded-md-full bg-md-primary text-md-on-primary shadow-elevation-0;
     padding: 0 20px;
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.01em;
     line-height: 40px;
-    box-shadow: var(--elevation-0);
     transition:
       box-shadow var(--duration-short) var(--motion-standard),
       background-color var(--duration-short) var(--motion-standard);
   }
 
   .pagination a:hover {
-    box-shadow: var(--elevation-1);
+    @apply shadow-elevation-1;
     background: color-mix(in srgb, var(--md-primary) 92%, var(--md-on-primary));
   }
 
   .pagination .next {
-    margin-inline-start: auto;
+    @apply ms-auto;
   }
 
   .pagination .previous {
-    margin-inline-end: auto;
+    @apply me-auto;
   }
 
   .pagination .pagination-info {
@@ -728,13 +825,7 @@
 
   /* M3 outlined card → elevated on hover */
   .post-entry {
-    position: relative;
-    margin-bottom: 1rem;
-    border: 1px solid var(--md-outline-variant);
-    border-radius: var(--shape-md);
-    background: var(--md-surface-container-lowest);
-    padding: 1.25rem 1.5rem;
-    box-shadow: var(--elevation-0);
+    @apply relative mb-4 rounded-theme border border-border bg-md-surface-container-lowest p-[1.25rem_1.5rem] shadow-elevation-0;
     transition:
       transform var(--duration-short) var(--motion-emphasized),
       box-shadow var(--duration-medium) var(--motion-emphasized),
@@ -743,21 +834,17 @@
   }
 
   .post-entry:hover {
+    @apply border-transparent bg-md-surface-container-low shadow-elevation-2;
     transform: translateY(-2px);
-    border-color: transparent;
-    background: var(--md-surface-container-low);
-    box-shadow: var(--elevation-2);
   }
 
   .post-entry.card-hover-border:hover {
-    border-color: var(--md-primary);
-    background: var(--md-surface-container-lowest);
-    box-shadow: var(--elevation-1);
+    @apply border-md-primary bg-md-surface-container-lowest shadow-elevation-1;
   }
 
   .post-entry:active {
+    @apply shadow-elevation-1;
     transform: scale(0.99);
-    box-shadow: var(--elevation-1);
   }
 
   .robot-tool-card:active,
@@ -777,10 +864,8 @@
   }
 
   .entry-content {
-    margin: 8px 0;
-    color: var(--md-on-surface-variant);
+    @apply my-2 overflow-hidden text-muted;
     display: -webkit-box;
-    overflow: hidden;
     font-size: 0.875rem;
     line-height: 1.5;
     letter-spacing: 0.015em;
@@ -789,20 +874,19 @@
   }
 
   .entry-footer {
-    color: var(--md-on-surface-variant);
+    @apply text-muted;
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.04em;
   }
 
   .entry-link {
-    position: absolute;
-    inset: 0;
+    @apply absolute inset-0;
   }
 
   .entry-cover,
   .entry-isdraft {
-    color: var(--text-muted);
+    @apply text-muted;
     font-size: 14px;
   }
 
@@ -829,19 +913,15 @@
   }
 
   .post-single {
-    max-width: calc(45rem + 3rem);
-    margin: 0 auto;
-    padding: 0 1.5rem;
+    @apply mx-auto max-w-main px-gap;
   }
 
   .search-page {
-    max-width: calc(45rem + 3rem);
-    margin: 0 auto;
-    padding: 0 1.5rem;
+    @apply mx-auto max-w-main px-gap;
   }
 
   .search-box {
-    margin-bottom: 1rem;
+    @apply mb-4;
   }
 
   .post-title {
@@ -859,9 +939,7 @@
 
   .post-meta,
   .breadcrumbs {
-    display: flex;
-    flex-wrap: wrap;
-    color: var(--text-muted);
+    @apply flex flex-wrap text-muted;
     font-size: 14px;
   }
 
@@ -882,7 +960,7 @@
   }
 
   .post-content {
-    color: var(--content-text);
+    @apply text-content;
   }
 
   .post-content h1 {
@@ -1488,17 +1566,11 @@
   }
 
   .search-entry {
-    position: relative;
-    margin-bottom: 1rem;
-    border: 1px solid var(--md-outline-variant);
-    border-radius: var(--shape-md);
-    background: var(--md-surface-container-lowest);
-    padding: 1.25rem 1.5rem;
-    box-shadow: var(--elevation-0);
+    @apply relative mb-4 rounded-theme border border-border bg-md-surface-container-lowest p-[1.25rem_1.5rem] shadow-elevation-0;
   }
 
   .search-entry .post-entry {
-    background: var(--md-surface-container-low);
+    @apply bg-md-surface-container-low;
   }
 
   .terms-tags {
@@ -1735,7 +1807,7 @@
 
   @media screen and (max-width: 768px) {
     .main {
-      padding: 0.875rem;
+      @apply p-gap-mobile;
     }
 
     .profile img {

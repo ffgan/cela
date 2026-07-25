@@ -123,14 +123,14 @@ Cela stays a pure static Zola theme:
 - No frontend framework runtime
 - No Node.js requirement for theme users
 
-Node.js is used only for **theme development** to generate static CSS.
+Node.js is used only for **theme development** to generate static CSS (Tailwind CSS v4 via `@tailwindcss/cli`).
 
 ### CSS Layers
 
 The final CSS stack is split into two layers:
 
 1. `static/css/theme-runtime.css`: a thin runtime theme layer for light/dark semantic color variables
-2. `styles/tailwind.css` -> `static/css/theme.css`: the generated Tailwind-controlled main stylesheet
+2. `styles/tailwind.css` -> `static/css/theme.css`: the generated Tailwind-controlled main stylesheet (design tokens live in the `@theme inline` block)
 
 The generated CSS file is committed so downstream theme users still only need Zola. Legacy files are no longer part of the runtime load path.
 
@@ -199,13 +199,13 @@ Mapping between semantic template class names and their Tailwind token equivalen
 | `.pagination .next` | `section_post.html` | Next page link | `bg-text`, `text-theme` |
 | `.footer-credits` | `home_footer.html` | Copyright + powered-by row | `text-muted` |
 
-> Tailwind token names correspond to keys in `tailwind.config.js` → `theme.extend`.
+> Tailwind token names correspond to keys in `styles/tailwind.css` → `@theme inline`.
 
 ## TODO
 
-- [ ] **Tailwind Path B migration**: All semantic classes (`.post-single`, `.post-entry`, `.footer`, etc.) in `styles/tailwind.css` currently use raw CSS values. Migrate them to use `@apply` with tokens defined in `tailwind.config.js` (e.g. `@apply bg-surface border-border rounded-theme`). This is the recommended step before considering Path A (utility classes in templates) or Tailwind v4.
-- [ ] **Tailwind Path A (future)**: Replace semantic classes in templates with inline Tailwind utility classes. Best done alongside Tailwind v4 migration.
-- [ ] Explore Tailwind v4 migration: v4 removes `tailwind.config.js` in favor of `@theme` blocks in CSS, aligns naturally with the CSS variable architecture, and offers significantly faster build times. Tracked for future investigation.
+- [x] **Tailwind Path B migration**: Semantic layout/card classes (`.post-single`, `.post-entry`, `.footer`, `.main`, `.nav`, etc.) in `styles/tailwind.css` use `@apply` with design tokens. Remaining one-off MD3 component styles still use CSS variables directly where `@apply` would not improve clarity.
+- [ ] **Tailwind Path A (future)**: Replace semantic classes in templates with inline Tailwind utility classes.
+- [x] **Tailwind v4 migration**: CSS-first `@theme` config, `@tailwindcss/cli`, no `tailwind.config.js` / PostCSS. Preflight remains disabled; custom `@layer base` is kept.
 
 ## LICENSE
 
