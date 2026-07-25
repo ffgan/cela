@@ -158,18 +158,14 @@
     font-weight: 700;
   }
 
-  .footer,
-  .top-link {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
   .footer {
     max-width: calc(45rem + 3rem);
     margin: 0 auto;
     padding: calc((3.75rem - 1.5rem) / 2) 1.5rem;
     text-align: center;
+    font-size: 12px;
     line-height: 24px;
+    color: var(--text-muted);
   }
 
   .footer-credits {
@@ -194,13 +190,14 @@
 
   .footer a:hover {
     border-bottom-color: var(--text-main);
+    color: var(--text-main);
   }
 
-  /* M3 FAB — scroll to top */
+  /* M3 FAB — primary container, medium (56dp), corner.large */
   .top-link {
     position: fixed;
-    right: 24px;
-    bottom: 48px;
+    right: 16px;
+    bottom: 16px;
     z-index: 99;
     display: grid;
     place-items: center;
@@ -222,6 +219,13 @@
       background-color var(--duration-short) var(--motion-standard);
   }
 
+  .top-link .md-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+  }
+
   .top-link.is-visible {
     visibility: visible;
     opacity: 1;
@@ -229,17 +233,22 @@
   }
 
   .top-link:hover {
+    background: color-mix(
+      in srgb,
+      var(--md-on-primary-container) calc(var(--state-hover) * 100%),
+      var(--md-primary-container)
+    );
     box-shadow: var(--elevation-4);
     color: var(--md-on-primary-container);
   }
 
   .top-link:active {
-    box-shadow: var(--elevation-2);
-    transform: scale(0.96);
-  }
-
-  .footer a:hover {
-    color: var(--text-main);
+    background: color-mix(
+      in srgb,
+      var(--md-on-primary-container) calc(var(--state-pressed) * 100%),
+      var(--md-primary-container)
+    );
+    box-shadow: var(--elevation-3);
   }
 
   .top-link:focus-visible,
@@ -1721,7 +1730,7 @@
 
   @media screen and (max-width: 900px) {
     .list .top-link {
-      transform: translateY(-5rem);
+      bottom: 5.5rem;
     }
   }
 

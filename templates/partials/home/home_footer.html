@@ -14,9 +14,18 @@
 </footer>
 
 {% if config.extra.cela.show_scroll_to_top %}
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-      <path d="M12 6H0l6-6z" />
+<a href="#top" aria-label="Go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+  <svg
+    class="md-icon"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    {# Material Symbols Rounded — arrow_upward #}
+    <path d="M11 20V7.825l-5.6 5.6L4 12l8-8 8 8-1.4 1.425-5.6-5.6V20Z"/>
   </svg>
 </a>
 {% endif %}
