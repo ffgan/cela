@@ -41,10 +41,14 @@
 {% elif section and section.extra and section.extra.canonical %}
   <link rel="canonical" href="{{ section.extra.canonical }}">
 {% elif page and page.path %}
-  {% set canonical_url = config.base_url ~ '/' ~ page.path %}
+  {% set base = config.base_url | trim_end_matches(pat="/") %}
+  {% set rel = page.path | trim_start_matches(pat="/") %}
+  {% set canonical_url = base ~ "/" ~ rel %}
   <link rel="canonical" href="{{ canonical_url }}">
 {% elif section and section.path %}
-  {% set canonical_url = config.base_url ~ '/' ~ section.path %}
+  {% set base = config.base_url | trim_end_matches(pat="/") %}
+  {% set rel = section.path | trim_start_matches(pat="/") %}
+  {% set canonical_url = base ~ "/" ~ rel %}
   <link rel="canonical" href="{{ canonical_url }}">
 {% else %}
   <link rel="canonical" href="{{ current_url | default(value=config.base_url) }}">

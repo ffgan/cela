@@ -4,7 +4,9 @@
     {% if rawpath is containing("@") %}
     {% set icon_path = "mailto:" ~ rawpath %}
     {% elif rawpath is starting_with("/")  %}
-    {% set icon_path = config.base_url ~ rawpath %}
+    {% set base = config.base_url | trim_end_matches(pat="/") %}
+    {% set rel = rawpath | trim_start_matches(pat="/") %}
+    {% set icon_path = base ~ "/" ~ rel %}
     {% else %}
     {% set icon_path = rawpath %}
     {% endif %}
