@@ -1,4 +1,9 @@
 <footer class="footer">
+  {% if config.extra.cela.show_home_social_icons | default(value=true) %}
+  <div class="footer-social">
+    {% include "partials/home/home_social_icons.html" %}
+  </div>
+  {% endif %}
   <div class="footer-credits">
     {% if config.extra.cela.copyright %}
     <span>{{ config.extra.cela.copyright }}</span>
