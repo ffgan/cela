@@ -22,15 +22,15 @@
     </div>
     <div class="tool-inputs">
       <div class="input-group">
-        <input aria-label="Text to encode" placeholder="Text to encode"></input>
+        <input aria-label="Text to encode" placeholder="Text to encode">
         <div class="button-container">
-          <button aria-label="Encode to Base64" onclick="encodeBase64()">Encode</button>
+          <button type="button" aria-label="Encode to Base64" onclick="encodeBase64()">Encode</button>
         </div>
       </div>
       <div class="input-group">
-        <input aria-label="Text to decode" placeholder="Text to decode"></input>
+        <input aria-label="Text to decode" placeholder="Text to decode">
         <div class="button-container">
-          <button aria-label="Decode from Base64" onclick="decodeBase64()">Decode</button>
+          <button type="button" aria-label="Decode from Base64" onclick="decodeBase64()">Decode</button>
         </div>
       </div>
     </div>
@@ -42,154 +42,22 @@
     </div>
     <div class="tool-inputs">
       <div class="input-group">
-        <input aria-label="Text to hash" placeholder="Text to hash"></input>
+        <input aria-label="Text to hash" placeholder="Text to hash">
         <div class="button-container">
-          <button aria-label="Generate MD5 hash" onclick="generateMD5()">Generate MD5</button>
+          <button type="button" aria-label="Generate MD5 hash" onclick="generateMD5()">Generate MD5</button>
         </div>
       </div>
       <div class="input-group">
-        <input aria-label="MD5 hash output" placeholder="MD5 hash output" readonly></input>
+        <input aria-label="MD5 hash output" placeholder="MD5 hash output" readonly>
       </div>
     </div>
   </div>
 </div>
 
-{# TODO: IP tool disabled in base theme; re-enable in custom branch if needed.
-<div class="post-entry">
-  <header class="entry-header" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; ">
-    <h2>IP Tools</h2>
-  </header>
-  <div class="tool-section">
-    <div class="input-group">
-      <iframe id="ipFrame" style="width: 100%; height: 200px; border: 0; display: none;"></iframe>
-      <div class="button-container">
-        <button onclick="showIP()">Show ip info</button>
-      </div>
-    </div>
-  </div>
-</div>
-#}
+{% endblock %}
 
-
-{# TODO: WeChat sender disabled in base theme; re-enable in custom branch if needed.
-<div class="post-entry">
-  <header class="entry-header" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; ">
-    <h2>Send WeChat Message</h2>
-  </header>
-  <div class="tool-section">
-    <form id="wechat-message-form" class="tool-inputs">
-      <div class="input-group">
-        <input id="wechat-contact-name" placeholder="Wechat"></input>
-      </div>
-      <div class="input-group">
-        <input id="wechat-message-content" placeholder="Your message"></input>
-      </div>
-      <div class="button-container">
-        <button type="button" onclick="sendWeChatMessage()">Send Message</button>
-      </div>
-    </form>
-  </div>
-  <div id="wechat-response" class="tool-response" style="margin-top: 20px; text-align: center; color: green;">
-    <!-- TODO: response message will appear here -->
-  </div>
-</div>
-#}
-{# Disabled action scripts retained for reference; enable in custom branch only.
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<script>
-  function encodeBase64() {
-  const input = document.querySelector('.tool-section:nth-of-type(1) .input-group:nth-of-type(1) input');
-  const output = document.querySelector('.tool-section:nth-of-type(1) .input-group:nth-of-type(2) input');
-  if (!input || !output) {
-    console.error("Input or output field not found.");
-    return;
-  }
-
-  const text = input.value;
-
-  if (text.trim() === "") {
-    alert("Please enter text to encode.");
-    return;
-  }
-
-  try {
-    const encoded = btoa(text); // Base64 encode
-    output.value = encoded;
-  } catch (error) {
-    alert("Error encoding text: " + error.message);
-  }
-}
-
-// Base64 decode
-function decodeBase64() {
-  const input = document.querySelector('.tool-section:nth-of-type(1) .input-group:nth-of-type(2) input');
-  const output = document.querySelector('.tool-section:nth-of-type(1) .input-group:nth-of-type(1) input');
-  
-  if (!input || !output) {
-    console.error("Input or output field not found.");
-    return;
-  }
-
-  const text = input.value;
-
-  if (text.trim() === "") {
-    alert("Please enter Base64 encoded text to decode.");
-    return;
-  }
-
-  try {
-    const decoded = atob(text); // Base64 decode
-    output.value = decoded;
-  } catch (error) {
-    alert("Error decoding text: " + error.message);
-  }
-}
-
-// MD5 generation
-function generateMD5() {
-  const input = document.querySelector('.tool-section:nth-of-type(2) .input-group:nth-of-type(1) input');
-  const output = document.querySelector('.tool-section:nth-of-type(2) .input-group:nth-of-type(2) input');
-
-  if (!input || !output) {
-    console.error("Input or output field not found.");
-    return;
-  }
-
-  const text = input.value;
-
-  if (text.trim() === "") {
-    alert("Please enter text to hash.");
-    return;
-  }
-
-  try {
-    const hash = CryptoJS.MD5(text).toString(); // generate MD5 using CryptoJS
-    output.value = hash;
-  } catch (error) {
-    alert("Error generating MD5 hash: " + error.message);
-  }
-}
-  // Function to toggle IP information visibility
-  function showIP() {
-    const iframe = document.getElementById("ipFrame");
-    const button = document.querySelector(".button-container button");
-
-    // Check current visibility of the iframe
-    if (iframe.style.display === "none" || iframe.style.display === "") {
-      iframe.style.display = "block"; // Show iframe
-      iframe.style.width = "100%"; // Set width
-      iframe.style.height = "260px"; // Set height
-      iframe.src = document.body.classList.contains("dark")
-        ? "https://ip.skk.moe/simple-dark"
-        : "https://ip.skk.moe/simple"; // Set src dynamically based on theme
-      button.textContent = "Hide ip info"; // Update button text
-    } else {
-      iframe.style.display = "none"; // Hide iframe
-      iframe.style.height = "0"; // Set height to 0
-      button.textContent = "Show ip info"; // Update button text
-    }
-  }
-
-</script>
-#}
+{% block extra_js %}
+{{ super() }}
+<script src="{{ get_url(path='js/vendor/crypto-js.js') }}"></script>
+<script src="{{ get_url(path='js/robot-tools.js') }}"></script>
 {% endblock %}

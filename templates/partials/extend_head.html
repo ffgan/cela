@@ -1,6 +1,5 @@
 {% if config.extra.enable_mathjax %}
   {% if page.extra.mathjax %}
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script>
     window.MathJax = {
       tex: {
@@ -8,10 +7,12 @@
         displayMath: [['$$', '$$'], ['\\[', '\\]']]
       },
       options: {
+        enableMenu: false,
         ignoreHtmlClass: "no-mathjax",
         processHtmlClass: "mathjax"
       }
     };
   </script>
+  <script defer src="{{ get_url(path='js/vendor/mathjax/tex-mml-chtml.js') }}"></script>
   {% endif %}
 {% endif %}
