@@ -46,14 +46,19 @@ data-search-index-js-url="{{ get_url(path='search_index.' ~ lang ~ '.js') }}">
 {% endblock %}
 
 {% block extra_js %}
-<script src="{{ get_url(path='js/site-ui.js') | safe }}"></script>
-<script src="{{ get_url(path='js/search-ui.js') | safe }}"></script>
-<script src="{{ get_url(path='js/list-paginate.js') | safe }}"></script>
-<script src="{{ get_url(path='js/home-effects.js') | safe }}"></script>
+<script defer src="{{ get_url(path='js/site-ui.js') | safe }}"></script>
+<script defer src="{{ get_url(path='js/search-ui.js') | safe }}"></script>
+{# Client list pagination + home motion only where those DOM hooks exist #}
+{% set path = current_path | default(value="") %}
+{% if path == "/" or path is starting_with("/page/") or path is starting_with("/archive") %}
+<script defer src="{{ get_url(path='js/list-paginate.js') | safe }}"></script>
+<script defer src="{{ get_url(path='js/home-effects.js') | safe }}"></script>
+{% endif %}
 {% if config.extra.debug %}
 {% include "macros/debug_console.html" %}
 {% endif %}
 {% endblock %}
+
 </body>
 
 </html>

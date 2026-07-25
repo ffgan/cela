@@ -56,9 +56,10 @@
   --color-md-scrim: var(--md-scrim);
   --color-overlay-backdrop: var(--overlay-backdrop);
 
+  /* System UI stack — no webfont download; Roboto kept as Android fallback only */
   --font-sans:
-    Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial,
-    Ubuntu, sans-serif;
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", "Liberation Sans", sans-serif;
 
   --spacing-gap: 1.5rem;
   --spacing-gap-mobile: 0.875rem;

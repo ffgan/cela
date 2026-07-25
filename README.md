@@ -18,7 +18,7 @@ If you like it, please give it a 🌟 on GitHub. Thanks!
 
 + [x] Material Design 3 light/dark theme
 + [x] Light/Dark mode toggle
-+ [x] MathJax support
++ [x] Math rendering (KaTeX, opt-in per page)
 + [x] Blog RSS feeds
 + [x] Full-text search
 + [x] Robot tools
@@ -45,6 +45,33 @@ taxonomies:
 ```
 
 Zola `taxonomies` as recommended are more powerful for structuring your contents. See [zola taxonomies](https://www.getzola.org/documentation/content/taxonomies/) for more information.
+
+### Math rendering (KaTeX)
+
+Cela ships self-hosted [KaTeX](https://katex.org/). Math assets load only when both gates are open, so most pages stay light.
+
+1. **Site-wide gate** — in your site `config.toml` / `zola.toml`:
+
+```toml
+[extra]
+enable_mathjax = true
+```
+
+2. **Per-page opt-in** — in the post front matter:
+
+```toml
+[extra]
+mathjax = true
+```
+
+or YAML:
+
+```yaml
+extra:
+  mathjax: true
+```
+
+Supported delimiters: `$...$` / `\(...\)` (inline) and `$$...$$` / `\[...\]` (display). The front-matter key remains `mathjax` for compatibility; the runtime renderer is KaTeX.
 
 ## Quick Start
 
@@ -125,6 +152,10 @@ Cela stays a pure static Zola theme:
 
 Node.js is used only for **theme development** to generate static CSS (Tailwind CSS v4 via `@tailwindcss/cli`).
 
+`npm run build:css` writes a **minified** `static/css/theme.css` (committed). Site configs set `minify_html = true`.
+
+Optional math pages load self-hosted **KaTeX** after idle (not on every page). Robot tools use Web Crypto / `btoa` — no crypto-js bundle.
+
 ### CSS Layers
 
 The final CSS stack is split into two layers:
@@ -142,10 +173,16 @@ Install the development dependencies:
 npm install
 ```
 
-Build the generated CSS once:
+Build the generated CSS once (minified, production default):
 
 ```bash
 npm run build:css
+```
+
+Unminified CSS for local debugging:
+
+```bash
+npm run build:css:dev
 ```
 
 Watch CSS changes during theme development:

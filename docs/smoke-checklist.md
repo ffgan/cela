@@ -26,6 +26,6 @@ still matches the current baseline.
 
 ## Build Checks
 
-- `npm run build:css`
+- `npm run build:css` (minified production CSS)
 - `zola check --skip-external-links`
 - `zola build`

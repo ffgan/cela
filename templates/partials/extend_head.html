@@ -1,18 +1,63 @@
+{# Math: KaTeX (self-hosted). Front matter still uses enable_mathjax / mathjax for compat. #}
 {% if config.extra.enable_mathjax %}
-  {% if page.extra.mathjax %}
+  {% if page and page.extra.mathjax %}
+  <link
+    rel="stylesheet"
+    href="{{ get_url(path='js/vendor/katex/katex.min.css') }}"
+    media="print"
+    onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="{{ get_url(path='js/vendor/katex/katex.min.css') }}">
+  </noscript>
   <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
-      },
-      options: {
-        enableMenu: false,
-        ignoreHtmlClass: "no-mathjax",
-        processHtmlClass: "mathjax"
+    (function () {
+      var katexJs = "{{ get_url(path='js/vendor/katex/katex.min.js') }}";
+      var autoJs = "{{ get_url(path='js/vendor/katex/auto-render.min.js') }}";
+
+      function loadScript(src) {
+        return new Promise(function (resolve, reject) {
+          var s = document.createElement("script");
+          s.src = src;
+          s.async = true;
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
       }
-    };
+
+      function boot() {
+        loadScript(katexJs)
+          .then(function () {
+            return loadScript(autoJs);
+          })
+          .then(function () {
+            var root = document.querySelector(".post-content.mathjax");
+            if (!root || typeof renderMathInElement !== "function") {
+              return;
+            }
+            renderMathInElement(root, {
+              delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "\\[", right: "\\]", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+              ],
+              throwOnError: false,
+            });
+          })
+          .catch(function (err) {
+            console.error("Failed to load KaTeX", err);
+          });
+      }
+
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(boot, { timeout: 1500 });
+      } else if (document.readyState === "complete") {
+        setTimeout(boot, 1);
+      } else {
+        window.addEventListener("load", boot);
+      }
+    })();
   </script>
-  <script defer src="{{ get_url(path='js/vendor/mathjax/tex-mml-chtml.js') }}"></script>
   {% endif %}
 {% endif %}

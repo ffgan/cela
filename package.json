@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "description": "Development tooling for the Cela Zola theme.",
   "scripts": {
-    "build:css": "npx @tailwindcss/cli -i ./styles/tailwind.css -o ./static/css/theme.css",
+    "build:css": "npx @tailwindcss/cli -i ./styles/tailwind.css -o ./static/css/theme.css --minify",
+    "build:css:dev": "npx @tailwindcss/cli -i ./styles/tailwind.css -o ./static/css/theme.css",
     "build:css:min": "npx @tailwindcss/cli -i ./styles/tailwind.css -o ./static/css/theme.css --minify",
     "watch:css": "npx @tailwindcss/cli -i ./styles/tailwind.css -o ./static/css/theme.css --watch"
   },

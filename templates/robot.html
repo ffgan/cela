@@ -38,17 +38,17 @@
 
   <div class="tool-section">
     <div class="tool-label">
-      <h4>MD5 Hash Generator</h4>
+      <h4>SHA-256 Hash Generator</h4>
     </div>
     <div class="tool-inputs">
       <div class="input-group">
         <input aria-label="Text to hash" placeholder="Text to hash">
         <div class="button-container">
-          <button type="button" aria-label="Generate MD5 hash" onclick="generateMD5()">Generate MD5</button>
+          <button type="button" aria-label="Generate SHA-256 hash" onclick="generateSHA256()">Generate SHA-256</button>
         </div>
       </div>
       <div class="input-group">
-        <input aria-label="MD5 hash output" placeholder="MD5 hash output" readonly>
+        <input aria-label="SHA-256 hash output" placeholder="SHA-256 hash output" readonly>
       </div>
     </div>
   </div>
@@ -58,6 +58,5 @@
 
 {% block extra_js %}
 {{ super() }}
-<script src="{{ get_url(path='js/vendor/crypto-js.js') }}"></script>
-<script src="{{ get_url(path='js/robot-tools.js') }}"></script>
+<script defer src="{{ get_url(path='js/robot-tools.js') }}"></script>
 {% endblock %}
