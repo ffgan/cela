@@ -243,7 +243,7 @@
   }
 
   .top-link:focus-visible,
-  #theme-toggle:focus-visible,
+  .md-icon-button:focus-visible,
   #menu a:focus-visible,
   .post-entry:focus-within,
   .button:focus-visible,
@@ -253,7 +253,7 @@
   }
 
   .top-link:focus,
-  #theme-toggle:focus {
+  .md-icon-button:focus {
     outline: 0;
   }
 
@@ -284,6 +284,10 @@
     display: block;
   }
 
+  .nav .md-icon-button {
+    display: grid;
+  }
+
   .logo,
   #menu {
     display: flex;
@@ -291,22 +295,20 @@
   }
 
   .logo {
+    display: flex;
     flex-wrap: inherit;
+    align-items: center;
+    gap: 0.25rem;
   }
 
-  .logo a {
-    font-size: 24px;
-    font-weight: 700;
-  }
-
-  .logo a img,
-  .logo a svg {
-    display: inline;
-    vertical-align: middle;
-    pointer-events: none;
-    transform: translate(0, -10%);
-    border-radius: var(--shape-sm);
-    margin-inline-end: 8px;
+  .logo-title {
+    margin-inline-start: 0.25rem;
+    padding-inline: 0.25rem;
+    font-size: 1.375rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.75rem;
+    color: var(--md-on-surface);
   }
 
   .logo-switches {
@@ -335,28 +337,42 @@
     font-weight: 500;
   } */
 
-  /* M3 icon button */
-  #theme-toggle {
+  /* M3 Icon Button — standard (40dp target, circular state layer) */
+  .md-icon-button {
     display: grid;
     place-items: center;
     width: 40px;
     height: 40px;
-    margin: auto 4px;
+    margin: 0;
+    border: 0;
     border-radius: var(--shape-full);
-    font-size: 22px;
+    background: transparent;
     color: var(--md-on-surface-variant);
+    cursor: pointer;
+    text-decoration: none;
     transition:
       background-color var(--duration-short) var(--motion-standard),
       color var(--duration-short) var(--motion-standard);
   }
 
-  #theme-toggle:hover {
+  .md-icon-button .md-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+  }
+
+  .md-icon-button:hover {
     background: color-mix(in srgb, var(--md-on-surface) calc(var(--state-hover) * 100%), transparent);
     color: var(--md-on-surface);
   }
 
-  #theme-toggle:active {
+  .md-icon-button:active {
     background: color-mix(in srgb, var(--md-on-surface) calc(var(--state-pressed) * 100%), transparent);
+  }
+
+  #theme-toggle {
+    margin: auto 4px;
   }
 
   .dark #moon {
