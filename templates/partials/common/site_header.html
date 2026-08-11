@@ -11,18 +11,7 @@
         title="{{ config.extra.cela.header_title }} (Alt + H)"
         aria-label="{{ config.extra.cela.header_title }}"
       >
-        <svg
-          class="md-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          {# Material Symbols Rounded — home #}
-          <path d="M6 19V9.125q0-.4.163-.75t.487-.575l5-3.725q.4-.3.85-.3t.85.3l5 3.725q.325.225.488.575T18 9.125V19q0 .425-.288.713T17 20h-3.5q-.425 0-.712-.287T12.5 19v-4.5h-1V19q0 .425-.288.713T10.5 20H7q-.425 0-.712-.287T6 19Z"/>
-        </svg>
+        {{ macro_material_icon::material_icon(name="home") }}
       </a>
       {% endif %}
       {% if config.extra.cela.show_header_title %}
@@ -35,46 +24,8 @@
       {% endif %}
       <div class="logo-switches">
         <button class="md-icon-button" id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
-          <svg
-            id="moon"
-            class="md-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-          <svg
-            id="sun"
-            class="md-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
+          {{ macro_material_icon::material_icon(name="dark_mode", id="moon") }}
+          {{ macro_material_icon::material_icon(name="light_mode", id="sun") }}
         </button>
       </div>
     </div>
@@ -118,18 +69,7 @@
       aria-controls="nav-drawer"
       aria-label="Open menu"
     >
-      <svg
-        class="md-icon nav-drawer-icon-menu"
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        {# Material Symbols Rounded — menu #}
-        <path d="M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z"/>
-      </svg>
+      {{ macro_material_icon::material_icon(name="menu", class="md-icon nav-drawer-icon-menu") }}
     </button>
     {% endif %}
   </nav>
@@ -147,17 +87,7 @@
         data-nav-drawer-close
         aria-label="Close menu"
       >
-        <svg
-          class="md-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path d="M6.4 19L5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6z"/>
-        </svg>
+        {{ macro_material_icon::material_icon(name="close") }}
       </button>
     </div>
     <ul class="md-nav-destinations md-nav-drawer-list">

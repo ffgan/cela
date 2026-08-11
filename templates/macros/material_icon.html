@@ -1,0 +1,37 @@
+{# Local Material Symbols (Rounded) — SVG files in static/icons/material/ #}
+{% macro material_icon(name, size="24", class="md-icon", id="") %}
+<svg
+  class="{{ class }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  xmlns="http://www.w3.org/2000/svg"
+  width="{{ size }}"
+  height="{{ size }}"
+  viewBox="0 -960 960 960"
+  fill="currentColor"
+  aria-hidden="true"
+>
+{%- if name == "home" -%}
+  {% include "icons/material/home.html" %}
+{%- elif name == "menu" -%}
+  {% include "icons/material/menu.html" %}
+{%- elif name == "close" -%}
+  {% include "icons/material/close.html" %}
+{%- elif name == "dark_mode" -%}
+  {% include "icons/material/dark_mode.html" %}
+{%- elif name == "light_mode" -%}
+  {% include "icons/material/light_mode.html" %}
+{%- elif name == "open_in_new" -%}
+  {% include "icons/material/open_in_new.html" %}
+{%- elif name == "smart_toy" -%}
+  {% include "icons/material/smart_toy.html" %}
+{%- elif name == "chevron_right" -%}
+  {% include "icons/material/chevron_right.html" %}
+{%- elif name == "article" -%}
+  {% include "icons/material/article.html" %}
+{%- elif name == "rss_feed" -%}
+  {% include "icons/material/rss_feed.html" %}
+{%- elif name == "arrow_upward" -%}
+  {% include "icons/material/arrow_upward.html" %}
+{%- endif -%}
+</svg>
+{% endmacro %}
