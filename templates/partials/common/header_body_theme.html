@@ -1,8 +1,44 @@
 <script>
   (function () {
-    var isDark =
-      document.documentElement.getAttribute("data-scheme") === "dark" ||
-      document.documentElement.classList.contains("dark");
-    document.body.classList.toggle("dark", isDark);
+    function normalizeScheme(value) {
+      if (!value) return null;
+      if (value === "light" || value === "catppuccin-latte") return "light";
+      if (
+        value === "dark" ||
+        value === "catppuccin-macchiato" ||
+        value === "rose-pine" ||
+        value === "nord"
+      ) {
+        return "dark";
+      }
+      return null;
+    }
+
+    var scheme = normalizeScheme(document.documentElement.getAttribute("data-scheme"));
+    if (!scheme) {
+      {% if config.extra.cela.color.remember_choice -%}
+      try {
+        scheme = normalizeScheme(localStorage.getItem("pref-scheme"));
+      } catch (e) {}
+      {% endif -%}
+    }
+    if (!scheme) {
+      {% if config.extra.cela.color.default_theme == "dark" -%}
+      scheme = "dark";
+      {% elif config.extra.cela.color.default_theme == "light" -%}
+      scheme = "light";
+      {% else -%}
+      scheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      {% endif -%}
+    }
+
+    document.documentElement.setAttribute("data-scheme", scheme);
+    if (scheme === "dark") {
+      document.documentElement.classList.add("dark");
+      document.body.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      document.body.classList.remove("dark");
+    }
   })();
 </script>

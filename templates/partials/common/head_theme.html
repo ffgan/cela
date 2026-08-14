@@ -1,6 +1,6 @@
-{# Apply scheme before stylesheets so the first paint is not the light
-   :root fallback. Do not set color-scheme here (it changes <img> fetches).
-   same-origin Referer: hotlink-protected images 403 on localhost. #}
+{# Apply scheme before stylesheets so the first paint uses the right tokens.
+   Only paint the html canvas here — never force body background, or it can
+   desync from light/dark CSS variables (dark page + light text/TOC). #}
 {% set default_theme = config.extra.cela.color.default_theme | default(value="auto") -%}
 <meta name="referrer" content="same-origin">
 <script>
@@ -38,7 +38,11 @@
 
     var root = document.documentElement;
     root.setAttribute("data-scheme", scheme);
-    root.classList.toggle("dark", scheme === "dark");
+    if (scheme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
     {% if config.extra.cela.color.remember_choice -%}
     try {
       localStorage.setItem("pref-scheme", scheme);
@@ -48,12 +52,12 @@
 </script>
 {% if default_theme == "dark" -%}
 <style>
-  html, body { background-color: #121318; }
-  html[data-scheme="light"], html[data-scheme="light"] body { background-color: #f9f9ff; }
+  html { background-color: #121318; }
+  html[data-scheme="light"] { background-color: #f9f9ff; }
 </style>
 {% elif default_theme == "light" -%}
 <style>
-  html, body { background-color: #f9f9ff; }
-  html[data-scheme="dark"], html[data-scheme="dark"] body { background-color: #121318; }
+  html { background-color: #f9f9ff; }
+  html[data-scheme="dark"] { background-color: #121318; }
 </style>
 {% endif -%}

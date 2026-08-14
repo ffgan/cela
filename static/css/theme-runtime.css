@@ -68,7 +68,7 @@
 }
 
 /* ─── Light ─────────────────────────────────────────────────────────────────── */
-:root:not(.dark):not([data-scheme="dark"]),
+:root,
 [data-scheme="light"] {
   color-scheme: light;
   --shadow-rgb: 25 28 33;
@@ -129,8 +129,8 @@
 }
 
 /* ─── Dark ──────────────────────────────────────────────────────────────────── */
-:root.dark,
-[data-scheme="dark"] {
+html.dark,
+html[data-scheme="dark"] {
   color-scheme: dark;
   --shadow-rgb: 0 0 0;
 
@@ -190,10 +190,6 @@
 
 html {
   background-color: var(--theme-bg);
-}
-
-@view-transition {
-  navigation: auto;
 }
 
 /* Keep replaced media on the light color-scheme so document-level
