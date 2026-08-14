@@ -68,7 +68,7 @@
 }
 
 /* ─── Light ─────────────────────────────────────────────────────────────────── */
-:root,
+:root:not(.dark):not([data-scheme="dark"]),
 [data-scheme="light"] {
   color-scheme: light;
   --shadow-rgb: 25 28 33;
@@ -190,6 +190,10 @@
 
 html {
   background-color: var(--theme-bg);
+}
+
+@view-transition {
+  navigation: auto;
 }
 
 /* Keep replaced media on the light color-scheme so document-level

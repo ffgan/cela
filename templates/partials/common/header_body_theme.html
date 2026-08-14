@@ -1,41 +1,8 @@
-<script>document.documentElement.classList.add("js");</script>
 <script>
   (function () {
-    function normalizeScheme(value) {
-      if (!value) return null;
-      if (value === "light" || value === "catppuccin-latte") return "light";
-      if (
-        value === "dark" ||
-        value === "catppuccin-macchiato" ||
-        value === "rose-pine" ||
-        value === "nord"
-      ) {
-        return "dark";
-      }
-      return null;
-    }
-
-    var scheme = null;
-    {% if config.extra.cela.color.remember_choice -%}
-    scheme = normalizeScheme(localStorage.getItem("pref-scheme"));
-    {% endif -%}
-    if (!scheme) {
-      {% if config.extra.cela.color.default_theme == "dark" -%}
-      scheme = "dark";
-      {% elif config.extra.cela.color.default_theme == "light" -%}
-      scheme = "light";
-      {% else -%}
-      scheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      {% endif -%}
-    }
-
-    document.documentElement.setAttribute("data-scheme", scheme);
-    if (scheme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.body.classList.add("dark");
-    }
-    {% if config.extra.cela.color.remember_choice -%}
-    localStorage.setItem("pref-scheme", scheme);
-    {% endif -%}
+    var isDark =
+      document.documentElement.getAttribute("data-scheme") === "dark" ||
+      document.documentElement.classList.contains("dark");
+    document.body.classList.toggle("dark", isDark);
   })();
 </script>

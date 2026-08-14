@@ -1,11 +1,59 @@
-{# Canvas color while CSS/JS load. Do not set color-scheme or data-scheme
-   here: that changes how browsers fetch <img> and busts the image cache. #}
+{# Apply scheme before stylesheets so the first paint is not the light
+   :root fallback. Do not set color-scheme here (it changes <img> fetches).
+   same-origin Referer: hotlink-protected images 403 on localhost. #}
 {% set default_theme = config.extra.cela.color.default_theme | default(value="auto") -%}
-{# External article images are hotlink-protected; sending localhost as
-   Referer returns 403. same-origin omits Referer on cross-origin images. #}
 <meta name="referrer" content="same-origin">
+<script>
+  document.documentElement.classList.add("js");
+  (function () {
+    function normalizeScheme(value) {
+      if (!value) return null;
+      if (value === "light" || value === "catppuccin-latte") return "light";
+      if (
+        value === "dark" ||
+        value === "catppuccin-macchiato" ||
+        value === "rose-pine" ||
+        value === "nord"
+      ) {
+        return "dark";
+      }
+      return null;
+    }
+
+    var scheme = null;
+    {% if config.extra.cela.color.remember_choice -%}
+    try {
+      scheme = normalizeScheme(localStorage.getItem("pref-scheme"));
+    } catch (e) {}
+    {% endif -%}
+    if (!scheme) {
+      {% if config.extra.cela.color.default_theme == "dark" -%}
+      scheme = "dark";
+      {% elif config.extra.cela.color.default_theme == "light" -%}
+      scheme = "light";
+      {% else -%}
+      scheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      {% endif -%}
+    }
+
+    var root = document.documentElement;
+    root.setAttribute("data-scheme", scheme);
+    root.classList.toggle("dark", scheme === "dark");
+    {% if config.extra.cela.color.remember_choice -%}
+    try {
+      localStorage.setItem("pref-scheme", scheme);
+    } catch (e) {}
+    {% endif -%}
+  })();
+</script>
 {% if default_theme == "dark" -%}
-<style>html { background-color: #121318; }</style>
+<style>
+  html, body { background-color: #121318; }
+  html[data-scheme="light"], html[data-scheme="light"] body { background-color: #f9f9ff; }
+</style>
 {% elif default_theme == "light" -%}
-<style>html { background-color: #f9f9ff; }</style>
+<style>
+  html, body { background-color: #f9f9ff; }
+  html[data-scheme="dark"], html[data-scheme="dark"] body { background-color: #121318; }
+</style>
 {% endif -%}
