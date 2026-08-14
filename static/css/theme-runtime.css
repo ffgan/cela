@@ -129,6 +129,7 @@
 }
 
 /* ─── Dark ──────────────────────────────────────────────────────────────────── */
+:root.dark,
 [data-scheme="dark"] {
   color-scheme: dark;
   --shadow-rgb: 0 0 0;
@@ -185,4 +186,17 @@
   --accent-soft: rgb(168 199 250 / 0.16);
   --focus-ring: rgb(168 199 250 / 0.28);
   --overlay-backdrop: var(--md-scrim);
+}
+
+html {
+  background-color: var(--theme-bg);
+}
+
+/* Keep replaced media on the light color-scheme so document-level
+   color-scheme: dark does not change how <img> sources are fetched. */
+img,
+picture,
+video,
+iframe {
+  color-scheme: light;
 }

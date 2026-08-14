@@ -134,6 +134,7 @@
   html {
     -webkit-tap-highlight-color: transparent;
     overflow-y: scroll;
+    background-color: var(--theme-bg);
   }
 
   body,
