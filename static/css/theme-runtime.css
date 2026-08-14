@@ -68,7 +68,6 @@
 }
 
 /* ─── Light ─────────────────────────────────────────────────────────────────── */
-:root,
 [data-scheme="light"] {
   color-scheme: light;
   --shadow-rgb: 25 28 33;
@@ -189,6 +188,10 @@ html[data-scheme="dark"] {
 }
 
 html {
+  background-color: var(--theme-bg);
+}
+
+body {
   background-color: var(--theme-bg);
 }
 

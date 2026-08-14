@@ -311,6 +311,10 @@ function applyScheme(scheme) {
   const isDark = normalized === "dark";
   document.documentElement.classList.toggle("dark", isDark);
   document.body.classList.toggle("dark", isDark);
+  const colorSchemeMeta = document.querySelector('meta[name="color-scheme"]');
+  if (colorSchemeMeta) {
+    colorSchemeMeta.setAttribute("content", normalized);
+  }
   if (document.body.dataset.rememberChoice === "true") {
     localStorage.setItem("pref-scheme", normalized);
   }

@@ -1,8 +1,15 @@
-{# Apply scheme before stylesheets so the first paint uses the right tokens.
-   Only paint the html canvas here — never force body background, or it can
-   desync from light/dark CSS variables (dark page + light text/TOC). #}
+{# First-paint theme: markup + this blocking snippet run before CSS.
+   Images stay on color-scheme: light and Referer is same-origin so
+   hotlink-protected screenshots keep loading. #}
 {% set default_theme = config.extra.cela.color.default_theme | default(value="auto") -%}
 <meta name="referrer" content="same-origin">
+{% if default_theme == "dark" -%}
+<meta name="color-scheme" content="dark">
+{% elif default_theme == "light" -%}
+<meta name="color-scheme" content="light">
+{% else -%}
+<meta name="color-scheme" content="dark light">
+{% endif -%}
 <script>
   document.documentElement.classList.add("js");
   (function () {
@@ -43,6 +50,10 @@
     } else {
       root.classList.remove("dark");
     }
+    var colorSchemeMeta = document.querySelector('meta[name="color-scheme"]');
+    if (colorSchemeMeta) {
+      colorSchemeMeta.setAttribute("content", scheme);
+    }
     {% if config.extra.cela.color.remember_choice -%}
     try {
       localStorage.setItem("pref-scheme", scheme);
@@ -50,14 +61,41 @@
     {% endif -%}
   })();
 </script>
-{% if default_theme == "dark" -%}
 <style>
-  html { background-color: #121318; }
-  html[data-scheme="light"] { background-color: #f9f9ff; }
-</style>
-{% elif default_theme == "light" -%}
-<style>
+  img, picture, video, iframe { color-scheme: light; }
+  {% if default_theme == "dark" -%}
+  html {
+    color-scheme: dark;
+    background-color: #121318;
+  }
+  html[data-scheme="light"] {
+    color-scheme: light;
+    background-color: #f9f9ff;
+  }
+  {% elif default_theme == "light" -%}
+  html {
+    color-scheme: light;
+    background-color: #f9f9ff;
+  }
+  html[data-scheme="dark"] {
+    color-scheme: dark;
+    background-color: #121318;
+  }
+  {% else -%}
   html { background-color: #f9f9ff; }
-  html[data-scheme="dark"] { background-color: #121318; }
+  @media (prefers-color-scheme: dark) {
+    html:not([data-scheme="light"]) {
+      color-scheme: dark;
+      background-color: #121318;
+    }
+  }
+  html[data-scheme="dark"] {
+    color-scheme: dark;
+    background-color: #121318;
+  }
+  html[data-scheme="light"] {
+    color-scheme: light;
+    background-color: #f9f9ff;
+  }
+  {% endif -%}
 </style>
-{% endif -%}

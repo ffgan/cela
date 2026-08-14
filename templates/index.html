@@ -3,7 +3,8 @@
 {% import "macros/social_icon.svg.html" as macro_social_icon -%}
 {% import "macros/post_list.html" as post_list -%}
 <!DOCTYPE html>
-<html lang="{{ lang }}" dir="{{ config.extra.cela.global.i18n_dir }}">
+{% set default_theme = config.extra.cela.color.default_theme | default(value="auto") -%}
+<html lang="{{ lang }}" dir="{{ config.extra.cela.global.i18n_dir }}"{% if default_theme == "dark" %} class="dark" data-scheme="dark"{% elif default_theme == "light" %} data-scheme="light"{% endif %}>
 
 <head>
   {% block head -%}
