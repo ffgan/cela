@@ -1,4 +1,5 @@
 {% set home_title = config.extra.cela.home_title | default(value=config.title) %}
+{% set home_eyebrow = config.extra.cela.home_eyebrow | default(value="") | trim %}
 {% set home_content = config.extra.cela.home_content | default(value="") | trim %}
 {% set show_title = config.extra.cela.show_home_title | default(value=true) %}
 {% set show_content = config.extra.cela.show_home_content | default(value=true) and home_content != "" %}
@@ -6,7 +7,9 @@
 
 {% if show_title or show_content %}
 <article class="home-hero reveal-on-scroll">
-  <p class="home-hero-eyebrow">Blog</p>
+  {% if home_eyebrow != "" %}
+  <p class="home-hero-eyebrow md-chip">{{ home_eyebrow }}</p>
+  {% endif %}
   {% if show_title %}
   <header class="entry-header">
     <h1>{{ home_title }}</h1>

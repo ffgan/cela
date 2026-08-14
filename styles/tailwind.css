@@ -789,13 +789,16 @@
   .home-hero-eyebrow {
     position: relative;
     z-index: 1;
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.75rem;
+    min-height: 32px;
+    padding: 0 12px;
+    background: color-mix(in srgb, var(--md-on-primary-container) 12%, transparent);
     color: var(--md-on-primary-container);
     font-size: var(--type-label-large-size);
     font-weight: 500;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.01em;
     line-height: var(--type-label-large-line);
-    text-transform: uppercase;
+    text-transform: none;
   }
 
   .home-hero .entry-header,
