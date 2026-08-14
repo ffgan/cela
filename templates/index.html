@@ -15,6 +15,10 @@
 {% if section or term or taxonomy -%}
   {% set body_classes = body_classes ~ "list " -%}
 {% endif -%}
+{% set path = current_path | default(value="") -%}
+{% if path == "/" or path is starting_with("/page/") -%}
+  {% set body_classes = body_classes ~ "is-home " -%}
+{% endif -%}
 
 <body
 class="{{ body_classes | trim }}"
@@ -39,9 +43,16 @@ data-search-index-js-url="{{ get_url(path='search_index.' ~ lang ~ '.js') }}">
 
 {% block search_panel %}
 <div id="search-toggle-box" class="hidden">
-  <div class="search-toggle-modal">
-    <input type="text" id="search-toggle-input" placeholder="Type to search..." />
-    <button id="search-toggle-button">Search</button>
+  <div class="search-toggle-modal" role="dialog" aria-modal="true" aria-labelledby="search-dialog-title">
+    <h2 id="search-dialog-title" class="search-dialog-title">Search</h2>
+    <label class="md-search-bar" for="search-toggle-input">
+      {{ macro_material_icon::material_icon(name="search") }}
+      <input type="search" id="search-toggle-input" placeholder="Search posts" autocomplete="off" />
+    </label>
+    <div class="search-dialog-actions">
+      <button type="button" id="search-toggle-cancel" class="md-text-button">Cancel</button>
+      <button type="button" id="search-toggle-button" class="md-filled-button">Search</button>
+    </div>
   </div>
 </div>
 {% endblock %}

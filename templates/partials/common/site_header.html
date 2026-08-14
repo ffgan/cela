@@ -3,7 +3,6 @@
   <nav class="nav" aria-label="Primary">
     <div class="logo">
       {% if config.extra.cela.show_cela_logo %}
-      {# M3 Icon Button — leading home affordance in Top App Bar #}
       <a
         class="md-icon-button logo-home"
         href="{{ config.base_url }}"
@@ -30,9 +29,9 @@
       </div>
     </div>
     {% if config.extra.cela.navigation %}
-    {# Desktop / no-JS: inline M3 destinations in the top app bar #}
     <ul id="menu" class="md-nav-destinations md-nav-bar">
       {% for item in config.extra.cela.navigation %}
+        {% if not item.is_search %}
         {% set path = item.path | trim %}
         {% if path is starting_with("http://") or path is starting_with("https://") or path is starting_with("#") %}
           {% set url = path %}
@@ -47,7 +46,6 @@
           class="md-nav-item{% if is_active_link %} is-active{% endif %}"
           href="{{ url }}"
           title="{{ item.title }}"
-          {%- if item.is_search -%} data-search-toggle="true"{%- endif -%}
           {%- if is_active_link %} aria-current="page"{% endif -%}
         >
           <span class="md-nav-label">{{ item.title }}</span>
@@ -58,24 +56,38 @@
           {%- endif -%}
         </a>
       </li>
+        {% endif %}
       {% endfor %}
     </ul>
-    {# Mobile-only trailing action — far right of the top app bar #}
-    <button
-      class="md-icon-button nav-drawer-toggle"
-      id="nav-drawer-toggle"
-      type="button"
-      aria-expanded="false"
-      aria-controls="nav-drawer"
-      aria-label="Open menu"
-    >
-      {{ macro_material_icon::material_icon(name="menu", class="md-icon nav-drawer-icon-menu") }}
-    </button>
+    <div class="nav-trailing">
+      {% for item in config.extra.cela.navigation %}
+        {% if item.is_search %}
+      <button
+        class="md-icon-button"
+        type="button"
+        data-search-toggle="true"
+        title="{{ item.title }}"
+        aria-label="{{ item.title }}"
+      >
+        {{ macro_material_icon::material_icon(name="search") }}
+      </button>
+        {% endif %}
+      {% endfor %}
+      <button
+        class="md-icon-button nav-drawer-toggle"
+        id="nav-drawer-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="nav-drawer"
+        aria-label="Open menu"
+      >
+        {{ macro_material_icon::material_icon(name="menu", class="md-icon nav-drawer-icon-menu") }}
+      </button>
+    </div>
     {% endif %}
   </nav>
 </header>
 {% if config.extra.cela.navigation %}
-{# Outside .header so position:fixed is not trapped by backdrop-filter #}
 <div class="nav-drawer" id="nav-drawer" hidden>
   <div class="nav-drawer-scrim" data-nav-drawer-close tabindex="-1"></div>
   <div class="nav-drawer-sheet" id="nav-drawer-sheet">

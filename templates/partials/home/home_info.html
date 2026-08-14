@@ -1,8 +1,30 @@
+{% set home_title = config.extra.cela.home_title | default(value=config.title) %}
 {% set home_content = config.extra.cela.home_content | default(value="") | trim %}
-{% if config.extra.cela.show_home_content | default(value=true) and home_content != "" %}
-<article class="first-entry home-info home-hero reveal-on-scroll">
-    <div class="entry-content">
-        {{ home_content | markdown(inline=true) | safe }}
-    </div>
+{% set show_title = config.extra.cela.show_home_title | default(value=true) %}
+{% set show_content = config.extra.cela.show_home_content | default(value=true) and home_content != "" %}
+{% set show_social = config.extra.cela.show_home_social_icons | default(value=true) %}
+
+{% if show_title or show_content %}
+<article class="home-hero reveal-on-scroll">
+  <p class="home-hero-eyebrow">Blog</p>
+  {% if show_title %}
+  <header class="entry-header">
+    <h1>{{ home_title }}</h1>
+  </header>
+  {% endif %}
+  {% if show_content %}
+  <div class="entry-content">
+    {{ home_content | markdown(inline=true) | safe }}
+  </div>
+  {% elif config.description %}
+  <div class="entry-content">
+    <p>{{ config.description }}</p>
+  </div>
+  {% endif %}
+  {% if show_social %}
+  <div class="home-hero-actions">
+    {% include "partials/home/home_social_icons.html" %}
+  </div>
+  {% endif %}
 </article>
 {% endif %}

@@ -1,4 +1,11 @@
 <article class="post-entry{% if card_extra_classes %} {{ card_extra_classes }}{% endif %}{% if card_reveal | default(value=false) %} reveal-on-scroll{% endif %}{% if config.extra.cela.card_hover_border | default(value=false) %} card-hover-border{% endif %}">
+  {% if card_page.taxonomies and card_page.taxonomies.categories %}
+  <div class="entry-chips">
+    {% for cat in card_page.taxonomies.categories %}
+    <span class="md-chip">{{ cat }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
   <header class="entry-header">
     <h2>{{ card_page.title }}</h2>
   </header>

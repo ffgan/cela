@@ -4,6 +4,7 @@ function initSearchOverlay() {
   const searchToggleModal = document.querySelector("#search-toggle-box .search-toggle-modal");
   const searchToggleInput = document.getElementById("search-toggle-input");
   const searchToggleButton = document.getElementById("search-toggle-button");
+  const searchToggleCancel = document.getElementById("search-toggle-cancel");
   const searchToggleLinks = document.querySelectorAll('[data-search-toggle="true"]');
 
   if (
@@ -65,6 +66,9 @@ function initSearchOverlay() {
   });
 
   searchToggleButton.addEventListener("click", submitSearch);
+  if (searchToggleCancel) {
+    searchToggleCancel.addEventListener("click", closeSearchOverlay);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", initSearchOverlay);

@@ -161,6 +161,33 @@ function initSmoothAnchors() {
   });
 }
 
+function syncThemeColor() {
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (!meta) {
+    return;
+  }
+  const surface = getComputedStyle(document.documentElement)
+    .getPropertyValue("--md-surface")
+    .trim();
+  if (surface) {
+    meta.setAttribute("content", surface);
+  }
+}
+
+function initAppBarScroll() {
+  const header = document.querySelector(".header");
+  if (!header) {
+    return;
+  }
+
+  function syncScrolled() {
+    header.classList.toggle("is-scrolled", window.scrollY > 8);
+  }
+
+  syncScrolled();
+  window.addEventListener("scroll", syncScrolled, { passive: true });
+}
+
 function initTopLink() {
   const topLink = document.getElementById("top-link");
   if (!topLink) {
@@ -287,13 +314,16 @@ function applyScheme(scheme) {
   if (document.body.dataset.rememberChoice === "true") {
     localStorage.setItem("pref-scheme", normalized);
   }
+  syncThemeColor();
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   initMenuScrollPersistence();
   initNavDrawer();
   initSmoothAnchors();
+  initAppBarScroll();
   initTopLink();
   initThemeToggle();
   initCodeCopyButtons();
+  syncThemeColor();
 });

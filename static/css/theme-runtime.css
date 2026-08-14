@@ -25,6 +25,34 @@
   --state-pressed: 0.12;
   --state-dragged: 0.16;
 
+  /* Type scale — Material 3 */
+  --type-display-small-size: 2.25rem;
+  --type-display-small-line: 2.75rem;
+  --type-headline-large-size: 2rem;
+  --type-headline-large-line: 2.5rem;
+  --type-headline-medium-size: 1.75rem;
+  --type-headline-medium-line: 2.25rem;
+  --type-headline-small-size: 1.5rem;
+  --type-headline-small-line: 2rem;
+  --type-title-large-size: 1.375rem;
+  --type-title-large-line: 1.75rem;
+  --type-title-medium-size: 1rem;
+  --type-title-medium-line: 1.5rem;
+  --type-title-small-size: 0.875rem;
+  --type-title-small-line: 1.25rem;
+  --type-body-large-size: 1rem;
+  --type-body-large-line: 1.5rem;
+  --type-body-medium-size: 0.875rem;
+  --type-body-medium-line: 1.25rem;
+  --type-body-small-size: 0.75rem;
+  --type-body-small-line: 1rem;
+  --type-label-large-size: 0.875rem;
+  --type-label-large-line: 1.25rem;
+  --type-label-medium-size: 0.75rem;
+  --type-label-medium-line: 1rem;
+  --type-label-small-size: 0.6875rem;
+  --type-label-small-line: 1rem;
+
   /* Elevation */
   --elevation-0: none;
   --elevation-1: 0 1px 2px 0 rgb(var(--shadow-rgb) / 0.3),
