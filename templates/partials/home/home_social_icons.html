@@ -1,17 +1,17 @@
 <div class="social-icons footer-social-icons">
     {% for i in config.extra.cela.social_icons %}
     {% set rawpath = i.path | trim  %}
-    {% if rawpath is containing("@") %}
+    {% if rawpath is containing(pat="@") %}
     {% set icon_path = "mailto:" ~ rawpath %}
-    {% elif rawpath is starting_with("/")  %}
-    {% set base = config.base_url | trim_end_matches(pat="/") %}
-    {% set rel = rawpath | trim_start_matches(pat="/") %}
+    {% elif rawpath is starting_with(pat="/")  %}
+    {% set base = config.base_url | trim_end(pat="/") %}
+    {% set rel = rawpath | trim_start(pat="/") %}
     {% set icon_path = base ~ "/" ~ rel %}
     {% else %}
     {% set icon_path = rawpath %}
     {% endif %}
     <a href="{{ icon_path }}" target="_blank" rel="noopener noreferrer me" title="{{ i.title }}">
-        {{ macro_social_icon::social_icon(icon=i.icon) }}
+        {{ <cela.social_icon icon={i.icon} /> }}
     </a>
     {% endfor %}
 </div>

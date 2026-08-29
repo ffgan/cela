@@ -1,5 +1,5 @@
 {# Local Material Symbols (Rounded) — SVG files in static/icons/material/ #}
-{% macro material_icon(name, size="24", class="md-icon", id="") %}
+{% component cela.material_icon(name, size="24", class="md-icon", id="") %}
 <svg
   class="{{ class }}"
   {% if id %}id="{{ id }}"{% endif %}
@@ -36,4 +36,4 @@
   {% include "icons/material/search.html" %}
 {%- endif -%}
 </svg>
-{% endmacro %}
+{% endcomponent cela.material_icon %}

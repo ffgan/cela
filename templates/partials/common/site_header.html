@@ -10,7 +10,7 @@
         title="{{ config.extra.cela.header_title }} (Alt + H)"
         aria-label="{{ config.extra.cela.header_title }}"
       >
-        {{ macro_material_icon::material_icon(name="home") }}
+        {{ <cela.material_icon name="home" /> }}
       </a>
       {% endif %}
       {% if config.extra.cela.show_header_title %}
@@ -23,8 +23,8 @@
       {% endif %}
       <div class="logo-switches">
         <button class="md-icon-button" id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
-          {{ macro_material_icon::material_icon(name="dark_mode", id="moon") }}
-          {{ macro_material_icon::material_icon(name="light_mode", id="sun") }}
+          {{ <cela.material_icon name="dark_mode" id="moon" /> }}
+          {{ <cela.material_icon name="light_mode" id="sun" /> }}
         </button>
       </div>
     </div>
@@ -33,14 +33,14 @@
       {% for item in config.extra.cela.navigation %}
         {% if not item.is_search %}
         {% set path = item.path | trim %}
-        {% if path is starting_with("http://") or path is starting_with("https://") or path is starting_with("#") %}
+        {% if path is starting_with(pat="http://") or path is starting_with(pat="https://") or path is starting_with(pat="#") %}
           {% set url = path %}
         {% else %}
-          {% set base = config.base_url | trim_end_matches(pat="/") %}
-          {% set rel = path | trim_start_matches(pat="/") %}
+          {% set base = config.base_url | trim_end(pat="/") %}
+          {% set rel = path | trim_start(pat="/") %}
           {% set url = base ~ "/" ~ rel %}
         {% endif %}
-        {% set is_active_link = current_url and url | trim_end_matches(pat="/") == current_url | trim_end_matches(pat="/") %}
+        {% set is_active_link = current_url and url | trim_end(pat="/") == current_url | trim_end(pat="/") %}
       <li>
         <a
           class="md-nav-item{% if is_active_link %} is-active{% endif %}"
@@ -50,9 +50,9 @@
         >
           <span class="md-nav-label">{{ item.title }}</span>
           {%- if item.is_external and item.is_external == true -%}
-            {{ macro_extra_icon::extra_icon(icon='link') }}
+            {{ <cela.extra_icon icon="link" /> }}
           {%- elif item.is_robot and item.is_robot == true -%}
-            {{ macro_extra_icon::extra_icon(icon='robot')}}
+            {{ <cela.extra_icon icon="robot" /> }}
           {%- endif -%}
         </a>
       </li>
@@ -69,7 +69,7 @@
         title="{{ item.title }}"
         aria-label="{{ item.title }}"
       >
-        {{ macro_material_icon::material_icon(name="search") }}
+        {{ <cela.material_icon name="search" /> }}
       </button>
         {% endif %}
       {% endfor %}
@@ -81,7 +81,7 @@
         aria-controls="nav-drawer"
         aria-label="Open menu"
       >
-        {{ macro_material_icon::material_icon(name="menu", class="md-icon nav-drawer-icon-menu") }}
+        {{ <cela.material_icon name="menu" class="md-icon nav-drawer-icon-menu" /> }}
       </button>
     </div>
     {% endif %}
@@ -99,20 +99,20 @@
         data-nav-drawer-close
         aria-label="Close menu"
       >
-        {{ macro_material_icon::material_icon(name="close") }}
+        {{ <cela.material_icon name="close" /> }}
       </button>
     </div>
     <ul class="md-nav-destinations md-nav-drawer-list">
       {% for item in config.extra.cela.navigation %}
         {% set path = item.path | trim %}
-        {% if path is starting_with("http://") or path is starting_with("https://") or path is starting_with("#") %}
+        {% if path is starting_with(pat="http://") or path is starting_with(pat="https://") or path is starting_with(pat="#") %}
           {% set url = path %}
         {% else %}
-          {% set base = config.base_url | trim_end_matches(pat="/") %}
-          {% set rel = path | trim_start_matches(pat="/") %}
+          {% set base = config.base_url | trim_end(pat="/") %}
+          {% set rel = path | trim_start(pat="/") %}
           {% set url = base ~ "/" ~ rel %}
         {% endif %}
-        {% set is_active_link = current_url and url | trim_end_matches(pat="/") == current_url | trim_end_matches(pat="/") %}
+        {% set is_active_link = current_url and url | trim_end(pat="/") == current_url | trim_end(pat="/") %}
       <li>
         <a
           class="md-nav-item{% if is_active_link %} is-active{% endif %}"
@@ -123,9 +123,9 @@
         >
           <span class="md-nav-label">{{ item.title }}</span>
           {%- if item.is_external and item.is_external == true -%}
-            {{ macro_extra_icon::extra_icon(icon='link') }}
+            {{ <cela.extra_icon icon="link" /> }}
           {%- elif item.is_robot and item.is_robot == true -%}
-            {{ macro_extra_icon::extra_icon(icon='robot')}}
+            {{ <cela.extra_icon icon="robot" /> }}
           {%- endif -%}
         </a>
       </li>

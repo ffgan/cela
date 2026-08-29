@@ -1,5 +1,4 @@
 {% extends "index.html" %}
-{% import "macros/material_icon.html" as macro_material_icon %}
 {% block main %}
 
 {# Try to use search_title from config.toml #}
@@ -43,7 +42,7 @@
   <article class="search-entry">
     <div class="search-box">
       <label class="md-search-bar" for="searchInput">
-        {{ macro_material_icon::material_icon(name="search") }}
+        {{ <cela.material_icon name="search" /> }}
         <input
           type="search"
           id="searchInput"

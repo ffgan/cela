@@ -1,0 +1,22 @@
+{% set list_pages = list_pages | default(value=[]) %}
+{% set client_paginate = client_paginate | default(value=false) %}
+{% set paginate_by = paginate_by | default(value=5) %}
+
+{% if client_paginate %}
+<div
+  class="post-list"
+  data-list-paginate="true"
+  data-paginate-by="{{ paginate_by }}"
+>
+{% endif %}
+{% for page in list_pages %}
+{% set card_page = page %}
+{% set card_reveal = true %}
+{% include "partials/common/post_card.html" %}
+{% endfor %}
+{% if client_paginate %}
+</div>
+<footer class="page-footer">
+  <nav class="pagination" data-list-pagination aria-label="Pagination" hidden></nav>
+</footer>
+{% endif %}

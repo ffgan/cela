@@ -1,4 +1,4 @@
-{% macro year_cards(pages, client_paginate=false, paginate_by=5) %}
+{% component cela.year_cards(pages, client_paginate=false, paginate_by=5) %}
 {% if client_paginate %}
 <div
   class="post-list"
@@ -20,9 +20,9 @@
   <nav class="pagination" data-list-pagination aria-label="Pagination" hidden></nav>
 </footer>
 {% endif %}
-{% endmacro %}
+{% endcomponent cela.year_cards %}
 
-{% macro bare_cards(pages, client_paginate=false, paginate_by=5) %}
+{% component cela.bare_cards(pages, client_paginate=false, paginate_by=5) %}
 {% if client_paginate %}
 <div
   class="post-list"
@@ -41,4 +41,4 @@
   <nav class="pagination" data-list-pagination aria-label="Pagination" hidden></nav>
 </footer>
 {% endif %}
-{% endmacro %}
+{% endcomponent cela.bare_cards %}

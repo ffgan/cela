@@ -1,19 +1,29 @@
 {% set content_dir = config.extra.cela.home_content_dir | default(value="blog") %}
-{% set content_dir = content_dir | trim_start_matches(pat="content/") %}
+{% set content_dir = content_dir | trim_start(pat="content/") %}
 {% set home_paginate_by = config.extra.cela.home_paginate_by | default(value=5) %}
 
 {% if paginator %}
-  {{ post_list::year_cards(pages=paginator.pages) }}
+  {% set list_pages = paginator.pages %}
+  {% include "partials/post_list/year_cards.html" %}
   {% include "partials/common/pagination.html" %}
 {% elif content_dir == "" or content_dir == "content" %}
   {% set home_section = get_section(path="_index.md") %}
-  {{ post_list::year_cards(pages=home_section.pages, client_paginate=true, paginate_by=home_paginate_by) }}
+  {% set list_pages = home_section.pages %}
+  {% set client_paginate = true %}
+  {% set paginate_by = home_paginate_by %}
+  {% include "partials/post_list/year_cards.html" %}
 {% else %}
   {% set home_section = get_section(path=content_dir ~ "/_index.md") %}
   {% if home_section.pages %}
-    {{ post_list::year_cards(pages=home_section.pages, client_paginate=true, paginate_by=home_paginate_by) }}
+    {% set list_pages = home_section.pages %}
+    {% set client_paginate = true %}
+    {% set paginate_by = home_paginate_by %}
+    {% include "partials/post_list/year_cards.html" %}
   {% else %}
     {% set root_section = get_section(path="_index.md") %}
-    {{ post_list::year_cards(pages=root_section.pages, client_paginate=true, paginate_by=home_paginate_by) }}
+    {% set list_pages = root_section.pages %}
+    {% set client_paginate = true %}
+    {% set paginate_by = home_paginate_by %}
+    {% include "partials/post_list/year_cards.html" %}
   {% endif %}
 {% endif %}

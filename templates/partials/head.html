@@ -3,32 +3,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 {% include "partials/common/head_theme.html" %}
 <meta name="robots" content="index, follow">
-<title>{% if page.title %}{{ page.title }}{% elif section.title %}{{ section.title }}{% else %}{{ config.title }}{% endif %}</title>
+<title>{% if page and page.title %}{{ page.title }}{% elif section and section.title %}{{ section.title }}{% else %}{{ config.title }}{% endif %}</title>
 
 
 {# Only for post page #}
-{% if page.taxonomies %}
+{% if page and page.taxonomies and page.taxonomies.tags %}
 {% set tags = page.taxonomies.tags %}
 <meta name="keywords" content="{{ tags | join(sep=', ') }}">
-{% elif page.keywords %}
-<meta name="keywords" content="{{ page.keywords | join(sep=', ') }}">
 {% else %}
 <meta name="keywords" content="{{ config.extra.cela.default_keywords | default(value=["Rust zola blog", "Theme cela"]) | join(sep=', ') }}">
 {% endif %}
 
 
-{% if page.description %}
+{% if page and page.description %}
 <meta name="description" content="{{ page.description }}">
-{% elif section.description %}
+{% elif section and section.description %}
 <meta name="description" content="{{ section.description }}">
 {% else %}
 <meta name="description" content="{{ config.description }}">
 {% endif %}
 
-{% if page.author %}
-<meta name="author" content="{{ page.author }}">
-{% elif section.author %}
-<meta name="author" content="{{ section.author }}">
+{% if page and page.authors and page.authors | length > 0 %}
+<meta name="author" content="{{ page.authors[0] }}">
 {% elif config.author %}
 <meta name="author" content="{{ config.author }}">
 {% endif %}
@@ -42,13 +38,13 @@
 {% elif section and section.extra and section.extra.canonical %}
   <link rel="canonical" href="{{ section.extra.canonical }}">
 {% elif page and page.path %}
-  {% set base = config.base_url | trim_end_matches(pat="/") %}
-  {% set rel = page.path | trim_start_matches(pat="/") %}
+  {% set base = config.base_url | trim_end(pat="/") %}
+  {% set rel = page.path | trim_start(pat="/") %}
   {% set canonical_url = base ~ "/" ~ rel %}
   <link rel="canonical" href="{{ canonical_url }}">
 {% elif section and section.path %}
-  {% set base = config.base_url | trim_end_matches(pat="/") %}
-  {% set rel = section.path | trim_start_matches(pat="/") %}
+  {% set base = config.base_url | trim_end(pat="/") %}
+  {% set rel = section.path | trim_start(pat="/") %}
   {% set canonical_url = base ~ "/" ~ rel %}
   <link rel="canonical" href="{{ canonical_url }}">
 {% else %}

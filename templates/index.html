@@ -1,7 +1,4 @@
-{% import "macros/material_icon.html" as macro_material_icon -%}
-{% import "macros/extra_icon.svg.html" as macro_extra_icon -%}
-{% import "macros/social_icon.svg.html" as macro_social_icon -%}
-{% import "macros/post_list.html" as post_list -%}
+
 <!DOCTYPE html>
 {% set default_theme = config.extra.cela.color.default_theme | default(value="auto") -%}
 <html lang="{{ lang }}" dir="{{ config.extra.cela.global.i18n_dir }}"{% if default_theme == "dark" %} class="dark" data-scheme="dark"{% elif default_theme == "light" %} data-scheme="light"{% endif %}>
@@ -17,7 +14,7 @@
   {% set body_classes = body_classes ~ "list " -%}
 {% endif -%}
 {% set path = current_path | default(value="") -%}
-{% if path == "/" or path is starting_with("/page/") -%}
+{% if path == "/" or path is starting_with(pat="/page/") -%}
   {% set body_classes = body_classes ~ "is-home " -%}
 {% endif -%}
 
@@ -47,7 +44,7 @@ data-search-index-js-url="{{ get_url(path='search_index.' ~ lang ~ '.js') }}">
   <div class="search-toggle-modal" role="dialog" aria-modal="true" aria-labelledby="search-dialog-title">
     <h2 id="search-dialog-title" class="search-dialog-title">Search</h2>
     <label class="md-search-bar" for="search-toggle-input">
-      {{ macro_material_icon::material_icon(name="search") }}
+      {{ <cela.material_icon name="search" /> }}
       <input type="search" id="search-toggle-input" placeholder="Search posts" autocomplete="off" />
     </label>
     <div class="search-dialog-actions">
@@ -63,7 +60,7 @@ data-search-index-js-url="{{ get_url(path='search_index.' ~ lang ~ '.js') }}">
 <script defer src="{{ get_url(path='js/search-ui.js') | safe }}"></script>
 {# Client list pagination + home motion only where those DOM hooks exist #}
 {% set path = current_path | default(value="") %}
-{% if path == "/" or path is starting_with("/page/") or path is starting_with("/archive") %}
+{% if path == "/" or path is starting_with(pat="/page/") or path is starting_with(pat="/archive") %}
 <script defer src="{{ get_url(path='js/list-paginate.js') | safe }}"></script>
 <script defer src="{{ get_url(path='js/home-effects.js') | safe }}"></script>
 {% endif %}

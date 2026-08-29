@@ -1,15 +1,14 @@
-{% import "macros/material_icon.html" as macro_material_icon -%}
 {# Legacy aliases → Material Symbols names (local SVGs under static/icons/material/) #}
-{% macro extra_icon(icon, size="12") %}
+{% component cela.extra_icon(icon, size="12") %}
 {%- if icon == "link" -%}
-{{ macro_material_icon::material_icon(name="open_in_new", size=size) }}
+{{ <cela.material_icon name="open_in_new" size={size} /> }}
 {%- elif icon == "robot" -%}
-{{ macro_material_icon::material_icon(name="smart_toy", size=size) }}
+{{ <cela.material_icon name="smart_toy" size={size} /> }}
 {%- elif icon == "arrowright" -%}
-{{ macro_material_icon::material_icon(name="chevron_right", size=size) }}
+{{ <cela.material_icon name="chevron_right" size={size} /> }}
 {%- elif icon == "articles" -%}
-{{ macro_material_icon::material_icon(name="article", size=size) }}
+{{ <cela.material_icon name="article" size={size} /> }}
 {%- else -%}
-{{ macro_material_icon::material_icon(name=icon, size=size) }}
+{{ <cela.material_icon name={icon} size={size} /> }}
 {%- endif -%}
-{% endmacro %}
+{% endcomponent cela.extra_icon %}
