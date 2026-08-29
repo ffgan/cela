@@ -11,12 +11,12 @@
 </h1>
 </header>
 {% if paginator %}
-{% for page in paginator.pages %}
+{% for page in paginator.pages | sort(attribute="date", reverse=true) %}
 {% set card_page = page %}
 {% include "partials/common/post_card.html" %}
 {% endfor %}
 {% elif section.pages %}
-{% for page in section.pages %}
+{% for page in section.pages | sort(attribute="date", reverse=true) %}
 {% set card_page = page %}
 {% include "partials/common/post_card.html" %}
 {% endfor %}

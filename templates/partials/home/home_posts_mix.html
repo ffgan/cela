@@ -2,7 +2,7 @@
 {% if content_dir == "" or content_dir == "content" %}
 {% set home_section_path = '_index.md' %}
 {% set home_section = get_section(path=home_section_path)%}
-{% for page in home_section.pages %}
+{% for page in home_section.pages | sort(attribute="date", reverse=true) %}
 <!-- only show pages under content base url -->
 <article class="post-entry">
   <header class="entry-header">
@@ -49,7 +49,7 @@
         </div>
       <div class="home-list-content">
       {% if subsec.pages %}
-        {% for page in subsec.pages %}
+        {% for page in subsec.pages | sort(attribute="date", reverse=true) %}
         {% set card_page = page %}
         {% set card_reveal = false %}
         {% set card_extra_classes = "home-subsection-card" %}

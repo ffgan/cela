@@ -6,26 +6,22 @@
   <h1>{{ section.title | default(value="Archive") }}</h1>
 </header>
 
-{% if paginator %}
-  {% set list_pages = paginator.pages %}
-  {% include "partials/post_list/year_cards.html" %}
-  {% include "partials/common/pagination.html" %}
-{% elif content_dir == "" or content_dir == "content" %}
+{% if content_dir == "" or content_dir == "content" %}
   {% set source_section = get_section(path="_index.md") %}
-  {% set list_pages = source_section.pages %}
+  {% set list_pages = source_section.pages | sort(attribute="date") | reverse %}
   {% set client_paginate = true %}
   {% set paginate_by = archive_paginate_by %}
   {% include "partials/post_list/year_cards.html" %}
 {% else %}
   {% set source_section = get_section(path=content_dir ~ "/_index.md") %}
   {% if source_section.pages %}
-    {% set list_pages = source_section.pages %}
+    {% set list_pages = source_section.pages | sort(attribute="date") | reverse %}
     {% set client_paginate = true %}
     {% set paginate_by = archive_paginate_by %}
     {% include "partials/post_list/year_cards.html" %}
   {% else %}
     {% set root_section = get_section(path="_index.md") %}
-    {% set list_pages = root_section.pages %}
+    {% set list_pages = root_section.pages | sort(attribute="date") | reverse %}
     {% set client_paginate = true %}
     {% set paginate_by = archive_paginate_by %}
     {% include "partials/post_list/year_cards.html" %}

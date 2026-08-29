@@ -3,9 +3,33 @@ function initListPagination(root) {
     1,
     Number(root.dataset.paginateBy || 5) || 5,
   );
+  const headings = Array.from(
+    root.querySelectorAll(":scope > [data-list-heading]"),
+  );
   const items = Array.from(
     root.querySelectorAll(":scope > .post-entry"),
+  ).sort(function (a, b) {
+    const dateA = a.dataset.date ? new Date(a.dataset.date + "T00:00:00").getTime() : 0;
+    const dateB = b.dataset.date ? new Date(b.dataset.date + "T00:00:00").getTime() : 0;
+    return dateB - dateA;
+  });
+  const headingsByYear = new Map(
+    headings.map(function (heading) {
+      return [heading.textContent.trim(), heading];
+    }),
   );
+  let currentYear = null;
+  items.forEach(function (item) {
+    const year = item.dataset.date ? item.dataset.date.slice(0, 4) : "";
+    if (year !== currentYear) {
+      const heading = headingsByYear.get(year);
+      if (heading) {
+        root.appendChild(heading);
+      }
+      currentYear = year;
+    }
+    root.appendChild(item);
+  });
   if (items.length <= pageSize) {
     return;
   }
@@ -17,9 +41,6 @@ function initListPagination(root) {
     return;
   }
 
-  const headings = Array.from(
-    root.querySelectorAll(":scope > [data-list-heading]"),
-  );
   const totalPages = Math.ceil(items.length / pageSize);
   let currentPage = 1;
 

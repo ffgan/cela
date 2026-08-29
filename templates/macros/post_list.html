@@ -7,11 +7,9 @@
 >
 {% endif %}
 {% set pages = pages | sort(attribute="date", reverse=true) %}
-{% set current_year = nil %}
 {% for page in pages %}
-{% if page.year != current_year %}
-{% set current_year = page.year %}
-<h1 class="home-year reveal-on-scroll"{% if client_paginate %} data-list-heading="true"{% endif %}>{{ current_year }}</h1>
+{% if loop.first or page.year != pages[loop.index0 - 1].year %}
+<h1 class="home-year reveal-on-scroll"{% if client_paginate %} data-list-heading="true"{% endif %}>{{ page.year }}</h1>
 {% endif %}
 {% set card_page = page %}
 {% set card_reveal = true %}

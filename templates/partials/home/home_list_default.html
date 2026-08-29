@@ -2,26 +2,22 @@
 {% set content_dir = content_dir | trim_start(pat="content/") %}
 {% set home_paginate_by = config.extra.cela.home_paginate_by | default(value=5) %}
 
-{% if paginator %}
-  {% set list_pages = paginator.pages %}
-  {% include "partials/post_list/year_cards.html" %}
-  {% include "partials/common/pagination.html" %}
-{% elif content_dir == "" or content_dir == "content" %}
+{% if content_dir == "" or content_dir == "content" %}
   {% set home_section = get_section(path="_index.md") %}
-  {% set list_pages = home_section.pages %}
+  {% set list_pages = home_section.pages | sort(attribute="date") | reverse %}
   {% set client_paginate = true %}
   {% set paginate_by = home_paginate_by %}
   {% include "partials/post_list/year_cards.html" %}
 {% else %}
   {% set home_section = get_section(path=content_dir ~ "/_index.md") %}
   {% if home_section.pages %}
-    {% set list_pages = home_section.pages %}
+    {% set list_pages = home_section.pages | sort(attribute="date") | reverse %}
     {% set client_paginate = true %}
     {% set paginate_by = home_paginate_by %}
     {% include "partials/post_list/year_cards.html" %}
   {% else %}
     {% set root_section = get_section(path="_index.md") %}
-    {% set list_pages = root_section.pages %}
+    {% set list_pages = root_section.pages | sort(attribute="date") | reverse %}
     {% set client_paginate = true %}
     {% set paginate_by = home_paginate_by %}
     {% include "partials/post_list/year_cards.html" %}
