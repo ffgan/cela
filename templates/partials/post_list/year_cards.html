@@ -1,6 +1,7 @@
-{% set list_pages = list_pages | default(value=[]) %}
+{% set list_pages = list_pages | default(value=[]) | sort(attribute="date", reverse=true) %}
 {% set client_paginate = client_paginate | default(value=false) %}
 {% set paginate_by = paginate_by | default(value=5) %}
+{% set current_year = nil %}
 
 {% if client_paginate %}
 <div
@@ -9,13 +10,14 @@
   data-paginate-by="{{ paginate_by }}"
 >
 {% endif %}
-{% for year, year_pages in list_pages | group_by(attribute="year") %}
-<h1 class="home-year reveal-on-scroll"{% if client_paginate %} data-list-heading="true"{% endif %}>{{ year }}</h1>
-{% for page in year_pages %}
+{% for page in list_pages %}
+{% if page.year != current_year %}
+{% set current_year = page.year %}
+<h1 class="home-year reveal-on-scroll"{% if client_paginate %} data-list-heading="true"{% endif %}>{{ current_year }}</h1>
+{% endif %}
 {% set card_page = page %}
 {% set card_reveal = true %}
 {% include "partials/common/post_card.html" %}
-{% endfor %}
 {% endfor %}
 {% if client_paginate %}
 </div>
