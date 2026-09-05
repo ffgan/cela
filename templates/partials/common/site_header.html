@@ -36,9 +36,8 @@
         {% if path is starting_with(pat="http://") or path is starting_with(pat="https://") or path is starting_with(pat="#") %}
           {% set url = path %}
         {% else %}
-          {% set base = config.base_url | trim_end(pat="/") %}
           {% set rel = path | trim_start(pat="/") %}
-          {% set url = base ~ "/" ~ rel %}
+          {% set url = "/" ~ rel %}
         {% endif %}
         {% set is_active_link = current_url and url | trim_end(pat="/") == current_url | trim_end(pat="/") %}
       <li>
@@ -108,9 +107,8 @@
         {% if path is starting_with(pat="http://") or path is starting_with(pat="https://") or path is starting_with(pat="#") %}
           {% set url = path %}
         {% else %}
-          {% set base = config.base_url | trim_end(pat="/") %}
           {% set rel = path | trim_start(pat="/") %}
-          {% set url = base ~ "/" ~ rel %}
+          {% set url = "/" ~ rel %}
         {% endif %}
         {% set is_active_link = current_url and url | trim_end(pat="/") == current_url | trim_end(pat="/") %}
       <li>

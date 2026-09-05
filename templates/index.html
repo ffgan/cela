@@ -14,7 +14,7 @@
   {% set body_classes = body_classes ~ "list " -%}
 {% endif -%}
 {% set path = current_path | default(value="") -%}
-{% if path == "/" or path is starting_with(pat="/page/") -%}
+{% if path == "/" or path is starting_with(pat="/page/") or path is starting_with(pat="/about") -%}
   {% set body_classes = body_classes ~ "is-home " -%}
 {% endif -%}
 
@@ -60,7 +60,7 @@ data-search-index-js-url="{{ get_url(path='search_index.' ~ lang ~ '.js') }}">
 <script defer src="{{ get_url(path='js/search-ui.js') | safe }}"></script>
 {# Client list pagination + home motion only where those DOM hooks exist #}
 {% set path = current_path | default(value="") %}
-{% if path == "/" or path is starting_with(pat="/page/") or path is starting_with(pat="/archive") %}
+{% if path == "/" or path is starting_with(pat="/page/") or path is starting_with(pat="/archive") or path is starting_with(pat="/about") %}
 <script defer src="{{ get_url(path='js/list-paginate.js') | safe }}"></script>
 <script defer src="{{ get_url(path='js/home-effects.js') | safe }}"></script>
 {% endif %}
