@@ -98,4 +98,37 @@
     background-color: #f9f9ff;
   }
   {% endif -%}
+  /* Mobile header must not depend on the js class. Cloudflare Rocket
+     Loader rewrites inline scripts and runs them after first paint, so the
+     no-js rule in theme.css would show About / Archive / Tags / Categories
+     on their own row and only then collapse them into the menu button.
+     These unlayered rules win over that stylesheet. No-JS visitors get the
+     bar back from the noscript block below. */
+  .nav-drawer-toggle {
+    display: none;
+  }
+  @media screen and (max-width: 768px) {
+    .md-nav-bar {
+      display: none;
+    }
+    .nav-drawer-toggle {
+      display: grid;
+    }
+  }
 </style>
+<noscript>
+  <style>
+    @media screen and (max-width: 768px) {
+      .md-nav-bar {
+        display: flex;
+        flex-basis: 100%;
+        flex-wrap: wrap;
+        margin: 0 0.875rem 0.5rem;
+        white-space: normal;
+      }
+      .nav-drawer-toggle {
+        display: none;
+      }
+    }
+  </style>
+</noscript>

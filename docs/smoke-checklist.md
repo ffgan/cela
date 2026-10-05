@@ -22,6 +22,7 @@ still matches the current baseline.
 - Homepage and archive lists show the first page immediately, with no entrance fade before the list settles.
 - Code block copy buttons still appear and copy content.
 - Navigation links still resolve correctly on home, post, taxonomy, search, and robot pages.
+- On a narrow viewport, the header shows the menu button immediately. About, Archive, Tags, and Categories do not paint as their own row before collapsing into that button. Without JavaScript, those links stay visible.
 - With `prefers-reduced-motion`, home animations are suppressed while the layout remains intact.
 
 ## Build Checks
