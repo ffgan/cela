@@ -1,3 +1,19 @@
+{# Paint the homepage list in its final state. Repeated after the
+   stylesheets so a cached theme.css cannot hide the list until the
+   reveal script runs, or leave later pages in the layout. #}
+<style>
+  .js .is-home .reveal-on-scroll,
+  .js .is-home .reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+
+  .js [data-list-paginate="true"] > .is-page-hidden {
+    display: none;
+  }
+</style>
 {# Math: KaTeX (self-hosted). Front matter still uses enable_mathjax / mathjax for compat. #}
 {% if config.extra.enable_mathjax %}
   {% if page and page.extra.mathjax %}

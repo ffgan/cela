@@ -203,10 +203,9 @@ zola build
 
 See [docs/smoke-checklist.md](docs/smoke-checklist.md) for the baseline routes and interactions to verify after template or CSS changes.
 
-Homepage motion is intentionally scoped to the landing page hero, social icons,
-year or section headers, and home post lists. It uses CSS animation plus
-`IntersectionObserver`, and degrades cleanly when JavaScript is disabled or
-`prefers-reduced-motion` is enabled.
+The homepage and archive lists paint their first page immediately. Later pages
+stay in the DOM for readers without JavaScript, and are hidden before first
+paint when JavaScript is available. Entrance fades are not used on those lists.
 
 ## Pagination
 

@@ -21,7 +21,11 @@ function initHomeListToggles() {
 }
 
 function initHomeRevealEffects() {
-  const revealTargets = Array.from(document.querySelectorAll(".reveal-on-scroll"));
+  const revealTargets = Array.from(
+    document.querySelectorAll(".reveal-on-scroll"),
+  ).filter(function (target) {
+    return !target.closest(".is-home") && !target.closest("[data-list-paginate='true']");
+  });
   if (!revealTargets.length) {
     return;
   }

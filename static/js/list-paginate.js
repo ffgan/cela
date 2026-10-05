@@ -1,3 +1,19 @@
+function datesDescending(items) {
+  for (let index = 1; index < items.length; index += 1) {
+    const previous = items[index - 1].dataset.date || "";
+    const current = items[index].dataset.date || "";
+    if (current > previous) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function setPageHidden(element, hidden) {
+  element.classList.toggle("is-page-hidden", hidden);
+  element.style.display = "";
+}
+
 function initListPagination(root) {
   const pageSize = Math.max(
     1,
@@ -6,31 +22,45 @@ function initListPagination(root) {
   const headings = Array.from(
     root.querySelectorAll(":scope > [data-list-heading]"),
   );
-  const items = Array.from(
-    root.querySelectorAll(":scope > .post-entry"),
-  ).sort(function (a, b) {
-    const dateA = a.dataset.date ? new Date(a.dataset.date + "T00:00:00").getTime() : 0;
-    const dateB = b.dataset.date ? new Date(b.dataset.date + "T00:00:00").getTime() : 0;
-    return dateB - dateA;
-  });
-  const headingsByYear = new Map(
-    headings.map(function (heading) {
-      return [heading.textContent.trim(), heading];
-    }),
-  );
-  let currentYear = null;
-  items.forEach(function (item) {
-    const year = item.dataset.date ? item.dataset.date.slice(0, 4) : "";
-    if (year !== currentYear) {
-      const heading = headingsByYear.get(year);
-      if (heading) {
-        root.appendChild(heading);
-      }
-      currentYear = year;
+  const domItems = Array.from(root.querySelectorAll(":scope > .post-entry"));
+  const items = domItems.slice().sort(function (a, b) {
+    const dateA = a.dataset.date || "";
+    const dateB = b.dataset.date || "";
+    if (dateA === dateB) {
+      return 0;
     }
-    root.appendChild(item);
+    return dateA < dateB ? 1 : -1;
   });
+
+  // Moving nodes on load replays layout even when the order is already
+  // correct, which shows up as a refresh before the list settles.
+  if (!datesDescending(domItems)) {
+    const headingsByYear = new Map(
+      headings.map(function (heading) {
+        return [heading.textContent.trim(), heading];
+      }),
+    );
+    let currentYear = null;
+    items.forEach(function (item) {
+      const year = item.dataset.date ? item.dataset.date.slice(0, 4) : "";
+      if (year !== currentYear) {
+        const heading = headingsByYear.get(year);
+        if (heading) {
+          root.appendChild(heading);
+        }
+        currentYear = year;
+      }
+      root.appendChild(item);
+    });
+  }
+
   if (items.length <= pageSize) {
+    domItems.forEach(function (item) {
+      setPageHidden(item, false);
+    });
+    headings.forEach(function (heading) {
+      setPageHidden(heading, false);
+    });
     return;
   }
 
@@ -69,14 +99,14 @@ function initListPagination(root) {
       while (sibling && !sibling.hasAttribute("data-list-heading")) {
         if (
           sibling.classList.contains("post-entry") &&
-          sibling.style.display !== "none"
+          !sibling.classList.contains("is-page-hidden")
         ) {
           visible = true;
           break;
         }
         sibling = sibling.nextElementSibling;
       }
-      heading.style.display = visible ? "" : "none";
+      setPageHidden(heading, !visible);
     });
   }
 
@@ -85,7 +115,7 @@ function initListPagination(root) {
     const end = start + pageSize;
 
     items.forEach(function (item, index) {
-      item.style.display = index >= start && index < end ? "" : "none";
+      setPageHidden(item, index < start || index >= end);
     });
     syncHeadingVisibility();
 

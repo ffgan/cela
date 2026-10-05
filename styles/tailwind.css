@@ -1846,6 +1846,24 @@
     transform: translateY(0);
   }
 
+  /* Home (and any .is-home page) must paint in its final state.
+     Leaving cards at opacity 0 until IntersectionObserver runs reads
+     as a refresh before the list appears. */
+  .js .is-home .reveal-on-scroll,
+  .js .is-home .reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+
+  /* Extra pages stay in the DOM for no-JS readers, but with JS they
+     are hidden before first paint so client pagination does not collapse
+     the list after load. */
+  .js [data-list-paginate="true"] > .is-page-hidden {
+    display: none;
+  }
+
   .js .home-hero .entry-header {
     animation: hero-rise 450ms var(--motion-emphasized-decelerate) both;
   }

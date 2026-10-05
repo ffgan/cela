@@ -10,11 +10,13 @@
 >
 {% endif %}
 {% for page in list_pages %}
+{% set on_later_page = client_paginate and loop.index0 >= paginate_by %}
 {% if loop.first or page.year != list_pages[loop.index0 - 1].year %}
-<h1 class="home-year reveal-on-scroll"{% if client_paginate %} data-list-heading="true"{% endif %}>{{ page.year }}</h1>
+<h1 class="home-year{% if on_later_page %} is-page-hidden{% elif not client_paginate %} reveal-on-scroll is-visible{% endif %}"{% if client_paginate %} data-list-heading="true"{% endif %}>{{ page.year }}</h1>
 {% endif %}
 {% set card_page = page %}
-{% set card_reveal = true %}
+{% set card_reveal = false %}
+{% set card_extra_classes = "is-page-hidden" if on_later_page else "" %}
 {% include "partials/common/post_card.html" %}
 {% endfor %}
 {% if client_paginate %}

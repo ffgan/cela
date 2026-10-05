@@ -11,7 +11,8 @@
 {% endif %}
 {% for page in list_pages %}
 {% set card_page = page %}
-{% set card_reveal = true %}
+{% set card_reveal = false %}
+{% set card_extra_classes = "is-page-hidden" if client_paginate and loop.index0 >= paginate_by else "" %}
 {% include "partials/common/post_card.html" %}
 {% endfor %}
 {% if client_paginate %}
