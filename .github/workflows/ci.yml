@@ -28,7 +28,7 @@ jobs:
         run: npm run build:js
 
       - name: Confirm generated scripts are committed
-        run: git diff --exit-code -- static/js
+        run: git diff --exit-code -- static/js templates/partials/generated
 
       - name: Build generated CSS
         run: npm run build:css:min

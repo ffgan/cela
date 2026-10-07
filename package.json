@@ -8,8 +8,8 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build:js": "node scripts/build.mjs",
-    "test": "node scripts/test.mjs",
+    "build:js": "node scripts/tooling/build.ts",
+    "test": "node scripts/tooling/test.ts",
     "build:css": "npx @tailwindcss/cli -i ./styles/tailwind.css -o ./static/css/theme.css --minify",
     "build:css:dev": "npx @tailwindcss/cli -i ./styles/tailwind.css -o ./static/css/theme.css",
     "build:css:min": "npx @tailwindcss/cli -i ./styles/tailwind.css -o ./static/css/theme.css --minify",

@@ -1,4 +1,4 @@
-/* Generated from scripts/*.ts. Edit the TypeScript source and run npm run build:js. */
+/* Generated from scripts/. Edit the TypeScript source and run npm run build:js. */
 "use strict";
 (() => {
   // scripts/lib/dom.ts

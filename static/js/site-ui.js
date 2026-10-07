@@ -1,4 +1,4 @@
-/* Generated from scripts/*.ts. Edit the TypeScript source and run npm run build:js. */
+/* Generated from scripts/. Edit the TypeScript source and run npm run build:js. */
 "use strict";
 (() => {
   // scripts/lib/dom.ts
@@ -292,7 +292,20 @@
     }
     syncThemeColor();
   }
+  function initDebugConsole() {
+    if (document.documentElement.dataset.debug !== "true") {
+      return;
+    }
+    console.log("Local Storage:");
+    for (let index = 0; index < localStorage.length; index += 1) {
+      const key = localStorage.key(index);
+      if (key) {
+        console.log(key, localStorage.getItem(key));
+      }
+    }
+  }
   onReady(() => {
+    initDebugConsole();
     initMenuScrollPersistence();
     initNavDrawer();
     initSmoothAnchors();

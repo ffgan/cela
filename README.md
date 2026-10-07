@@ -163,7 +163,7 @@ Cela stays a pure static Zola theme:
 
 Node.js is used only for **theme development** to generate static CSS (Tailwind CSS v4 via `@tailwindcss/cli`) and to typecheck the browser scripts. Tooling is tested on the current Node.js 26 release.
 
-Browser behavior is authored in `scripts/*.ts`. `npm run build:js` writes classic scripts to `static/js/` (committed), so theme users still only need Zola. KaTeX stays vendored JavaScript.
+Browser behavior is authored in `scripts/*.ts`. `npm run build:js` writes classic scripts to `static/js/` (committed) and the blocking first-paint snippet to `templates/partials/generated/early-theme.html`, so theme users still only need Zola. KaTeX itself stays vendored JavaScript; only its loader is authored here.
 
 `npm run build:css` writes a **minified** `static/css/theme.css` (committed). Site configs set `minify_html = true`.
 

@@ -61,7 +61,7 @@
 {%- set ui_not_found_desc = "Nothing is published at this address." -%}
 {%- set ui_back_home = "Back home" -%}
 {%- endif -%}
-<html lang="{{ config.extra.cela.html_lang | default(value=lang) }}" dir="{{ html_dir }}"{% if default_theme == "dark" %} class="dark" data-scheme="dark"{% elif default_theme == "light" %} data-scheme="light"{% endif %}>
+<html lang="{{ config.extra.cela.html_lang | default(value=lang) }}" dir="{{ html_dir }}" data-default-theme="{{ default_theme }}"{% if config.extra.cela.color.remember_choice %} data-remember-choice="true"{% endif %}{% if config.extra.debug %} data-debug="true"{% endif %}{% if default_theme == "dark" %} class="dark" data-scheme="dark"{% elif default_theme == "light" %} data-scheme="light"{% endif %}>
 
 <head>
   {% block head -%}
@@ -126,9 +126,6 @@ data-ui-search-empty="{{ ui_search_empty }}">
 {% if path == "/" or path is starting_with(pat="/page/") or path is starting_with(pat="/archive") %}
 <script defer src="{{ get_url(path='js/list-paginate.js') | safe }}"></script>
 <script defer src="{{ get_url(path='js/home-effects.js') | safe }}"></script>
-{% endif %}
-{% if config.extra.debug %}
-{% include "macros/debug_console.html" %}
 {% endif %}
 {% endblock %}
 

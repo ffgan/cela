@@ -16,8 +16,8 @@ const testFiles = (await readdir("build/test"))
   .map((name) => `build/test/${name}`);
 
 const child = spawn("node", ["--test", ...testFiles], { stdio: "inherit" });
-const code = await new Promise((resolve, reject) => {
+const code = await new Promise<number>((resolve, reject) => {
   child.on("error", reject);
-  child.on("exit", resolve);
+  child.on("exit", (status) => resolve(status ?? 1));
 });
-process.exit(code ?? 1);
+process.exit(code);

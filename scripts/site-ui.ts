@@ -315,7 +315,21 @@ function applyScheme(scheme: string): void {
   syncThemeColor();
 }
 
+function initDebugConsole(): void {
+  if (document.documentElement.dataset.debug !== "true") {
+    return;
+  }
+  console.log("Local Storage:");
+  for (let index = 0; index < localStorage.length; index += 1) {
+    const key = localStorage.key(index);
+    if (key) {
+      console.log(key, localStorage.getItem(key));
+    }
+  }
+}
+
 onReady(() => {
+  initDebugConsole();
   initMenuScrollPersistence();
   initNavDrawer();
   initSmoothAnchors();
