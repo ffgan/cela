@@ -205,19 +205,8 @@ function initTopLink() {
 }
 
 function normalizeScheme(value) {
-  if (!value) {
-    return null;
-  }
-  if (value === "light" || value === "catppuccin-latte") {
-    return "light";
-  }
-  if (
-    value === "dark" ||
-    value === "catppuccin-macchiato" ||
-    value === "rose-pine" ||
-    value === "nord"
-  ) {
-    return "dark";
+  if (value === "light" || value === "dark") {
+    return value;
   }
   return null;
 }

@@ -124,60 +124,6 @@
             display: none;
         }
     </style>
-    {% if config.extra.cela.color.default_theme == "dark" %}
-    <style>
-        :root {
-            color-scheme: dark;
-            --shadow-rgb: 0 0 0;
-            --md-primary: #a8c7fa;
-            --md-on-primary: #062e6f;
-            --md-primary-container: #0842a0;
-            --md-on-primary-container: #d3e3fd;
-            --md-secondary: #bcc7db;
-            --md-on-secondary: #263141;
-            --md-secondary-container: #3c4758;
-            --md-on-secondary-container: #d8e3f8;
-            --md-tertiary: #d8bde3;
-            --md-on-tertiary: #3c2947;
-            --md-tertiary-container: #533f5e;
-            --md-on-tertiary-container: #f5d9ff;
-            --md-surface: #121318;
-            --md-surface-dim: #121318;
-            --md-surface-bright: #38393f;
-            --md-surface-container-lowest: #0d0e13;
-            --md-surface-container-low: #1a1b21;
-            --md-surface-container: #1e1f25;
-            --md-surface-container-high: #282a2f;
-            --md-surface-container-highest: #33343a;
-            --md-on-surface: #e2e2e9;
-            --md-on-surface-variant: #c4c6d0;
-            --md-outline: #8e9099;
-            --md-outline-variant: #44474e;
-            --md-inverse-surface: #e2e2e9;
-            --md-inverse-on-surface: #2f3036;
-            --md-scrim: rgb(0 0 0 / 0.72);
-            --theme-bg: var(--md-surface);
-            --surface-bg: var(--md-surface-container-low);
-            --surface-muted: var(--md-surface-container-highest);
-            --surface-strong: var(--md-surface-container-high);
-            --text-main: var(--md-on-surface);
-            --text-muted: var(--md-on-surface-variant);
-            --content-text: #c8c6cf;
-            --highlight-bg: var(--md-surface-container-lowest);
-            --code-bg: var(--md-surface-container-lowest);
-            --border-color: var(--md-outline-variant);
-            --accent-color: var(--md-primary);
-            --accent-strong: #d3e3fd;
-            --accent-soft: rgb(168 199 250 / 0.16);
-            --focus-ring: rgb(168 199 250 / 0.28);
-            --overlay-backdrop: var(--md-scrim);
-        }
-
-        .list {
-            background: var(--theme-bg);
-        }
-    </style>
-    {% endif %}
 </noscript>
 
 {% include "partials/extend_head.html" %}

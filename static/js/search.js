@@ -8,7 +8,7 @@ function debounce(func, wait) {
   };
 }
 
-function formatSearchResultItem(item) {
+function renderSearchResult(item) {
   const title = item.doc && item.doc.title ? item.doc.title : item.ref;
   let summary = "";
   if (item.doc) {
@@ -18,20 +18,32 @@ function formatSearchResultItem(item) {
         item.doc.body.slice(0, 140) + (item.doc.body.length > 140 ? "…" : "");
     }
   }
-  return (
-    '<article class="post-entry">' +
-    '<header class="entry-header">' +
-    '<h3>'+
-    title +
-    "&nbsp;»</h3></header>" +
-    (summary ? '<div class="entry-content"><p>' + summary + "</p></div>" : "") +
-    '<a class="entry-link" href="' +
-    item.ref +
-    '" aria-label="' +
-    title +
-    '"></a>' +
-    '</article>'
-  );
+
+  const entry = document.createElement("li");
+  entry.className = "post-entry";
+
+  const header = document.createElement("header");
+  header.className = "entry-header";
+  const heading = document.createElement("h3");
+  heading.textContent = title + " »";
+  header.appendChild(heading);
+  entry.appendChild(header);
+
+  if (summary) {
+    const content = document.createElement("div");
+    content.className = "entry-content";
+    const paragraph = document.createElement("p");
+    paragraph.textContent = summary;
+    content.appendChild(paragraph);
+    entry.appendChild(content);
+  }
+
+  const link = document.createElement("a");
+  link.className = "entry-link";
+  link.href = item.ref || "#";
+  link.setAttribute("aria-label", title);
+  entry.appendChild(link);
+  return entry;
 }
 
 function normalizeTerm(term) {
@@ -131,7 +143,7 @@ function initSearch() {
   async function performSearch(term) {
     if (!term) {
       resultsList.style.display = "none";
-      resultsList.innerHTML = "";
+      resultsList.replaceChildren();
       return;
     }
     const docs = await initIndex();
@@ -145,14 +157,13 @@ function initSearch() {
     }
     if (!results.length) {
       resultsList.style.display = "none";
-      resultsList.innerHTML = "";
+      resultsList.replaceChildren();
       return;
     }
     resultsList.style.display = "block";
-    resultsList.innerHTML = results
-      .slice(0, MAX_ITEMS)
-      .map(formatSearchResultItem)
-      .join("");
+    resultsList.replaceChildren(
+      ...results.slice(0, MAX_ITEMS).map(renderSearchResult),
+    );
   }
 
   const debounced = debounce(function () {

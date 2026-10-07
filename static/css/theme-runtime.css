@@ -109,22 +109,13 @@
   --md-scrim: rgb(0 0 0 / 0.5);
   --md-surface-tint: #0b57d0;
 
-  /* Legacy aliases used by components */
-  --theme-bg: var(--md-surface);
-  --surface-bg: var(--md-surface-container-lowest);
-  --surface-muted: var(--md-surface-container-highest);
-  --surface-strong: var(--md-surface-container-high);
-  --text-main: var(--md-on-surface);
-  --text-muted: var(--md-on-surface-variant);
-  --content-text: #2e3038;
-  --highlight-bg: var(--md-surface-container);
-  --code-bg: var(--md-surface-container-low);
-  --border-color: var(--md-outline-variant);
-  --accent-color: var(--md-primary);
-  --accent-strong: #0842a0;
-  --accent-soft: rgb(11 87 208 / 0.12);
-  --focus-ring: rgb(11 87 208 / 0.24);
-  --overlay-backdrop: var(--md-scrim);
+  --md-card: var(--md-surface-container-lowest);
+  --md-content: #2e3038;
+  --md-highlight: var(--md-surface-container);
+  --md-code: var(--md-surface-container-low);
+  --md-accent-strong: #0842a0;
+  --md-accent-soft: rgb(11 87 208 / 0.12);
+  --md-focus-ring: rgb(11 87 208 / 0.24);
 }
 
 /* ─── Dark ──────────────────────────────────────────────────────────────────── */
@@ -170,29 +161,21 @@ html[data-scheme="dark"] {
   --md-scrim: rgb(0 0 0 / 0.72);
   --md-surface-tint: #a8c7fa;
 
-  --theme-bg: var(--md-surface);
-  --surface-bg: var(--md-surface-container-low);
-  --surface-muted: var(--md-surface-container-highest);
-  --surface-strong: var(--md-surface-container-high);
-  --text-main: var(--md-on-surface);
-  --text-muted: var(--md-on-surface-variant);
-  --content-text: #c8c6cf;
-  --highlight-bg: var(--md-surface-container-lowest);
-  --code-bg: var(--md-surface-container-lowest);
-  --border-color: var(--md-outline-variant);
-  --accent-color: var(--md-primary);
-  --accent-strong: #d3e3fd;
-  --accent-soft: rgb(168 199 250 / 0.16);
-  --focus-ring: rgb(168 199 250 / 0.28);
-  --overlay-backdrop: var(--md-scrim);
+  --md-card: var(--md-surface-container-low);
+  --md-content: #c8c6cf;
+  --md-highlight: var(--md-surface-container-lowest);
+  --md-code: var(--md-surface-container-lowest);
+  --md-accent-strong: #d3e3fd;
+  --md-accent-soft: rgb(168 199 250 / 0.16);
+  --md-focus-ring: rgb(168 199 250 / 0.28);
 }
 
 html {
-  background-color: var(--theme-bg);
+  background-color: var(--md-surface);
 }
 
 body {
-  background-color: var(--theme-bg);
+  background-color: var(--md-surface);
 }
 
 /* Keep replaced media on the light color-scheme so document-level

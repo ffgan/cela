@@ -20,20 +20,20 @@
   `inline` keeps runtime CSS variables (theme-runtime.css) as direct references.
 */
 @theme inline {
-  --color-theme: var(--theme-bg);
-  --color-surface: var(--surface-bg);
-  --color-surface-muted: var(--surface-muted);
-  --color-border: var(--border-color);
-  --color-text: var(--text-main);
-  --color-muted: var(--text-muted);
-  --color-content: var(--content-text);
-  --color-code: var(--code-bg);
-  --color-highlight: var(--highlight-bg);
-  --color-accent: var(--accent-color);
-  --color-accent-strong: var(--accent-strong);
-  --color-accent-soft: var(--accent-soft);
-  --color-surface-strong: var(--surface-strong);
-  --color-focus-ring: var(--focus-ring);
+  --color-theme: var(--md-surface);
+  --color-surface: var(--md-card);
+  --color-surface-muted: var(--md-surface-container-highest);
+  --color-border: var(--md-outline-variant);
+  --color-text: var(--md-on-surface);
+  --color-muted: var(--md-on-surface-variant);
+  --color-content: var(--md-content);
+  --color-code: var(--md-code);
+  --color-highlight: var(--md-highlight);
+  --color-accent: var(--md-primary);
+  --color-accent-strong: var(--md-accent-strong);
+  --color-accent-soft: var(--md-accent-soft);
+  --color-surface-strong: var(--md-surface-container-high);
+  --color-focus-ring: var(--md-focus-ring);
   --color-md-primary: var(--md-primary);
   --color-md-on-primary: var(--md-on-primary);
   --color-md-primary-container: var(--md-primary-container);
@@ -58,7 +58,7 @@
   --color-md-inverse-surface: var(--md-inverse-surface);
   --color-md-inverse-on-surface: var(--md-inverse-on-surface);
   --color-md-scrim: var(--md-scrim);
-  --color-overlay-backdrop: var(--overlay-backdrop);
+  --color-overlay-backdrop: var(--md-scrim);
 
   /* System UI stack — no webfont download; Roboto kept as Android fallback only */
   --font-sans:
@@ -134,7 +134,7 @@
   html {
     -webkit-tap-highlight-color: transparent;
     overflow-y: scroll;
-    background-color: var(--theme-bg);
+    background-color: var(--md-surface);
   }
 
   body,
@@ -175,7 +175,7 @@
   h4,
   h5,
   h6 {
-    color: var(--text-main);
+    color: var(--md-on-surface);
   }
 
   a {
@@ -238,7 +238,7 @@
 
   input:-webkit-autofill,
   textarea:-webkit-autofill {
-    box-shadow: 0 0 0 50px var(--theme-bg) inset;
+    box-shadow: 0 0 0 50px var(--md-surface) inset;
   }
 
   img {
@@ -307,12 +307,12 @@
 
   .footer-credits a {
     color: inherit;
-    border-bottom: 1px solid var(--text-muted);
+    border-bottom: 1px solid var(--md-on-surface-variant);
   }
 
   .footer-credits a:hover {
-    border-bottom-color: var(--text-main);
-    color: var(--text-main);
+    border-bottom-color: var(--md-on-surface);
+    color: var(--md-on-surface);
   }
 
   .is-home .footer-social {
@@ -1061,8 +1061,8 @@
   }
 
   .entry-cover a {
-    color: var(--text-muted);
-    box-shadow: 0 1px 0 var(--text-main);
+    color: var(--md-on-surface-variant);
+    box-shadow: 0 1px 0 var(--md-on-surface);
   }
 
   .page-header,
@@ -1105,7 +1105,7 @@
     display: inline-flex;
     list-style: none;
     margin: auto 3px;
-    box-shadow: 0 1px 0 var(--text-muted);
+    box-shadow: 0 1px 0 var(--md-on-surface-variant);
   }
 
   .post-meta a:hover,
@@ -1182,7 +1182,7 @@
   .post-content a code {
     margin: auto 0;
     border-radius: 0;
-    box-shadow: 0 -1px 0 var(--text-main) inset;
+    box-shadow: 0 -1px 0 var(--md-on-surface) inset;
   }
 
   .post-content del {
@@ -1239,7 +1239,7 @@
   .post-content table th,
   .post-content table td {
     min-width: 30px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--md-outline-variant);
     padding: 12px 8px;
     line-height: 1;
   }
@@ -1256,7 +1256,7 @@
   .post-content .highlight:not(table) {
     margin: 10px auto;
     border-radius: var(--shape-md);
-    background: var(--highlight-bg) !important;
+    background: var(--md-highlight) !important;
     direction: ltr;
   }
 
@@ -1293,8 +1293,8 @@
     margin: 16px 0;
     overflow-x: auto;
     border-radius: var(--shape-md);
-    background: var(--highlight-bg);
-    color: var(--content-text);
+    background: var(--md-highlight);
+    color: var(--md-content);
     padding: 14px 16px;
   }
 
@@ -1303,7 +1303,7 @@
     margin: auto 4px;
     border-radius: var(--shape-xs);
     background: var(--md-surface-container-high);
-    color: var(--content-text);
+    color: var(--md-content);
     padding: 2px 6px;
     font-size: 0.85em;
   }
@@ -1312,7 +1312,7 @@
     display: block;
     overflow-x: auto;
     background: transparent;
-    color: var(--content-text);
+    color: var(--md-content);
     padding: 0;
     word-break: break-word;
   }
@@ -1356,13 +1356,13 @@
 
   .post-content figure > figcaption {
     margin: 8px 0 16px;
-    color: var(--text-main);
+    color: var(--md-on-surface);
     font-size: 16px;
     font-weight: 700;
   }
 
   .post-content figure > figcaption > p {
-    color: var(--text-muted);
+    color: var(--md-on-surface-variant);
     font-size: 14px;
     font-weight: 400;
   }
@@ -1480,7 +1480,7 @@
   h6:hover .anchor {
     display: inline-flex;
     margin-inline-start: 8px;
-    color: var(--text-muted);
+    color: var(--md-on-surface-variant);
     font-weight: 500;
     user-select: none;
   }
@@ -1498,7 +1498,7 @@
   }
 
   .paginav .title {
-    color: var(--text-muted);
+    color: var(--md-on-surface-variant);
     font-size: small;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -1651,7 +1651,7 @@
     border: 1px solid var(--md-outline);
     border-radius: var(--shape-xs);
     background: var(--md-surface-container-highest);
-    color: var(--text-main);
+    color: var(--md-on-surface);
     padding: 12px 16px;
     font-weight: 400;
     transition:
@@ -1667,7 +1667,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--overlay-backdrop);
+    background: var(--md-scrim);
     padding: 1rem;
   }
 
@@ -1790,6 +1790,8 @@
 
   .search-results {
     margin: 10px 0;
+    padding: 0;
+    list-style: none;
   }
 
   .search-entry {
@@ -1882,25 +1884,25 @@
   }
 
   .list:not(.dark)::-webkit-scrollbar-track {
-    background: var(--code-bg);
+    background: var(--md-code);
   }
 
   ::-webkit-scrollbar-thumb {
-    border: 5px solid var(--theme-bg);
+    border: 5px solid var(--md-surface);
     border-radius: var(--shape-full);
     background: var(--md-outline-variant);
   }
 
   .list:not(.dark)::-webkit-scrollbar-thumb {
-    border-color: var(--code-bg);
+    border-color: var(--md-code);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--text-muted);
+    background: var(--md-on-surface-variant);
   }
 
   ::-webkit-scrollbar:not(.highlighttable, .highlight table, .gist .highlight) {
-    background: var(--theme-bg);
+    background: var(--md-surface);
   }
 
   .post-content .highlighttable td .highlight pre code::-webkit-scrollbar {
@@ -1908,7 +1910,7 @@
   }
 
   .post-content :not(table) ::-webkit-scrollbar-thumb {
-    border: 2px solid var(--highlight-bg);
+    border: 2px solid var(--md-highlight);
     background: #717175;
   }
 
