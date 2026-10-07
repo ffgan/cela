@@ -203,3 +203,8 @@ video,
 iframe {
   color-scheme: light;
 }
+
+/* width/height attributes reserve the box; height:auto lets max-width shrink it. */
+img {
+  height: auto;
+}

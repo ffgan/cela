@@ -22,6 +22,13 @@
 {% else %}
 <meta name="description" content="{{ config.description }}">
 {% endif %}
+<meta property="og:title" content="{% if page and page.title %}{{ page.title }}{% elif section and section.title %}{{ section.title }}{% else %}{{ config.title }}{% endif %}">
+<meta property="og:description" content="{% if page and page.description %}{{ page.description }}{% elif section and section.description %}{{ section.description }}{% else %}{{ config.description }}{% endif %}">
+<meta property="og:url" content="{{ current_url | default(value=config.base_url) }}">
+<meta property="og:type" content="{% if page %}article{% else %}website{% endif %}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{% if page and page.title %}{{ page.title }}{% elif section and section.title %}{{ section.title }}{% else %}{{ config.title }}{% endif %}">
+<meta name="twitter:description" content="{% if page and page.description %}{{ page.description }}{% elif section and section.description %}{{ section.description }}{% else %}{{ config.description }}{% endif %}">
 
 {% if page and page.authors and page.authors | length > 0 %}
 <meta name="author" content="{{ page.authors[0] }}">

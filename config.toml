@@ -217,8 +217,8 @@ remember_choice = true
 title_show = true
 # Title prefix/delimiter before page or section title
 title_prefix = "🌟"
-# The internationalization directory for multi-language support
-i18n_dir = "i18n_dir"
+# Value of the HTML dir attribute (ltr, rtl, or auto)
+i18n_dir = "auto"
 
 # # TODO
 # # Whether to load social icons (default = true)

@@ -122,6 +122,7 @@ This is pre text
 
 ### Code block with Hugo's internal highlight shortcode
 
+{% raw %}
 {{< highlight html >}}
 
 <!doctype html>
@@ -135,10 +136,13 @@ This is pre text
 </body>
 </html>
 {{< /highlight >}}
+{% endraw %}
 
 ### Gist
 
+{% raw %}
 {{< gist spf13 7896402 >}}
+{% endraw %}
 
 ## List Types
 

@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 {% set default_theme = config.extra.cela.color.default_theme | default(value="auto") -%}
-<html lang="{{ lang }}" dir="{{ config.extra.cela.global.i18n_dir }}"{% if default_theme == "dark" %} class="dark" data-scheme="dark"{% elif default_theme == "light" %} data-scheme="light"{% endif %}>
+<html lang="{{ config.extra.cela.html_lang | default(value=lang) }}" dir="{{ config.extra.cela.global.i18n_dir }}"{% if default_theme == "dark" %} class="dark" data-scheme="dark"{% elif default_theme == "light" %} data-scheme="light"{% endif %}>
 
 <head>
   {% block head -%}

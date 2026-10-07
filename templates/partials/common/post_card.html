@@ -9,7 +9,11 @@
   <header class="entry-header">
     <h2>{{ card_page.title }}</h2>
   </header>
-  {% if card_page.summary %}
+  {% if card_page.description %}
+  <div class="entry-content">
+    <p>{{ card_page.description }}</p>
+  </div>
+  {% elif card_page.summary %}
   <div class="entry-content">
     <p>{{ card_page.summary | safe }}</p>
   </div>

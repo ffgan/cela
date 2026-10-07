@@ -1,4 +1,17 @@
 {% extends "index.html" %}
 {% block main %}
 {% include "partials/home/home_info.html" %}
+{% if section and section.content %}
+<article class="post-single about-page">
+  <div class="post-content">
+    {{ section.content | safe }}
+  </div>
+</article>
+{% elif page and page.content %}
+<article class="post-single about-page">
+  <div class="post-content">
+    {{ page.content | safe }}
+  </div>
+</article>
+{% endif %}
 {% endblock %}

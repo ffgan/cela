@@ -79,11 +79,11 @@ If you only need installation of the theme, skip to [Theme Installation](#theme-
 
 ### Zola Installation
 
-Cela is developed and validated against `Zola 0.22.1`.
+Cela is developed and validated against `Zola 0.23.4`.
 
-For syntax highlighting on `Zola 0.22.x`, use the nested
-`[markdown.highlighting]` table instead of the older flat
-`highlight_code` setting. See the official configuration docs:
+For syntax highlighting, use the nested `[markdown.highlighting]` table
+instead of the older flat `highlight_code` setting. See the official
+configuration docs:
 https://www.getzola.org/documentation/getting-started/configuration/
 
 ```bash
@@ -94,7 +94,7 @@ apk add zola
 # Arch Linux
 pacman -S zola
 # Docker
-docker pull ghcr.io/getzola/zola:v0.22.1
+docker pull ghcr.io/getzola/zola:v0.23.4
 ```
 
 ### Create a Zola site
@@ -209,8 +209,8 @@ paint when JavaScript is available. Entrance fades are not used on those lists.
 
 ## Pagination
 
-- Homepage (`/`): set `paginate_by = 5` in `content/_index.md`, and `transparent = true` in `content/blog/_index.md` so posts under `home_content_dir` are paginated on the home page. Override size with `extra.cela.home_paginate_by`.
-- Archive (`/archive/`): add `content/archive/_index.md` with `template = "archive.html"`. Page size defaults to 10 via `extra.cela.archive_paginate_by`.
+- Homepage (`/`): with `home_list_style = "default"`, the index template uses Zola's paginator when `content/_index.md` sets `paginate_by`. Set `transparent = true` on the blog section so those posts join the index. Keep non-post pages, such as About, as their own sections so they are not listed as posts. `extra.cela.home_paginate_by` is only the client-side fallback used when the index section does not paginate.
+- Archive (`/archive/`): add `content/archive/_index.md` with `template = "archive.html"`. Page size defaults to 10 via `extra.cela.archive_paginate_by`. The archive list is paginated in the browser.
 - Point the nav item at `/archive`, for example `{path = "/archive", title = "Archive"}`.
 
 ## CSS Class Reference
