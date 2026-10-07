@@ -2,11 +2,11 @@
 <footer class="page-footer">
   <nav class="pagination" aria-label="Pagination">
     {% if paginator.previous %}
-    <a class="previous" href="{{ paginator.previous | safe }}" rel="prev">« {{ ui_previous }}</a>
+    <a class="previous" href="{{ paginator.previous | safe }}" rel="prev">{{ ui_previous }}</a>
     {% endif %}
     <span class="pagination-info">{{ paginator.current_index }} / {{ paginator.number_pagers }}</span>
     {% if paginator.next %}
-    <a class="next" href="{{ paginator.next | safe }}" rel="next">{{ ui_next }} »</a>
+    <a class="next" href="{{ paginator.next | safe }}" rel="next">{{ ui_next }}</a>
     {% endif %}
   </nav>
 </footer>

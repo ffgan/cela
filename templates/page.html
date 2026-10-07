@@ -3,9 +3,11 @@
 <article class="post-single">
   <header class="post-header">
       <nav class="breadcrumbs" aria-label="breadcrumb">
-          <a href="{{ config.base_url }}">{{ ui_home }}</a>&nbsp;»&nbsp;
-          <a href="{{ get_url(path='@/archive/_index.md') }}">{{ ui_archive }}</a>&nbsp;»&nbsp;
-          <a href="{{ page.permalink }}">{{ page.title }}</a>
+          <a href="{{ config.base_url }}">{{ ui_home }}</a>
+          <span class="breadcrumb-sep" aria-hidden="true">{{ <cela.material_icon name="chevron_right" size="18" /> }}</span>
+          <a href="{{ get_url(path='@/archive/_index.md') }}">{{ ui_archive }}</a>
+          <span class="breadcrumb-sep" aria-hidden="true">{{ <cela.material_icon name="chevron_right" size="18" /> }}</span>
+          <span class="breadcrumb-current" aria-current="page">{{ page.title }}</span>
       </nav>
       <h1 class="post-title">{{ page.title }}</h1>
       {% if page.description %}

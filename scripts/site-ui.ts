@@ -230,10 +230,19 @@ function ancestor(node: Node, depth: number): Node | null {
   return current;
 }
 
+const copyIcon =
+  '<svg class="md-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" aria-hidden="true"><path d="M300-200q-24 0-42-18t-18-42v-560q0-24 18-42t42-18h440q24 0 42 18t18 42v560q0 24-18 42t-42 18H300Zm0-60h440v-560H300v560ZM180-80q-24 0-42-18t-18-42v-590q0-12.75 8.68-21.38 8.67-8.62 21.5-8.62 12.82 0 21.32 8.62 8.5 8.63 8.5 21.38v590h470q12.75 0 21.38 8.68 8.62 8.67 8.62 21.5 0 12.82-8.62 21.32Q662.75-80 650-80H180Zm120-180v-560 560Z"/></svg>';
+const copiedIcon =
+  '<svg class="md-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" aria-hidden="true"><path d="m378-332 363-363q9-9 21.5-9t21.5 9q9 9 9 21.5t-9 21.5L399-267q-9 9-21 9t-21-9L175-449q-9-9-8.5-21.5T176-492q9-9 21.5-9t21.5 9l159 160Z"/></svg>';
+
 function initCodeCopyButtons(): void {
   if (document.body.dataset.showCodeCopyButtons !== "true") {
     return;
   }
+
+  const zh = document.documentElement.lang.toLowerCase().startsWith("zh");
+  const labelCopy = zh ? "复制代码" : "Copy code";
+  const labelCopied = zh ? "已复制" : "Copied";
 
   document.querySelectorAll("pre > code").forEach((codeBlock) => {
     const pre = codeBlock.parentElement;
@@ -245,12 +254,20 @@ function initCodeCopyButtons(): void {
     const copyButton = document.createElement("button");
     copyButton.classList.add("copy-code");
     copyButton.type = "button";
-    copyButton.textContent = "copy";
+    copyButton.innerHTML = copyIcon;
+    copyButton.title = labelCopy;
+    copyButton.setAttribute("aria-label", labelCopy);
+
+    function showIcon(icon: string, label: string): void {
+      copyButton.innerHTML = icon;
+      copyButton.title = label;
+      copyButton.setAttribute("aria-label", label);
+    }
 
     function copyingDone(): void {
-      copyButton.textContent = "copied!";
+      showIcon(copiedIcon, labelCopied);
       window.setTimeout(() => {
-        copyButton.textContent = "copy";
+        showIcon(copyIcon, labelCopy);
       }, 2000);
     }
 
@@ -263,9 +280,14 @@ function initCodeCopyButtons(): void {
           .join("");
       }
 
-      if ("clipboard" in navigator) {
-        void navigator.clipboard.writeText(content);
+      const finish = (): void => {
         copyingDone();
+      };
+
+      if ("clipboard" in navigator) {
+        void navigator.clipboard.writeText(content).then(finish).catch(() => {
+          // Leave the icon unchanged when the clipboard is blocked.
+        });
         return;
       }
 
@@ -279,7 +301,7 @@ function initCodeCopyButtons(): void {
       selection.addRange(range);
       try {
         document.execCommand("copy");
-        copyingDone();
+        finish();
       } catch {
         // Ignore browsers that reject the legacy copy path.
       }

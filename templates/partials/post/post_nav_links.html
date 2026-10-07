@@ -4,16 +4,14 @@
 <nav class="paginav">
     {% if page.higher %}
     <a class="prev" href="{{ page.higher.permalink }}">
-        <span class="title">« {{ ui_prev_post }}</span>
-        <br>
-        <span>{{ page.higher.title }}</span>
+        <span class="title">{{ ui_prev_post }}</span>
+        <span class="paginav-name">{{ page.higher.title }}</span>
     </a>
     {% endif %}
     {% if page.lower %}
     <a class="next" href="{{ page.lower.permalink }}">
-        <span class="title">{{ ui_next_post }} »</span>
-        <br>
-        <span>{{ page.lower.title }}</span>
+        <span class="title">{{ ui_next_post }}</span>
+        <span class="paginav-name">{{ page.lower.title }}</span>
     </a>
     {% endif %}
 </nav>
