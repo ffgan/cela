@@ -16,9 +16,6 @@
       {% if config.extra.cela.show_post_meta | default(value=true) %}
       <div class="post-meta">
       {% include "partials/post/post_meta.html" %}
-      {% if config.extra.cela.show_post_edit_button %}
-          {% include "partials/post/post_edit.html" %}
-      {% endif %}
       </div>
       {% endif %}
   </header>
@@ -46,6 +43,11 @@
 
     {% if config.extra.cela.show_post_nav_links | default(value=true) %}
     {% include "partials/post/post_nav_links.html" %}
+    {% endif %}
+    {% if config.extra.cela.show_post_edit_button %}
+    <div class="post-edit">
+      {% include "partials/post/post_edit.html" %}
+    </div>
     {% endif %}
     {# TODO #}
     {#- if (and site.Params.ShowShareButtons (ne .Params.disableShare true)) }}

@@ -183,9 +183,12 @@ taxonomies_tail = [
 # if your blog source is public, cela will try to find the orinal page with its relative path
 # edit_post_url = "mailto:your-username@gmail.com"
 edit_post_url = "https://github.com/your-username/your-source/tree/main"
+edit_post_label = "Suggest changes"
 show_cela_logo = true
 show_code_copy_buttons = true
+show_card_categories = true
 show_header_title = false
+show_post_author = true
 show_post_edit_button = true
 show_post_meta = true
 show_post_nav_links = true
