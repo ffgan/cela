@@ -161,7 +161,7 @@ Cela stays a pure static Zola theme:
 - No frontend framework runtime
 - No Node.js requirement for theme users
 
-Node.js is used only for **theme development** to generate static CSS (Tailwind CSS v4 via `@tailwindcss/cli`) and to typecheck the browser scripts.
+Node.js is used only for **theme development** to generate static CSS (Tailwind CSS v4 via `@tailwindcss/cli`) and to typecheck the browser scripts. Tooling is tested on the current Node.js 26 release.
 
 Browser behavior is authored in `scripts/*.ts`. `npm run build:js` writes classic scripts to `static/js/` (committed), so theme users still only need Zola. KaTeX stays vendored JavaScript.
 
