@@ -4,8 +4,7 @@
   <header class="post-header">
       <nav class="breadcrumbs" aria-label="breadcrumb">
           <a href="{{ config.base_url }}">{{ ui_home }}</a>&nbsp;»&nbsp;
-          <a href="{{ get_url(path='@/archive/_index.md') }}">{{ ui_archive }}</a>&nbsp;»&nbsp;
-          <a href="{{ page.permalink }}">{{ page.title }}</a>
+          <a href="{{ get_url(path='@/archive/_index.md') }}">{{ ui_archive }}</a>
       </nav>
       <h1 class="post-title">{{ page.title }}</h1>
       {% if page.description %}

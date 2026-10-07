@@ -615,22 +615,21 @@
     display: flex;
   }
 
-  /* M3 filled button */
+  /* Low-emphasis text navigation keeps pagination secondary to content. */
   .pagination a {
-    @apply rounded-md-full bg-md-primary text-md-on-primary shadow-elevation-0;
-    padding: 0 20px;
+    @apply rounded-md-full bg-transparent text-md-primary shadow-elevation-0;
+    padding: 0 16px;
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.01em;
     line-height: 40px;
     transition:
-      box-shadow var(--duration-short) var(--motion-standard),
       background-color var(--duration-short) var(--motion-standard);
   }
 
   .pagination a:hover {
-    @apply shadow-elevation-1;
-    background: color-mix(in srgb, var(--md-primary) 92%, var(--md-on-primary));
+    @apply shadow-elevation-0;
+    background: color-mix(in srgb, var(--md-primary) calc(var(--state-hover) * 100%), transparent);
   }
 
   .pagination .next {
@@ -1486,6 +1485,12 @@
     border-radius: var(--shape-md);
   }
 
+  .paginav {
+    gap: 0.5rem;
+    border: 0;
+    background: transparent;
+  }
+
   .share-buttons {
     display: flex;
     justify-content: center;
@@ -1522,6 +1527,7 @@
   }
 
   .paginav a {
+    background: var(--md-surface-container-low);
     border-radius: var(--shape-md);
     padding-inline: 14px;
     transition: background-color var(--duration-short) var(--motion-standard);
