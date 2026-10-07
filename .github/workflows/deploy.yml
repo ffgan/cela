@@ -26,8 +26,8 @@ jobs:
       - name: Install CSS tooling
         run: npm ci
 
-      - name: Build generated CSS
-        run: npm run build:css
+      - name: Build generated scripts and CSS
+        run: npm run build:js && npm run build:css
 
       # install zola via install-action
       - name: Install Zola

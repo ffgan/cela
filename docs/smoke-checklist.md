@@ -27,6 +27,9 @@ still matches the current baseline.
 
 ## Build Checks
 
+- `npm run typecheck`
+- `npm test`
+- `npm run build:js` (committed `static/js/*.js` must match)
 - `npm run build:css` (minified production CSS)
 - `zola check --skip-external-links`
 - `zola build`

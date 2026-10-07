@@ -1,192 +1,256 @@
-function debounce(func, wait) {
-  let timeoutId;
-
-  return function debounced(...args) {
-    const context = this;
-    clearTimeout(timeoutId);
-    timeoutId = window.setTimeout(() => func.apply(context, args), wait);
-  };
-}
-
-function formatSearchResultItem(item) {
-  const title = item.doc && item.doc.title ? item.doc.title : item.ref;
-  let summary = "";
-  if (item.doc) {
-    summary = item.doc.summary || item.doc.description || "";
-    if (!summary && item.doc.body) {
-      summary =
-        item.doc.body.slice(0, 140) + (item.doc.body.length > 140 ? "…" : "");
+/* Generated from scripts/*.ts. Edit the TypeScript source and run npm run build:js. */
+"use strict";
+(() => {
+  // scripts/lib/dom.ts
+  function onReady(callback) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", callback);
+      return;
     }
+    callback();
   }
-  return (
-    '<article class="post-entry">' +
-    '<header class="entry-header">' +
-    '<h3>'+
-    title +
-    "&nbsp;»</h3></header>" +
-    (summary ? '<div class="entry-content"><p>' + summary + "</p></div>" : "") +
-    '<a class="entry-link" href="' +
-    item.ref +
-    '" aria-label="' +
-    title +
-    '"></a>' +
-    '</article>'
-  );
-}
-
-function normalizeTerm(term) {
-  return term.toLowerCase().split(/\s+/).filter(Boolean);
-}
-
-function docsFromIndex(data) {
-  if (Array.isArray(data)) {
-    return data;
-  }
-  if (data && Array.isArray(data.docs)) {
-    return data.docs;
-  }
-  const stored = data && data.documentStore && data.documentStore.docs;
-  if (!stored || typeof stored !== "object") {
-    return [];
-  }
-  return Object.keys(stored).map(function (key) {
-    const doc = stored[key];
-    return {
-      title: doc.title || key,
-      body: doc.body || "",
-      summary: doc.summary || "",
-      permalink: key,
-      url: key,
-    };
-  });
-}
-
-function documentMatches(doc, terms) {
-  if (!terms.length) {
-    return false;
+  function eventNode(event) {
+    return event.target instanceof Node ? event.target : null;
   }
 
-  // Substring match on the stored title and body. elasticlunr has no Chinese
-  // tokenizer, so the inverted index is not used for the query itself.
-  const haystack = ((doc.title || "") + " " + (doc.body || "")).toLowerCase();
-  for (let i = 0; i < terms.length; i += 1) {
-    if (haystack.indexOf(terms[i]) === -1) {
+  // scripts/lib/search-index.ts
+  function isRecord(value) {
+    return typeof value === "object" && value !== null;
+  }
+  function asSearchDoc(value) {
+    if (!isRecord(value)) {
+      return null;
+    }
+    const doc = {};
+    if (typeof value.title === "string") {
+      doc.title = value.title;
+    }
+    if (typeof value.body === "string") {
+      doc.body = value.body;
+    }
+    if (typeof value.summary === "string") {
+      doc.summary = value.summary;
+    }
+    if (typeof value.description === "string") {
+      doc.description = value.description;
+    }
+    if (typeof value.permalink === "string") {
+      doc.permalink = value.permalink;
+    }
+    if (typeof value.url === "string") {
+      doc.url = value.url;
+    }
+    return doc;
+  }
+  function docsFromIndex(data) {
+    if (Array.isArray(data)) {
+      return data.flatMap((item) => {
+        const doc = asSearchDoc(item);
+        return doc ? [doc] : [];
+      });
+    }
+    if (!isRecord(data)) {
+      return [];
+    }
+    const payload = data;
+    if (Array.isArray(payload.docs)) {
+      return payload.docs.flatMap((item) => {
+        const doc = asSearchDoc(item);
+        return doc ? [doc] : [];
+      });
+    }
+    const stored = payload.documentStore?.docs;
+    if (!stored || typeof stored !== "object") {
+      return [];
+    }
+    return Object.keys(stored).map((key) => {
+      const doc = stored[key];
+      return {
+        title: doc?.title || key,
+        body: doc?.body || "",
+        summary: doc?.summary || "",
+        permalink: key,
+        url: key
+      };
+    });
+  }
+  function normalizeTerm(term) {
+    return term.toLowerCase().split(/\s+/).filter(Boolean);
+  }
+  function documentMatches(doc, terms) {
+    if (!terms.length) {
       return false;
     }
+    const haystack = `${doc.title || ""} ${doc.body || ""}`.toLowerCase();
+    return terms.every((term) => haystack.includes(term));
   }
-  return true;
-}
-
-function initSearch() {
-  const searchIndexJsonUrl = document.body.dataset.searchIndexJsonUrl;
-  const searchIndexJsUrl = document.body.dataset.searchIndexJsUrl;
-  const input = document.getElementById("searchInput");
-  const resultsList = document.getElementById("searchResults");
-  if (!input || !resultsList || !searchIndexJsonUrl || !searchIndexJsUrl) {
-    return; // No search DOM on this page.
-  }
-
-  const MAX_ITEMS = 10;
-  let currentTerm = "";
-  let indexPromise = null;
-
-  async function initIndex() {
-    if (!indexPromise) {
-      indexPromise = loadIndex();
+  function summaryOf(doc) {
+    if (!doc) {
+      return "";
     }
-    return indexPromise;
+    const summary = doc.summary || doc.description || "";
+    if (summary) {
+      return summary;
+    }
+    if (!doc.body) {
+      return "";
+    }
+    return doc.body.slice(0, 140) + (doc.body.length > 140 ? "\u2026" : "");
+  }
+  function resultHref(ref, baseHref) {
+    if (ref.startsWith("/") || ref.startsWith("./") || ref.startsWith("../") || ref.startsWith("#")) {
+      return ref;
+    }
+    try {
+      const url = new URL(ref, baseHref);
+      if (url.protocol === "http:" || url.protocol === "https:") {
+        return url.href;
+      }
+    } catch {
+      return null;
+    }
+    return null;
   }
 
-  async function loadIndex() {
-    try {
-      const jsonResponse = await fetch(searchIndexJsonUrl);
-      if (
-        jsonResponse.ok &&
-        jsonResponse.headers.get("content-type")?.includes("application/json")
-      ) {
-        const data = await jsonResponse.json();
-        const docs = docsFromIndex(data);
-        if (docs.length) {
-          return docs;
+  // scripts/search.ts
+  function debounce(func, wait) {
+    let timeoutId = 0;
+    return () => {
+      window.clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(func, wait);
+    };
+  }
+  function renderResult(doc, ref) {
+    const href = resultHref(ref, window.location.href);
+    if (!href) {
+      return null;
+    }
+    const title = doc.title || ref;
+    const article = document.createElement("article");
+    article.className = "post-entry";
+    const header = document.createElement("header");
+    header.className = "entry-header";
+    const heading = document.createElement("h3");
+    heading.append(document.createTextNode(title), document.createTextNode("\xA0\xBB"));
+    header.append(heading);
+    article.append(header);
+    const summary = summaryOf(doc);
+    if (summary) {
+      const content = document.createElement("div");
+      content.className = "entry-content";
+      const paragraph = document.createElement("p");
+      paragraph.textContent = summary;
+      content.append(paragraph);
+      article.append(content);
+    }
+    const link = document.createElement("a");
+    link.className = "entry-link";
+    link.href = href;
+    link.setAttribute("aria-label", title);
+    article.append(link);
+    return article;
+  }
+  function initSearch() {
+    const searchIndexJsonUrl = document.body.dataset.searchIndexJsonUrl;
+    const searchIndexJsUrl = document.body.dataset.searchIndexJsUrl;
+    const input = document.getElementById("searchInput");
+    const resultsList = document.getElementById("searchResults");
+    if (!(input instanceof HTMLInputElement) || !resultsList || !searchIndexJsonUrl || !searchIndexJsUrl) {
+      return;
+    }
+    const maxItems = 10;
+    let currentTerm = "";
+    let indexPromise = null;
+    function initIndex() {
+      if (!indexPromise) {
+        indexPromise = loadIndex();
+      }
+      return indexPromise;
+    }
+    async function loadIndex() {
+      try {
+        const jsonResponse = await fetch(searchIndexJsonUrl ?? "");
+        if (jsonResponse.ok && jsonResponse.headers.get("content-type")?.includes("application/json")) {
+          const docs = docsFromIndex(await jsonResponse.json());
+          if (docs.length) {
+            return docs;
+          }
+        }
+      } catch {
+      }
+      try {
+        const jsResponse = await fetch(searchIndexJsUrl ?? "");
+        const text = await jsResponse.text();
+        const prefix = "window.searchIndex = ";
+        if (text.startsWith(prefix)) {
+          return docsFromIndex(JSON.parse(text.slice(prefix.length)));
+        }
+      } catch (err) {
+        console.error("Failed to load search index", err);
+      }
+      return [];
+    }
+    function clearResults() {
+      resultsList?.replaceChildren();
+      if (resultsList) {
+        resultsList.style.display = "none";
+      }
+    }
+    async function performSearch(term) {
+      if (!resultsList) {
+        return;
+      }
+      if (!term) {
+        clearResults();
+        return;
+      }
+      const docs = await initIndex();
+      const terms = normalizeTerm(term);
+      const results = [];
+      for (const doc of docs) {
+        if (!documentMatches(doc, terms)) {
+          continue;
+        }
+        const ref = doc.permalink || doc.url;
+        if (!ref) {
+          continue;
+        }
+        const card = renderResult(doc, ref);
+        if (card) {
+          results.push(card);
+        }
+        if (results.length >= maxItems) {
+          break;
         }
       }
-    } catch (_) {
-      // Fall back to the JS index format below.
-    }
-
-    try {
-      const jsResponse = await fetch(searchIndexJsUrl);
-      const text = await jsResponse.text();
-      const prefix = "window.searchIndex = ";
-      if (text.startsWith(prefix)) {
-        const parsed = JSON.parse(text.slice(prefix.length));
-        return docsFromIndex(parsed);
+      if (!results.length) {
+        clearResults();
+        return;
       }
-    } catch (err) {
-      console.error("Failed to load search index", err);
+      resultsList.style.display = "block";
+      resultsList.replaceChildren(...results);
     }
-    return [];
-  }
-
-  async function performSearch(term) {
-    if (!term) {
-      resultsList.style.display = "none";
-      resultsList.innerHTML = "";
-      return;
-    }
-    const docs = await initIndex();
-    const terms = normalizeTerm(term);
-    const results = [];
-
-    for (let i = 0; i < docs.length; i += 1) {
-      if (documentMatches(docs[i], terms)) {
-        results.push({ ref: docs[i].permalink || docs[i].url, doc: docs[i] });
+    const debounced = debounce(() => {
+      const term = input.value.trim();
+      if (term === currentTerm) {
+        return;
       }
+      currentTerm = term;
+      void performSearch(term);
+    }, 150);
+    input.addEventListener("input", debounced);
+    window.addEventListener("click", (event) => {
+      const target = eventNode(event);
+      if (resultsList.style.display === "block" && target !== null && !resultsList.contains(target) && target !== input) {
+        resultsList.style.display = "none";
+      }
+    });
+    const initial = new URLSearchParams(window.location.search).get("q");
+    if (initial) {
+      input.value = initial;
+      currentTerm = "";
+      void performSearch(initial);
     }
-    if (!results.length) {
-      resultsList.style.display = "none";
-      resultsList.innerHTML = "";
-      return;
-    }
-    resultsList.style.display = "block";
-    resultsList.innerHTML = results
-      .slice(0, MAX_ITEMS)
-      .map(formatSearchResultItem)
-      .join("");
   }
-
-  const debounced = debounce(function () {
-    const term = input.value.trim();
-    if (term === currentTerm) {
-      return;
-    }
-    currentTerm = term;
-    void performSearch(term);
-  }, 150);
-
-  input.addEventListener("input", debounced);
-
-  window.addEventListener("click", function (event) {
-    if (
-      resultsList.style.display === "block" &&
-      !resultsList.contains(event.target) &&
-      event.target !== input
-    ) {
-      resultsList.style.display = "none";
-    }
-  });
-
-  const params = new URLSearchParams(window.location.search);
-  const initial = params.get("q");
-  if (initial) {
-    input.value = initial;
-    currentTerm = "";
-    void performSearch(initial);
-  }
-}
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initSearch);
-} else {
-  initSearch();
-}
+  onReady(initSearch);
+})();

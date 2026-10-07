@@ -6,6 +6,7 @@
 
 # Zola build artifacts
 /target/
+/build/
 
 # Dependency directories
 /node_modules/

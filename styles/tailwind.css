@@ -10,6 +10,7 @@
 @source "../templates/**/*.html";
 @source "../content/**/*.{md,html}";
 @source not "../content/_bak/**/*";
+@source "../scripts/**/*.ts";
 @source "../static/js/**/*.js";
 
 /* Class-based dark mode (html/body.dark), matching theme-runtime + site-ui.js */

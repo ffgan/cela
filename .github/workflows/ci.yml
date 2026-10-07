@@ -21,6 +21,15 @@ jobs:
       - name: Install CSS tooling
         run: npm ci
 
+      - name: Typecheck and test scripts
+        run: npm run typecheck && npm test
+
+      - name: Build generated scripts
+        run: npm run build:js
+
+      - name: Confirm generated scripts are committed
+        run: git diff --exit-code -- static/js
+
       - name: Build generated CSS
         run: npm run build:css:min
 

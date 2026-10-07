@@ -16,39 +16,39 @@
   <header class="entry-header robot-card-header">
     <h2>Crypto Tools</h2>
   </header>
-  <div class="tool-section">
+  <div class="tool-section" data-tool="base64">
     <div class="tool-label">
       <h4>Base64 En/Decode</h4>
     </div>
     <div class="tool-inputs">
       <div class="input-group">
-        <input aria-label="Text to encode" placeholder="Text to encode">
+        <input data-role="plain" aria-label="Text to encode" placeholder="Text to encode">
         <div class="button-container">
-          <button type="button" aria-label="Encode to Base64" onclick="encodeBase64()">Encode</button>
+          <button type="button" data-action="encode" aria-label="Encode to Base64">Encode</button>
         </div>
       </div>
       <div class="input-group">
-        <input aria-label="Text to decode" placeholder="Text to decode">
+        <input data-role="encoded" aria-label="Text to decode" placeholder="Text to decode">
         <div class="button-container">
-          <button type="button" aria-label="Decode from Base64" onclick="decodeBase64()">Decode</button>
+          <button type="button" data-action="decode" aria-label="Decode from Base64">Decode</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="tool-section">
+  <div class="tool-section" data-tool="sha256">
     <div class="tool-label">
       <h4>SHA-256 Hash Generator</h4>
     </div>
     <div class="tool-inputs">
       <div class="input-group">
-        <input aria-label="Text to hash" placeholder="Text to hash">
+        <input data-role="plain" aria-label="Text to hash" placeholder="Text to hash">
         <div class="button-container">
-          <button type="button" aria-label="Generate SHA-256 hash" onclick="generateSHA256()">Generate SHA-256</button>
+          <button type="button" data-action="hash" aria-label="Generate SHA-256 hash">Generate SHA-256</button>
         </div>
       </div>
       <div class="input-group">
-        <input aria-label="SHA-256 hash output" placeholder="SHA-256 hash output" readonly>
+        <input data-role="digest" aria-label="SHA-256 hash output" placeholder="SHA-256 hash output" readonly>
       </div>
     </div>
   </div>
