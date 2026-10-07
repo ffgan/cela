@@ -6,17 +6,21 @@
 
 {% if config.extra.cela.show_taxonomies_description %}
 <div class="taxonomy-desc">
-{% set form_taxonomy = (taxonomy.name | replace(from="_",to=" ")) %}
-{% set default_desc = "Here is a list of " ~ form_taxonomy ~ " in this site." %}
-{% set description = default_desc %}
-
+{% if taxonomy.name == "tags" %}
+{% set description = ui_tags_desc %}
+{% elif taxonomy.name == "categories" %}
+{% set description = ui_categories_desc %}
+{% else %}
+{% set description = "" %}
+{% endif %}
 {% for kv in config.extra.cela.taxonomies_desc %}
 {% if kv.name == taxonomy.name %}
-	{% set description = kv.desc %}
-	<p>{{ description }}</p>
+{% set description = kv.desc %}
 {% endif %}
-
 {% endfor %}
+{% if description != "" %}
+<p>{{ description }}</p>
+{% endif %}
 </div>
 {% endif %}
 </article>

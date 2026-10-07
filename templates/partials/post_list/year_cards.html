@@ -1,4 +1,5 @@
-{% set list_pages = list_pages | default(value=[]) | sort(attribute="date") | reverse %}
+{# permalink first so posts that share a date stay in a stable order #}
+{% set list_pages = list_pages | default(value=[]) | sort(attribute="permalink") | sort(attribute="date") | reverse %}
 {% set client_paginate = client_paginate | default(value=false) %}
 {% set paginate_by = paginate_by | default(value=5) %}
 

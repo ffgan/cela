@@ -30,7 +30,7 @@ function initSearchOverlay() {
   function submitSearch() {
     const searchTerm = searchToggleInput.value.trim();
     if (!searchTerm) {
-      alert("Please enter a search term.");
+      alert(document.body.dataset.uiSearchEmpty || "Please enter a search term.");
       return;
     }
     window.location.assign(`${searchPageUrl}?q=${encodeURIComponent(searchTerm)}`);

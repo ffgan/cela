@@ -1,7 +1,13 @@
 {% extends "index.html" %}
 {% block main %}
 {% if not title %}
+  {% if ui_zh and taxonomy.name == "tags" %}
+  {% set title = ui_all_tags %}
+  {% elif ui_zh and taxonomy.name == "categories" %}
+  {% set title = ui_all_categories %}
+  {% else %}
   {% set title = "All " ~ taxonomy.name | replace(from="_",to=" ") | title %}
+  {% endif %}
 	{% set css_class = "terms-" ~ taxonomy.name %}
 {% endif %}
 

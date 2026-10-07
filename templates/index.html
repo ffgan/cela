@@ -1,7 +1,67 @@
 
 <!DOCTYPE html>
-{% set default_theme = config.extra.cela.color.default_theme | default(value="auto") -%}
-<html lang="{{ config.extra.cela.html_lang | default(value=lang) }}" dir="{{ config.extra.cela.global.i18n_dir }}"{% if default_theme == "dark" %} class="dark" data-scheme="dark"{% elif default_theme == "light" %} data-scheme="light"{% endif %}>
+{%- set default_theme = config.extra.cela.color.default_theme | default(value="auto") -%}
+{%- set html_dir = config.extra.cela.global.i18n_dir | default(value="ltr") -%}
+{%- if html_dir != "ltr" and html_dir != "rtl" and html_dir != "auto" -%}
+{%- set html_dir = "ltr" -%}
+{%- endif -%}
+{%- set ui_lang = config.extra.cela.html_lang | default(value=lang) -%}
+{%- set ui_zh = false -%}
+{%- if ui_lang is starting_with(pat="zh") -%}
+{%- set ui_zh = true -%}
+{%- endif -%}
+{%- if ui_zh -%}
+{%- set ui_home = "首页" -%}
+{%- set ui_latest = "最新" -%}
+{%- set ui_archive = "归档" -%}
+{%- set ui_previous = "上一页" -%}
+{%- set ui_next = "下一页" -%}
+{%- set ui_prev_post = "上一篇" -%}
+{%- set ui_next_post = "下一篇" -%}
+{%- set ui_search = "搜索" -%}
+{%- set ui_search_posts = "搜索文章" -%}
+{%- set ui_cancel = "取消" -%}
+{%- set ui_search_empty = "请输入要搜索的内容" -%}
+{%- set ui_no_posts = "还没有文章" -%}
+{%- set ui_powered = "由" -%}
+{%- set ui_driven = "驱动" -%}
+{%- set ui_go_top = "回到顶部" -%}
+{%- set ui_tags = "标签" -%}
+{%- set ui_categories = "分类" -%}
+{%- set ui_all_tags = "全部标签" -%}
+{%- set ui_all_categories = "全部分类" -%}
+{%- set ui_tags_desc = "按标签浏览文章。" -%}
+{%- set ui_categories_desc = "按分类浏览文章。" -%}
+{%- set ui_not_found = "页面不存在" -%}
+{%- set ui_not_found_desc = "这个地址没有对应的页面。" -%}
+{%- set ui_back_home = "回到首页" -%}
+{%- else -%}
+{%- set ui_home = "Home" -%}
+{%- set ui_latest = "Latest" -%}
+{%- set ui_archive = "Archive" -%}
+{%- set ui_previous = "Previous" -%}
+{%- set ui_next = "Next" -%}
+{%- set ui_prev_post = "Prev" -%}
+{%- set ui_next_post = "Next" -%}
+{%- set ui_search = "Search" -%}
+{%- set ui_search_posts = "Search posts" -%}
+{%- set ui_cancel = "Cancel" -%}
+{%- set ui_search_empty = "Please enter a search term." -%}
+{%- set ui_no_posts = "No posts yet." -%}
+{%- set ui_powered = "Powered by" -%}
+{%- set ui_driven = "" -%}
+{%- set ui_go_top = "Go to top" -%}
+{%- set ui_tags = "Tags" -%}
+{%- set ui_categories = "Categories" -%}
+{%- set ui_all_tags = "All Tags" -%}
+{%- set ui_all_categories = "All Categories" -%}
+{%- set ui_tags_desc = "Here is a list of tags in this site." -%}
+{%- set ui_categories_desc = "Here is a list of categories in this site." -%}
+{%- set ui_not_found = "Page not found" -%}
+{%- set ui_not_found_desc = "Nothing is published at this address." -%}
+{%- set ui_back_home = "Back home" -%}
+{%- endif -%}
+<html lang="{{ config.extra.cela.html_lang | default(value=lang) }}" dir="{{ html_dir }}"{% if default_theme == "dark" %} class="dark" data-scheme="dark"{% elif default_theme == "light" %} data-scheme="light"{% endif %}>
 
 <head>
   {% block head -%}
@@ -14,7 +74,7 @@
   {% set body_classes = body_classes ~ "list " -%}
 {% endif -%}
 {% set path = current_path | default(value="") -%}
-{% if path == "/" or path is starting_with(pat="/page/") or path is starting_with(pat="/about") -%}
+{% if path == "/" or path is starting_with(pat="/page/") -%}
   {% set body_classes = body_classes ~ "is-home " -%}
 {% endif -%}
 
@@ -26,7 +86,10 @@ data-show-theme-toggle="{{ config.extra.cela.show_theme_toggle | default(value=t
 data-remember-choice="{{ config.extra.cela.color.remember_choice | default(value=true) }}"
 data-search-page-url="{{ get_url(path='search/') }}"
 data-search-index-json-url="{{ get_url(path='search_index.' ~ lang ~ '.json') }}"
-data-search-index-js-url="{{ get_url(path='search_index.' ~ lang ~ '.js') }}">
+data-search-index-js-url="{{ get_url(path='search_index.' ~ lang ~ '.js') }}"
+data-ui-previous="{{ ui_previous }}"
+data-ui-next="{{ ui_next }}"
+data-ui-search-empty="{{ ui_search_empty }}">
   {% block header -%}
     {% include "partials/home/home_header.html" -%}
   {% endblock %}
@@ -42,14 +105,14 @@ data-search-index-js-url="{{ get_url(path='search_index.' ~ lang ~ '.js') }}">
 {% block search_panel %}
 <div id="search-toggle-box" class="hidden">
   <div class="search-toggle-modal" role="dialog" aria-modal="true" aria-labelledby="search-dialog-title">
-    <h2 id="search-dialog-title" class="search-dialog-title">Search</h2>
+    <h2 id="search-dialog-title" class="search-dialog-title">{{ ui_search }}</h2>
     <label class="md-search-bar" for="search-toggle-input">
       {{ <cela.material_icon name="search" /> }}
-      <input type="search" id="search-toggle-input" placeholder="Search posts" autocomplete="off" />
+      <input type="search" id="search-toggle-input" placeholder="{{ ui_search_posts }}" autocomplete="off" />
     </label>
     <div class="search-dialog-actions">
-      <button type="button" id="search-toggle-cancel" class="md-text-button">Cancel</button>
-      <button type="button" id="search-toggle-button" class="md-filled-button">Search</button>
+      <button type="button" id="search-toggle-cancel" class="md-text-button">{{ ui_cancel }}</button>
+      <button type="button" id="search-toggle-button" class="md-filled-button">{{ ui_search }}</button>
     </div>
   </div>
 </div>
@@ -60,7 +123,7 @@ data-search-index-js-url="{{ get_url(path='search_index.' ~ lang ~ '.js') }}">
 <script defer src="{{ get_url(path='js/search-ui.js') | safe }}"></script>
 {# Client list pagination + home motion only where those DOM hooks exist #}
 {% set path = current_path | default(value="") %}
-{% if path == "/" or path is starting_with(pat="/page/") or path is starting_with(pat="/archive") or path is starting_with(pat="/about") %}
+{% if path == "/" or path is starting_with(pat="/page/") or path is starting_with(pat="/archive") %}
 <script defer src="{{ get_url(path='js/list-paginate.js') | safe }}"></script>
 <script defer src="{{ get_url(path='js/home-effects.js') | safe }}"></script>
 {% endif %}

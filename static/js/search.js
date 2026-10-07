@@ -38,11 +38,36 @@ function normalizeTerm(term) {
   return term.toLowerCase().split(/\s+/).filter(Boolean);
 }
 
+function docsFromIndex(data) {
+  if (Array.isArray(data)) {
+    return data;
+  }
+  if (data && Array.isArray(data.docs)) {
+    return data.docs;
+  }
+  const stored = data && data.documentStore && data.documentStore.docs;
+  if (!stored || typeof stored !== "object") {
+    return [];
+  }
+  return Object.keys(stored).map(function (key) {
+    const doc = stored[key];
+    return {
+      title: doc.title || key,
+      body: doc.body || "",
+      summary: doc.summary || "",
+      permalink: key,
+      url: key,
+    };
+  });
+}
+
 function documentMatches(doc, terms) {
   if (!terms.length) {
     return false;
   }
 
+  // Substring match on the stored title and body. elasticlunr has no Chinese
+  // tokenizer, so the inverted index is not used for the query itself.
   const haystack = ((doc.title || "") + " " + (doc.body || "")).toLowerCase();
   for (let i = 0; i < terms.length; i += 1) {
     if (haystack.indexOf(terms[i]) === -1) {
@@ -80,7 +105,10 @@ function initSearch() {
         jsonResponse.headers.get("content-type")?.includes("application/json")
       ) {
         const data = await jsonResponse.json();
-        return Array.isArray(data) ? data : data.docs || [];
+        const docs = docsFromIndex(data);
+        if (docs.length) {
+          return docs;
+        }
       }
     } catch (_) {
       // Fall back to the JS index format below.
@@ -92,17 +120,7 @@ function initSearch() {
       const prefix = "window.searchIndex = ";
       if (text.startsWith(prefix)) {
         const parsed = JSON.parse(text.slice(prefix.length));
-        const docsObj = (parsed.documentStore && parsed.documentStore.docs) || {};
-        return Object.keys(docsObj).map(function (key) {
-          const doc = docsObj[key];
-          return {
-            title: doc.title || key,
-            body: doc.body || "",
-            summary: doc.summary || "",
-            permalink: key,
-            url: key,
-          };
-        });
+        return docsFromIndex(parsed);
       }
     } catch (err) {
       console.error("Failed to load search index", err);

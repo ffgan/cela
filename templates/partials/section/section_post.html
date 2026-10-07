@@ -1,6 +1,6 @@
 <header class="page-header">
   <nav class="breadcrumbs" aria-label="breadcrumb">
-      <a href="{{ config.base_url }}">Home</a>
+      <a href="{{ config.base_url }}">{{ ui_home }}</a>
   </nav>
   <h1>{{ section.title }}
     {% for feed_filename in config.feed_filenames %}
@@ -11,17 +11,17 @@
 </h1>
 </header>
 {% if paginator %}
-{% for page in paginator.pages | sort(attribute="date", reverse=true) %}
+{% for page in paginator.pages | sort(attribute="permalink") | sort(attribute="date") | reverse %}
 {% set card_page = page %}
 {% include "partials/common/post_card.html" %}
 {% endfor %}
 {% elif section.pages %}
-{% for page in section.pages | sort(attribute="date", reverse=true) %}
+{% for page in section.pages | sort(attribute="permalink") | sort(attribute="date") | reverse %}
 {% set card_page = page %}
 {% include "partials/common/post_card.html" %}
 {% endfor %}
 {% else %}
-<p>No posts yet.</p>
+<p>{{ ui_no_posts }}</p>
 {% endif %}
 
 {% include "partials/common/pagination.html" %}

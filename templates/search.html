@@ -11,7 +11,7 @@
     {% set search_title = section.title %}
   {% else %}
     {# Use default search title #}
-    {% set search_title = "Search" %}
+    {% set search_title = ui_search %}
   {% endif %}
 {% endif %}
 
@@ -25,14 +25,14 @@
     {% set search_description = section.description %}
   {% else %}
     {# Use default search description #}
-    {% set search_description = "Find posts by title or body content" %}
+    {% set search_description = ui_search_posts %}
   {% endif %}
 {% endif %}
 
 <section class="post-single search-page">
   <header class="post-header">
     <nav class="breadcrumbs" aria-label="breadcrumb">
-      <a href="{{ config.base_url }}">Home</a>&nbsp;»&nbsp;
+      <a href="{{ config.base_url }}">{{ ui_home }}</a>&nbsp;»&nbsp;
       <a href="{{ current_url | default(value=config.base_url ~ '/search/') }}">{{ search_title }}</a>
     </nav>
     <h1 class="post-title">{{ search_title }}</h1>
@@ -46,8 +46,8 @@
         <input
           type="search"
           id="searchInput"
-          placeholder="Search posts"
-          aria-label="Search posts"
+          placeholder="{{ ui_search_posts }}"
+          aria-label="{{ ui_search_posts }}"
           autocomplete="off"
         />
       </label>

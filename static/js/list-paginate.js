@@ -78,7 +78,7 @@ function initListPagination(root) {
   previous.className = "previous";
   previous.href = "#";
   previous.rel = "prev";
-  previous.textContent = "« Previous";
+  previous.textContent = "« " + (document.body.dataset.uiPrevious || "Previous");
 
   const info = document.createElement("span");
   info.className = "pagination-info";
@@ -87,7 +87,7 @@ function initListPagination(root) {
   next.className = "next";
   next.href = "#";
   next.rel = "next";
-  next.textContent = "Next »";
+  next.textContent = (document.body.dataset.uiNext || "Next") + " »";
 
   footerNav.append(previous, info, next);
   footerNav.hidden = false;

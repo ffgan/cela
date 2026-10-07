@@ -1,7 +1,11 @@
 {% extends "index.html" %}
 {% block main %}
 {% if not title %}
+  {% if ui_zh %}
+  {% set title = ui_all_tags %}
+  {% else %}
   {% set title = taxonomy.name | replace(from="_",to=" ") | title %}
+  {% endif %}
 	{% set css_class = "terms-" ~ taxonomy.name %}
 {% endif %}
 

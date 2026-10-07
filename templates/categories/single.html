@@ -2,7 +2,7 @@
 {% block main %}
 {% set taxonomy_title = taxonomy.name | replace(from="_",to=" ") | title %}
   {% include "partials/taxonomy/single_header.html" %}
-{% for page in term.pages %}
+{% for page in term.pages | sort(attribute="permalink") | sort(attribute="date") | reverse %}
 {% set card_page = page %}
 {% set card_reveal = false %}
 {% include "partials/common/post_card.html" %}

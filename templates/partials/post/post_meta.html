@@ -5,12 +5,40 @@
 {% set formatted_date_short = meta_page.date | date(format=config.extra.cela.date_format) %}
 {% set meta = [...meta, '<span title="' ~ formatted_date_long ~ '">' ~ formatted_date_short ~ '</span>'] %}
 
+{# Zola counts words by splitting on whitespace, so a Chinese paragraph is one word.
+   Count Han characters, and count Latin words separately for code and English. #}
+{% set raw = meta_page.content | default(value="") | striptags %}
+{% set cjk = raw | regex_replace(pattern='[^一-鿿]', rep='') | length %}
+{% set latin_src = raw | regex_replace(pattern='[一-鿿]', rep=' ') %}
+{% set latin_src = latin_src | regex_replace(pattern='[^A-Za-z0-9]+', rep=' ') | trim %}
+{% if latin_src == "" %}
+{% set latin_words = 0 %}
+{% else %}
+{% set latin_words = latin_src | split(pat=" ") | length %}
+{% endif %}
+{% set units = cjk + latin_words * 2 %}
+{% if units == 0 %}
+{% set minutes = meta_page.reading_time %}
+{% set count_label = meta_page.word_count ~ " words" %}
+{% set time_label = minutes ~ " min" %}
+{% else %}
+{% set minutes = (units / 400) | round(method="ceil") %}
+{% set minutes = (minutes ~ "") | split(pat=".") | first %}
+{% if cjk > 0 %}
+{% set count_label = cjk ~ " 字" %}
+{% set time_label = minutes ~ " 分钟" %}
+{% else %}
+{% set count_label = latin_words ~ " words" %}
+{% set time_label = minutes ~ " min" %}
+{% endif %}
+{% endif %}
+
 {% if config.extra.cela.show_reading_time and config.extra.cela.show_reading_time == true %}
-{% set meta = [...meta, meta_page.reading_time ~ " min"] %}
+{% set meta = [...meta, time_label] %}
 {% endif %}
 
 {% if config.extra.cela.show_word_count and config.extra.cela.show_word_count == true %}
-{% set meta = [...meta, meta_page.word_count ~ " words"] %}
+{% set meta = [...meta, count_label] %}
 {% endif %}
 
 {% set meta = [...meta, meta_page.author | default(value=config.author)] %}

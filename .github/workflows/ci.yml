@@ -3,7 +3,7 @@ name: zola-themes-cela-ci
 on:
   pull_request:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, ffgan-blog ]
 
 jobs:
   build:
@@ -34,3 +34,6 @@ jobs:
 
       - name: Zola build
         run: zola build
+
+      - name: Copy KaTeX into the demo output
+        run: mkdir -p public/js/vendor && cp -a vendor/katex public/js/vendor/katex

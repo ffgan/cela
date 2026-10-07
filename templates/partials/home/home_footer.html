@@ -11,15 +11,23 @@
     <span>&copy; {{ now() | date(format="%Y") }} <a href="{{ config.base_url }}">{{ config.author }}</a></span>
     {% endif %}
     <span>
-        Powered by
+        {% if ui_zh %}
+        {{ ui_powered }}
+        <a href="https://www.getzola.org/" rel="noopener noreferrer" target="_blank">Zola</a>
+        与
+        <a href="https://github.com/edwardzcn-decade/cela" rel="noopener" target="_blank">Cela</a>
+        {{ ui_driven }}
+        {% else %}
+        {{ ui_powered }}
         <a href="https://www.getzola.org/" rel="noopener noreferrer" target="_blank">Zola</a> &
         <a href="https://github.com/edwardzcn-decade/cela" rel="noopener" target="_blank">Cela</a>
+        {% endif %}
     </span>
   </div>
 </footer>
 
 {% if config.extra.cela.show_scroll_to_top %}
-<a href="#top" aria-label="Go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+<a href="#top" aria-label="{{ ui_go_top }}" title="{{ ui_go_top }} (Alt + G)" class="top-link" id="top-link" accesskey="g">
   {{ <cela.material_icon name="arrow_upward" /> }}
 </a>
 {% endif %}

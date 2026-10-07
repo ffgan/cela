@@ -1,9 +1,15 @@
 <!-- taxonomy header (mostly used in single template) just below the nav bar -->
 <header class="page-header">
   <div class="breadcrumbs">
-      <a href="{{ config.base_url }}">Home</a>&nbsp;»&nbsp;
+      <a href="{{ config.base_url }}">{{ ui_home }}</a>&nbsp;»&nbsp;
       <a href="{{ config.base_url }}/{{ taxonomy.name }}">
+        {%- if ui_zh and taxonomy.name == "tags" -%}
+        {{- ui_tags -}}
+        {%- elif ui_zh and taxonomy.name == "categories" -%}
+        {{- ui_categories -}}
+        {%- else -%}
         {{- taxonomy_title -}}
+        {%- endif -%}
         {% if config.extra.cela.show_taxonomies_tail %}
         {% for tail in config.extra.cela.taxonomies_tail %}
           {% if tail.name == taxonomy.name %}

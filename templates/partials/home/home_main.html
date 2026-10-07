@@ -1,4 +1,4 @@
 {% if not paginator or paginator.current_index == 1 %}
-<p class="home-feed-label">Latest</p>
+<p class="home-feed-label">{{ ui_latest }}</p>
 {% endif %}
 {% include "partials/home/home_list.html" %}

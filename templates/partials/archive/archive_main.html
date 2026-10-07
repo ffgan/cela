@@ -3,7 +3,7 @@
 {% set content_dir = content_dir | trim_start(pat="content/") %}
 
 <header class="page-header">
-  <h1>{{ section.title | default(value="Archive") }}</h1>
+  <h1>{{ section.title | default(value=ui_archive) }}</h1>
 </header>
 
 {% if content_dir == "" or content_dir == "content" %}

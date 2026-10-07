@@ -73,6 +73,17 @@ extra:
 
 Supported delimiters: `$...$` / `\(...\)` (inline) and `$$...$$` / `\[...\]` (display). The front-matter key remains `mathjax` for compatibility; the runtime renderer is KaTeX.
 
+The renderer is stored in `vendor/katex` so a normal `zola build` does not upload it. After building a site that actually enables math, copy it into the output:
+
+```bash
+mkdir -p public/js/vendor
+cp -a themes/cela/vendor/katex public/js/vendor/katex
+```
+
+Inside this theme repository the source directory is `vendor/katex` (there is no `themes/cela/` prefix).
+
+Reading time counts Han characters (about 400 per minute) plus whitespace-delimited Latin words, because Zola's `word_count` treats an entire Chinese paragraph as one word. Set `extra.cela.html_lang` to a `zh` tag to switch the chrome (navigation still comes from your config) into Chinese. `default_language` stays an elasticlunr language such as `en`; search matches the stored title and body as substrings, so Chinese queries still work.
+
 ## Quick Start
 
 If you only need installation of the theme, skip to [Theme Installation](#theme-installation). Here lists the detail procedures from installing Zola to building a site locally according to [Zola Documentation](https://www.getzola.org/documentation/getting-started/installation/).
