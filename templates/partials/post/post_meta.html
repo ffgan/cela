@@ -41,5 +41,7 @@
 {% set meta = [...meta, count_label] %}
 {% endif %}
 
+{% if config.extra.cela.show_post_author | default(value=true) %}
 {% set meta = [...meta, meta_page.author | default(value=config.author)] %}
+{% endif %}
 {{ meta | join(sep="&nbsp;·&nbsp;") | safe }}

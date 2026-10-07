@@ -6,8 +6,6 @@
           <a href="{{ config.base_url }}">{{ ui_home }}</a>
           <span class="breadcrumb-sep" aria-hidden="true">{{ <cela.material_icon name="chevron_right" size="18" /> }}</span>
           <a href="{{ get_url(path='@/archive/_index.md') }}">{{ ui_archive }}</a>
-          <span class="breadcrumb-sep" aria-hidden="true">{{ <cela.material_icon name="chevron_right" size="18" /> }}</span>
-          <span class="breadcrumb-current" aria-current="page">{{ page.title }}</span>
       </nav>
       <h1 class="post-title">{{ page.title }}</h1>
       {% if page.description %}
@@ -18,9 +16,6 @@
       {% if config.extra.cela.show_post_meta | default(value=true) %}
       <div class="post-meta">
       {% include "partials/post/post_meta.html" %}
-      {% if config.extra.cela.show_post_edit_button %}
-          {% include "partials/post/post_edit.html" %}
-      {% endif %}
       </div>
       {% endif %}
   </header>
@@ -48,6 +43,11 @@
 
     {% if config.extra.cela.show_post_nav_links | default(value=true) %}
     {% include "partials/post/post_nav_links.html" %}
+    {% endif %}
+    {% if config.extra.cela.show_post_edit_button %}
+    <div class="post-edit">
+      {% include "partials/post/post_edit.html" %}
+    </div>
     {% endif %}
     {# TODO #}
     {#- if (and site.Params.ShowShareButtons (ne .Params.disableShare true)) }}
